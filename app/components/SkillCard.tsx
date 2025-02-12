@@ -1,4 +1,4 @@
-import { Card, CardBody, Heading, Text, Progress, Flex, Stack, Box } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
 
 interface Skill {
   name: string
@@ -13,42 +13,46 @@ interface SkillCardProps {
 
 export function SkillCard({ title, skills }: SkillCardProps) {
   return (
-    <Card
-      className="card-hover"
-      bg="whiteAlpha.100"
-      borderRadius="xl"
+    <motion.div
+      className="bg-white/80 dark:bg-dark-surface/80 shadow-xl rounded-xl overflow-hidden backdrop-blur-sm"
+      whileHover={{ 
+        y: -5,
+        transition: { duration: 0.2 }
+      }}
     >
-      <CardBody>
-        <Heading
-          size="lg"
-          mb={6}
-          bgGradient="linear(to-r, blue.400, purple.500)"
-          bgClip="text"
-        >
+      <div className="p-6 space-y-6">
+        <h3 className="text-2xl font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text">
           {title}
-        </Heading>
-        <Stack spacing={6}>
+        </h3>
+        
+        <div className="space-y-6">
           {skills.map((skill) => (
-            <Box key={skill.name}>
-              <Flex justify="space-between" align="center" mb={2}>
-                <Text fontWeight="medium">{skill.name}</Text>
-                <Text fontSize="sm" color="gray.400">{skill.level}%</Text>
-              </Flex>
-              <Progress
-                value={skill.level}
-                max={100}
-                colorScheme="blue"
-                borderRadius="full"
-                size="sm"
-                mb={2}
-              />
-              <Text fontSize="sm" color="gray.300">
+            <div key={skill.name} className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="font-medium text-slate-700 dark:text-slate-200">
+                  {skill.name}
+                </span>
+                <span className="text-sm text-slate-500 dark:text-slate-400">
+                  {skill.level}%
+                </span>
+              </div>
+              
+              <div className="relative h-2 bg-pastel-purple/10 dark:bg-dark-purple/10 rounded-full overflow-hidden">
+                <motion.div
+                  className="absolute top-0 left-0 h-full bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${skill.level}%` }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                />
+              </div>
+              
+              <p className="text-sm text-slate-600 dark:text-slate-300">
                 {skill.description}
-              </Text>
-            </Box>
+              </p>
+            </div>
           ))}
-        </Stack>
-      </CardBody>
-    </Card>
+        </div>
+      </div>
+    </motion.div>
   )
 } 
