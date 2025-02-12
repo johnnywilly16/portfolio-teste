@@ -93,7 +93,7 @@ const FloatingTechIcon = ({
   name, 
   delay = 0 
 }: { 
-  Icon: any, 
+  Icon: React.ComponentType<{ className?: string }>, 
   name: string, 
   delay?: number 
 }) => (

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
+import Image from 'next/image'
 
 interface ProjectCardProps {
   title: string
@@ -30,10 +31,12 @@ export function ProjectCard({
       <div className="p-6 space-y-4">
         {imageUrl && (
           <div className="relative h-48 mb-4 overflow-hidden rounded-lg">
-            <img
+            <Image
               src={imageUrl}
               alt={title}
-              className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
         )}
