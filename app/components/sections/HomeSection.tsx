@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion'
-import { useEffect, useState, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useState, useMemo, useRef } from 'react'
+import { FaAngleUp, FaAngleDown } from 'react-icons/fa'
 
 // Terminal aprimorado com mais linhas de código
 const CodeTerminal = () => {
@@ -13,7 +14,10 @@ const CodeTerminal = () => {
 const desenvolvedor = {
     nome: "Johnny",
     idade: 28,
-    funções: ["Desenvolvedor Fullstack", "Designer UX/UI"],
+    funções: [
+        "Desenvolvedor Fullstack",
+        "Designer UX/UI"
+    ],
     habilidades: {
         linguagens: ["TypeScript", "Python", "JavaScript"],
         frontend: ["React", "Next.js", "Angular", "Tailwind"],
@@ -32,7 +36,7 @@ const desenvolvedor = {
     }
 }
 
-desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
+desenvolvedor.criarCoisasIncríveis() // ✨`
 
   useEffect(() => {
     let currentIndex = 0
@@ -45,6 +49,10 @@ desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
         if (currentIndex < codeText.length) {
           setText(prev => prev + codeText[currentIndex])
           currentIndex++
+          
+          if (terminalRef.current) {
+            terminalRef.current.scrollTop = terminalRef.current.scrollHeight
+          }
         } else {
           clearInterval(typingInterval)
           setIsTyping(false)
@@ -63,7 +71,7 @@ desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
       clearInterval(typingInterval)
       clearInterval(cursorInterval)
     }
-  }, [codeText])
+  }, [])
 
   const handleRestart = () => {
     if (!isTyping) {
@@ -75,6 +83,10 @@ desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
         if (currentIndex < codeText.length) {
           setText(prev => prev + codeText[currentIndex])
           currentIndex++
+          
+          if (terminalRef.current) {
+            terminalRef.current.scrollTop = terminalRef.current.scrollHeight
+          }
         } else {
           clearInterval(typingInterval)
           setIsTyping(false)
@@ -86,16 +98,19 @@ desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
   return (
     <motion.div
       className="relative w-full mx-auto max-w-4xl -rotate-2"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ 
+        duration: 0.5,
+        ease: [0.23, 1, 0.32, 1] // Curva de animação suave
+      }}
     >
       <motion.div
         ref={terminalRef}
-        className="bg-white dark:bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all duration-300"
+        className="bg-white dark:bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden shadow-xl transform-gpu hover:shadow-2xl hover:scale-[1.01] transition-all duration-300"
       >
         {/* Barra de título do terminal */}
-        <div className="bg-white dark:bg-slate-700 px-4 py-3 flex items-center justify-between border-b-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30">
+        <div className="bg-gradient-to-r from-pastel-purple/20 to-pastel-pink/20 dark:from-dark-purple/20 dark:to-dark-pink/20 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
           <div className="flex items-center gap-2">
             <div className="flex gap-2">
               <div className="w-3 h-3 rounded-full bg-red-500/70" />
@@ -125,7 +140,7 @@ desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
           >
             <span className="text-pastel-pink dark:text-purple-400">$</span> node portfolio.js
           </motion.div>
-          <div className="mt-6 whitespace-pre-wrap break-words text-pastel-purple dark:text-emerald-300 max-w-full" style={{ tabSize: 4 }}>
+          <div className="mt-6 whitespace-pre text-pastel-purple dark:text-emerald-300 max-w-full" style={{ tabSize: 4 }}>
             {text}
             {showCursor && (
               <motion.span 
@@ -264,21 +279,21 @@ export function TerminalTitle({ title, isActive }: TerminalTitleProps) {
 
 export function HomeSection() {
   return (
-    <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-pastel-purple/5 to-white dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface">
+    <section id="inicio" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-pastel-purple/5 to-white dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface pt-16 lg:pt-48">
       {/* Elementos de fundo */}
       <FloatingClouds />
       <FloatingBubbles />
 
-      <div className="container mx-auto px-2 sm:px-4 relative z-10">
-        <div className="flex flex-col items-center justify-center min-h-screen pt-32 sm:pt-40 pb-20">
+      <div className="w-full h-full flex items-center justify-center relative z-10">
+        <div className="w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center min-h-screen">
           {/* Terminal Grande como foco principal */}
-          <div className="w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-[85vw] lg:max-w-5xl mt-16 sm:mt-20">
+          <div className="w-full max-w-[92vw] sm:max-w-[95vw] md:max-w-[90vw] lg:max-w-4xl mt-8 lg:mt-0 transform-gpu">
             <CodeTerminal />
           </div>
 
           {/* Scroll Indicator */}
           <motion.div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2"
+            className="fixed bottom-8 left-1/2 -translate-x-1/2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, y: [0, 10, 0] }}
             transition={{ 

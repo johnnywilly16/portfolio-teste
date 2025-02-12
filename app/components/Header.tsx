@@ -9,6 +9,7 @@ export function Header() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [activeSection, setActiveSection] = useState('inicio')
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -16,6 +17,9 @@ export function Header() {
     const handleScroll = () => {
       const sections = ['inicio', 'projetos', 'sobre', 'contato']
       const scrollPosition = window.scrollY + 100
+
+      // Atualiza o estado de scroll
+      setScrolled(window.scrollY > 50)
 
       sections.forEach(section => {
         const element = document.getElementById(section)
@@ -54,9 +58,13 @@ export function Header() {
         transition={{ duration: 0.5 }}
       >
         <div className="relative">
-          {/* Background com estilo cartoon mais divertido */}
+          {/* Background com efeito glassmorphism */}
           <motion.div 
-            className="absolute inset-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg rounded-[2rem] border-4 border-dashed border-pastel-purple/50 dark:border-neon-purple/50 shadow-lg"
+            className={`absolute inset-0 backdrop-blur-lg rounded-[2rem] border-4 border-dashed border-pastel-purple/50 dark:border-neon-purple/50 shadow-lg transition-all duration-300 ${
+              scrolled 
+                ? 'bg-white/40 dark:bg-slate-900/40' 
+                : 'bg-white/90 dark:bg-slate-900/90'
+            }`}
             animate={{
               rotate: [-0.5, 0.5, -0.5]
             }}
@@ -66,12 +74,16 @@ export function Header() {
               ease: "easeInOut"
             }}
           >
-            {/* Padrão de bolinhas animadas */}
+            {/* Padrão de bolinhas animadas com opacidade baseada no scroll */}
             <div className="absolute inset-0 overflow-hidden rounded-[2rem]">
               {[...Array(6)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-12 h-12 rounded-full bg-pastel-purple/30 dark:bg-neon-purple/20"
+                  className={`absolute w-12 h-12 rounded-full transition-all duration-300 ${
+                    scrolled
+                      ? 'bg-pastel-purple/10 dark:bg-neon-purple/10'
+                      : 'bg-pastel-purple/30 dark:bg-neon-purple/20'
+                  }`}
                   style={{
                     left: `${i * 20}%`,
                     top: Math.random() * 100 + '%'
@@ -79,7 +91,7 @@ export function Header() {
                   animate={{
                     y: [-20, 20, -20],
                     scale: [1, 1.2, 1],
-                    opacity: [0.5, 0.8, 0.5]
+                    opacity: scrolled ? [0.3, 0.5, 0.3] : [0.5, 0.8, 0.5]
                   }}
                   transition={{
                     duration: 3,
