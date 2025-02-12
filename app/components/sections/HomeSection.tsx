@@ -1,15 +1,14 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, useState } from 'react'
-import { FaExpandAlt, FaCompressAlt, FaAngleUp, FaAngleDown } from 'react-icons/fa'
+import { useEffect, useState, useMemo } from 'react'
+import { FaAngleUp, FaAngleDown } from 'react-icons/fa'
 
 // Terminal aprimorado com mais linhas de código
 const CodeTerminal = () => {
   const [text, setText] = useState('')
   const [isMinimized, setIsMinimized] = useState(false)
-  const [isMaximized, setIsMaximized] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(false)
   const [shouldRestart, setShouldRestart] = useState(false)
-  const codeLines = [
+  
+  const codeLines = useMemo(() => [
     'const desenvolvedor = {',
     '  nome: "Johnny",',
     '  idade: 28,',
@@ -36,7 +35,7 @@ const CodeTerminal = () => {
     '}',
     '',
     'desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨'
-  ]
+  ], [])
 
   useEffect(() => {
     let currentLine = 0
@@ -79,25 +78,23 @@ const CodeTerminal = () => {
   return (
     <motion.div
       className={`relative w-full mx-auto transform transition-all duration-300 ${
-        isMaximized ? 'max-w-none scale-100' : 
-        isExpanded ? 'max-w-4xl scale-100 rotate-0' : 
+        isMinimized ? 'max-w-none scale-100' : 
         'max-w-4xl -rotate-2'
       }`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
       style={{
-        position: isMaximized ? 'fixed' : 'relative',
-        inset: isMaximized ? '0' : 'auto',
-        margin: isMaximized ? '0' : 'auto',
-        zIndex: isMaximized ? 50 : 10,
+        position: isMinimized ? 'fixed' : 'relative',
+        inset: isMinimized ? '0' : 'auto',
+        margin: isMinimized ? '0' : 'auto',
+        zIndex: isMinimized ? 50 : 10,
       }}
     >
       <AnimatePresence>
         <motion.div
           className={`bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden shadow-2xl transition-all duration-300 ${
-            isMaximized ? 'rounded-none' : 
-            isExpanded ? 'shadow-2xl scale-[1.02]' : 
+            isMinimized ? 'rounded-none' : 
             'shadow-xl hover:shadow-2xl hover:scale-[1.01]'
           }`}
           animate={{
@@ -202,7 +199,7 @@ const CodeTerminal = () => {
       </AnimatePresence>
 
       {/* Elementos decorativos ao redor do terminal */}
-      {!isMaximized && !isMinimized && !isExpanded && (
+      {!isMinimized && (
         <>
           <motion.div
             className="absolute -bottom-4 sm:-bottom-8 -left-4 sm:-left-8 text-2xl sm:text-4xl lg:text-6xl"
