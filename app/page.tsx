@@ -13,75 +13,6 @@ import { Footer } from './components/Footer'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      type: "spring",
-      bounce: 0.4,
-      duration: 0.8
-    }
-  }
-}
-
-const logoVariants = {
-  initial: {
-    scale: 1,
-    opacity: 1,
-    y: 0
-  },
-  animate: {
-    scale: [1, 1.2, 30],
-    opacity: [1, 1, 0],
-    y: [0, -20, 0],
-    transition: {
-      duration: 2,
-      times: [0, 0.3, 1],
-      ease: "easeInOut"
-    }
-  }
-}
-
-const glowVariants = {
-  initial: {
-    opacity: 0,
-    scale: 1
-  },
-  animate: {
-    opacity: [0, 1, 0.5, 0],
-    scale: [1, 1.2, 1.5, 30],
-    transition: {
-      duration: 2,
-      ease: "easeInOut"
-    }
-  }
-}
-
-const overlayVariants = {
-  initial: {
-    opacity: 1
-  },
-  animate: {
-    opacity: 0,
-    transition: {
-      duration: 0.5,
-      delay: 1.5
-    }
-  }
-}
-
 const projects = [
   {
     title: 'Sistema de E-commerce',
@@ -108,17 +39,6 @@ const projects = [
     category: 'Mobile'
   }
 ]
-
-const particleVariants = {
-  initial: {
-    opacity: 0,
-    scale: 0,
-  },
-  animate: {
-    opacity: 1,
-    scale: 1,
-  },
-}
 
 export default function Home() {
   const backgroundParticlesRef = useRef<HTMLDivElement>(null)
@@ -256,7 +176,7 @@ export default function Home() {
               <div 
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
               >
-                {projects.map((project, index) => (
+                {projects.map((project) => (
                   <motion.div
                     key={project.title}
                     className="project-card card bg-white/80 dark:bg-dark-surface/80 shadow-xl group hover:shadow-2xl transition-all duration-300 backdrop-blur-sm"
@@ -379,7 +299,7 @@ export default function Home() {
                   <FaGithub className="ml-2 text-lg" />
                 </motion.a>
               </motion.div>
-    </div>
+            </div>
           </motion.div>
         </section>
       </main>
