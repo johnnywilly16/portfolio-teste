@@ -198,7 +198,7 @@ export function AboutSection() {
             </div>
 
             <p>$ cat ./experiencia.json</p>
-            <pre className="pl-4 mt-2 border-l-2 border-emerald-500/20">
+            <pre className="pl-4 mt-2 border-l-2 border-emerald-500/20 overflow-x-auto scrollbar-thin scrollbar-thumb-emerald-500/20 scrollbar-track-transparent">
 {`{
   "experiencias": [
 ${experiences.map(exp => `    {
@@ -228,7 +228,7 @@ ${experiences.map(exp => `    {
           <Terminal title="certificados@portfolio:~">
             <div className="text-emerald-400/90 dark:text-emerald-300/90">
               <p>$ ls ./certificacoes</p>
-              <div className="pl-4 mt-2 border-l-2 border-emerald-500/20">
+              <div className="pl-4 mt-2 border-l-2 border-emerald-500/20 overflow-x-auto scrollbar-thin scrollbar-thumb-emerald-500/20 scrollbar-track-transparent">
                 <p>🏆 AWS Certified Developer Associate</p>
                 <p>🏆 MongoDB Certified Developer</p>
                 <p>🏆 React Advanced Patterns</p>

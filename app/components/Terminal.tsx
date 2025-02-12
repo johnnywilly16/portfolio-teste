@@ -24,12 +24,10 @@ export function Terminal({
   showEmoji
 }: TerminalProps) {
   const [isMinimized, setIsMinimized] = useState(defaultMinimized)
-  const [isMaximized, setIsMaximized] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(false)
 
   return (
     <motion.div
-      className={`relative w-full transform transition-all duration-300 ${className}`}
+      className={`relative w-full transform transition-all duration-300 overflow-hidden ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -39,6 +37,9 @@ export function Terminal({
         animate={{
           height: isMinimized ? '3rem' : 'auto',
           rotate: [-0.5, 0.5, -0.5]
+        }}
+        style={{
+          transformOrigin: 'center center'
         }}
         transition={{
           duration: 5,
@@ -84,20 +85,8 @@ export function Terminal({
                   setIsMinimized(!isMinimized)
                 }}
               />
-              <button
-                className="w-3 h-3 rounded-full bg-[#EED49F] hover:bg-[#EED49F]/80 transition-colors cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setIsMaximized(!isMaximized)
-                }}
-              />
-              <button
-                className="w-3 h-3 rounded-full bg-[#A6DA95] hover:bg-[#A6DA95]/80 transition-colors cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setIsExpanded(!isExpanded)
-                }}
-              />
+              <div className="w-3 h-3 rounded-full bg-[#EED49F]" />
+              <div className="w-3 h-3 rounded-full bg-[#A6DA95]" />
             </div>
             <span className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm font-mono ml-2">
               {showEmoji && <span className="mr-2">{showEmoji}</span>}
@@ -108,7 +97,7 @@ export function Terminal({
             {showRestart && (
               <button
                 onClick={onRestart}
-                className="text-slate-600 dark:text-slate-300 hover:text-pastel-purple dark:hover:text-neon-purple transition-colors p-1 cursor-pointer"
+                className="text-slate-600 dark:text-slate-300 hover:text-pastel-purple dark:hover:text-neon-purple transition-colors p-1 cursor-pointer hidden sm:block"
                 title="Recomeçar animação"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -121,7 +110,7 @@ export function Terminal({
                 e.stopPropagation()
                 setIsMinimized(!isMinimized)
               }}
-              className="text-slate-600 dark:text-slate-300 hover:text-pastel-purple dark:hover:text-neon-purple transition-colors p-1 cursor-pointer"
+              className="text-slate-600 dark:text-slate-300 hover:text-pastel-purple dark:hover:text-neon-purple transition-colors p-1 cursor-pointer hidden sm:block"
               title={isMinimized ? "Expandir" : "Minimizar"}
             >
               {isMinimized ? <FaAngleUp size={12} /> : <FaAngleDown size={12} />}
@@ -137,9 +126,9 @@ export function Terminal({
             opacity: isMinimized ? 0 : 1
           }}
         >
-          <div className="p-6 sm:p-10 font-mono text-xs sm:text-sm md:text-base overflow-x-auto relative bg-white/80 dark:bg-slate-900/80">
+          <div className="p-4 sm:p-6 lg:p-10 font-mono text-xs sm:text-sm md:text-base relative bg-white/80 dark:bg-slate-900/80 break-words">
             <motion.div
-              className="text-slate-700 dark:text-slate-300"
+              className="text-slate-700 dark:text-slate-300 break-all whitespace-normal"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -150,18 +139,24 @@ export function Terminal({
       </motion.div>
 
       {/* Elementos decorativos ao redor do terminal */}
-      {!isMaximized && !isMinimized && !isExpanded && showEmoji && (
+      {!isMinimized && showEmoji && (
         <>
           <motion.div
-            className="absolute -bottom-4 sm:-bottom-8 -left-4 sm:-left-8 text-2xl sm:text-4xl lg:text-6xl"
-            animate={{ rotate: [-10, 10], scale: [1, 1.1, 1] }}
+            className="absolute bottom-0 left-0 sm:-bottom-8 sm:-left-8 text-2xl sm:text-4xl lg:text-6xl"
+            animate={{ rotate: [-5, 5], scale: [1, 1.1, 1] }}
+            style={{
+              transformOrigin: 'center center'
+            }}
             transition={{ duration: 3, repeat: Infinity }}
           >
             {showEmoji}
           </motion.div>
           <motion.div
-            className="absolute -top-4 sm:-top-8 -right-4 sm:-right-8 text-2xl sm:text-4xl lg:text-6xl"
-            animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
+            className="absolute top-0 right-0 sm:-top-8 sm:-right-8 text-2xl sm:text-4xl lg:text-6xl"
+            animate={{ rotate: [0, 180], scale: [1, 1.2, 1] }}
+            style={{
+              transformOrigin: 'center center'
+            }}
             transition={{ duration: 6, repeat: Infinity }}
           >
             ✨
