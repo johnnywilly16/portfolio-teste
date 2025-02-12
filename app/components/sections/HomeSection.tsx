@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, useState, useMemo, useRef } from 'react'
-import { FaAngleUp, FaAngleDown } from 'react-icons/fa'
+import { useEffect, useState, useRef } from 'react'
 
 // Terminal aprimorado com mais linhas de código
 const CodeTerminal = () => {
@@ -71,7 +70,7 @@ desenvolvedor.criarCoisasIncríveis() // ✨`
       clearInterval(typingInterval)
       clearInterval(cursorInterval)
     }
-  }, [])
+  }, [codeText])
 
   const handleRestart = () => {
     if (!isTyping) {
