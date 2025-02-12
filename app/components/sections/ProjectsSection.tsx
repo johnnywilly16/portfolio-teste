@@ -1,13 +1,35 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { FaGithub, FaExternalLinkAlt, FaAngleDown, FaAngleUp } from 'react-icons/fa'
-import { SiAngular } from 'react-icons/si'
+import { 
+  SiNextdotjs, 
+  SiNodedotjs, 
+  SiPostgresql, 
+  SiStripe, 
+  SiReact, 
+  SiExpress, 
+  SiMongodb, 
+  SiFirebase, 
+  SiTypescript, 
+  SiAngular,
+  SiD3Dotjs
+} from 'react-icons/si'
+
+interface Technology {
+  name: string
+  icon: React.ComponentType<{ className?: string }>
+}
 
 const projects = [
   {
     title: 'Sistema de E-commerce',
     description: 'Plataforma completa de e-commerce com integração de pagamentos, gestão de estoque e painel administrativo.',
-    technologies: ['Next.js', 'Node.js', 'PostgreSQL', 'Stripe'],
+    technologies: [
+      { name: 'Next.js', icon: SiNextdotjs },
+      { name: 'Node.js', icon: SiNodedotjs },
+      { name: 'PostgreSQL', icon: SiPostgresql },
+      { name: 'Stripe', icon: SiStripe }
+    ],
     projectUrl: 'https://ecommerce-demo.com',
     githubUrl: 'https://github.com/johnnywilly/ecommerce',
     category: 'Fullstack',
@@ -16,7 +38,12 @@ const projects = [
   {
     title: 'Dashboard Analytics',
     description: 'Dashboard interativo para análise de dados em tempo real com gráficos e relatórios personalizados.',
-    technologies: ['React', 'D3.js', 'Express', 'MongoDB'],
+    technologies: [
+      { name: 'React', icon: SiReact },
+      { name: 'D3.js', icon: SiD3Dotjs },
+      { name: 'Express', icon: SiExpress },
+      { name: 'MongoDB', icon: SiMongodb }
+    ],
     projectUrl: 'https://dashboard-demo.com',
     githubUrl: 'https://github.com/johnnywilly/dashboard',
     category: 'Frontend',
@@ -25,7 +52,11 @@ const projects = [
   {
     title: 'App de Gestão de Tarefas',
     description: 'Aplicativo mobile-first para gestão de tarefas e projetos com funcionalidades colaborativas.',
-    technologies: ['React Native', 'Firebase', 'TypeScript'],
+    technologies: [
+      { name: 'React Native', icon: SiReact },
+      { name: 'Firebase', icon: SiFirebase },
+      { name: 'TypeScript', icon: SiTypescript }
+    ],
     projectUrl: 'https://tasks-demo.com',
     githubUrl: 'https://github.com/johnnywilly/tasks',
     category: 'Mobile',
@@ -34,12 +65,16 @@ const projects = [
   {
     title: 'Sistema de Gestão de Clientes',
     description: 'Aplicação web moderna para gestão de clientes, contratos e atendimentos com dashboard em tempo real.',
-    technologies: ['Angular', 'TypeScript', 'NestJS', 'PostgreSQL'],
+    technologies: [
+      { name: 'Angular', icon: SiAngular },
+      { name: 'TypeScript', icon: SiTypescript },
+      { name: 'Node.js', icon: SiNodedotjs },
+      { name: 'PostgreSQL', icon: SiPostgresql }
+    ],
     projectUrl: 'https://crm-demo.com',
     githubUrl: 'https://github.com/johnnywilly/crm',
     category: 'Fullstack',
-    emoji: '👥',
-    icon: SiAngular
+    emoji: '👥'
   }
 ]
 
@@ -151,12 +186,12 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
             <div className="flex flex-wrap gap-2">
               {project.technologies.map((tech) => (
                 <motion.span
-                  key={tech}
+                  key={tech.name}
                   className="px-4 py-2 rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple font-cartoon text-sm border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 flex items-center gap-2"
                   whileHover={{ scale: 1.1 }}
                 >
-                  {tech === 'Angular' && project.icon && <project.icon className="w-4 h-4 text-[#DD0031]" />}
-                  {tech}
+                  <tech.icon className="w-4 h-4" />
+                  {tech.name}
                 </motion.span>
               ))}
             </div>
