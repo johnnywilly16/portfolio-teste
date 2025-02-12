@@ -5,60 +5,157 @@ import {
   SiGit, SiAmazonwebservices, SiFirebase, SiPrisma
 } from 'react-icons/si'
 
-const frontendTechs = [
-  { icon: SiReact, name: 'React' },
-  { icon: SiNextdotjs, name: 'Next.js' },
-  { icon: SiTypescript, name: 'TypeScript' },
-  { icon: SiTailwindcss, name: 'Tailwind' }
-]
+// Componente de bolhas flutuantes
+const FloatingBubbles = ({ color }: { color: string }) => (
+  <div className="absolute inset-0 overflow-hidden">
+    {[...Array(6)].map((_, i) => (
+      <motion.div
+        key={i}
+        className="absolute rounded-full"
+        style={{
+          background: `radial-gradient(circle at 30% 30%, ${color}, transparent)`,
+          width: `${Math.random() * 100 + 50}px`,
+          height: `${Math.random() * 100 + 50}px`,
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+        }}
+        initial={{ opacity: 0.3, scale: 0.8 }}
+        animate={{
+          y: [-20, 20],
+          x: [-10, 10],
+          scale: [0.8, 1.2],
+          opacity: [0.3, 0.6],
+        }}
+        transition={{
+          duration: Math.random() * 3 + 2,
+          repeat: Infinity,
+          repeatType: "reverse",
+          delay: i * 0.3,
+        }}
+      />
+    ))}
+  </div>
+)
 
-const backendTechs = [
-  { icon: SiNodedotjs, name: 'Node.js' },
-  { icon: SiPostgresql, name: 'PostgreSQL' },
-  { icon: SiMongodb, name: 'MongoDB' },
-  { icon: SiDocker, name: 'Docker' },
-  { icon: SiGit, name: 'Git' },
-  { icon: SiAmazonwebservices, name: 'AWS' },
-  { icon: SiFirebase, name: 'Firebase' },
-  { icon: SiPrisma, name: 'Prisma' }
-]
+// Componente de estrelas decorativas
+const Stars = () => (
+  <>
+    {[...Array(15)].map((_, i) => (
+      <motion.div
+        key={i}
+        className="absolute text-yellow-300/30 dark:text-yellow-300/20"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          fontSize: `${Math.random() * 20 + 10}px`,
+        }}
+        initial={{ opacity: 0.2, scale: 0.8 }}
+        animate={{
+          scale: [0.8, 1.2, 0.8],
+          opacity: [0.2, 0.5, 0.2],
+          rotate: [0, 360],
+        }}
+        transition={{
+          duration: Math.random() * 3 + 2,
+          repeat: Infinity,
+          delay: i * 0.2,
+        }}
+      >
+        ✨
+      </motion.div>
+    ))}
+  </>
+)
 
-// Componente de giz flutuante
-const FloatingChalk = ({ delay = 0, top, left }: { delay: number, top: string, left: string }) => (
+// Componente de nuvem de pensamento
+const ThoughtCloud = ({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) => (
   <motion.div
-    className="absolute text-white/30 text-2xl"
-    style={{ top, left }}
-    initial={{ opacity: 0.3, scale: 0.5 }}
-    animate={{ 
-      opacity: [0.3, 0.6, 0.3],
-      scale: [0.8, 1, 0.8],
-      x: [-10, 10, -10]
-    }}
-    transition={{
-      duration: 3,
-      delay,
-      repeat: Infinity,
-      ease: "easeInOut"
-    }}
+    className="relative"
+    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay, duration: 0.5 }}
   >
-    ✎
+    <motion.div
+      className="absolute inset-0 bg-white/90 dark:bg-dark-surface/90 rounded-2xl sm:rounded-[3rem] transform rotate-2"
+      animate={{ rotate: [2, -2, 2] }}
+      transition={{ duration: 6, repeat: Infinity }}
+    />
+    <div className="relative bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md rounded-xl sm:rounded-[2.5rem] p-4 sm:p-6 border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30">
+      {children}
+    </div>
+  </motion.div>
+)
+
+// Componente de ícone de tecnologia flutuante
+const FloatingTechIcon = ({ 
+  Icon, 
+  name, 
+  delay = 0 
+}: { 
+  Icon: any, 
+  name: string, 
+  delay?: number 
+}) => (
+  <motion.div
+    className="group relative flex flex-col items-center justify-center gap-2"
+    initial={{ opacity: 0, scale: 0 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ delay }}
+  >
+    <motion.div
+      className="relative p-3 sm:p-4 bg-white/90 dark:bg-dark-surface/90 rounded-xl border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 group-hover:border-pastel-pink/50 dark:group-hover:border-dark-pink/50 transition-all duration-300"
+      whileHover={{ scale: 1.1, rotate: [-5, 5, 0], transition: { duration: 0.3 } }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-pastel-purple/20 to-pastel-pink/20 dark:from-dark-purple/20 dark:to-dark-pink/20 rounded-xl blur-xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.5, 0.8, 0.5]
+        }}
+        transition={{ duration: 2, repeat: Infinity }}
+      />
+      
+      <div className="relative">
+        <Icon className="text-2xl sm:text-3xl text-pastel-purple dark:text-dark-purple" />
+        <motion.div
+          className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          animate={{ rotate: [0, 360] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        >
+          ✨
+        </motion.div>
+      </div>
+    </motion.div>
+
+    <motion.span
+      className="text-xs sm:text-sm font-cartoon text-pastel-purple dark:text-dark-purple opacity-80 group-hover:opacity-100 transition-opacity duration-300 text-center min-h-[1.5rem]"
+      initial={{ opacity: 0.8 }}
+      whileHover={{ opacity: 1 }}
+    >
+      {name}
+    </motion.span>
   </motion.div>
 )
 
 export function AboutSection() {
   return (
-    <section id="sobre" className="min-h-screen py-20 bg-gradient-to-b from-white/80 to-pastel-purple/5 dark:from-dark-surface/80 dark:to-dark-purple/5 backdrop-blur-sm relative z-10">
-      <div className="container mx-auto px-4">
+    <section id="sobre" className="min-h-screen py-12 sm:py-20 bg-gradient-to-br from-white via-pastel-purple/5 to-white dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface backdrop-blur-sm relative z-10 overflow-hidden">
+      {/* Background com estrelas */}
+      <Stars />
+      
+      <div className="container mx-auto px-4 sm:px-6">
         {/* Título */}
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-16"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
           <motion.h2 
-            className="text-6xl font-cartoon font-bold relative inline-block px-12 py-6"
+            className="text-4xl sm:text-6xl font-cartoon font-bold relative inline-block px-6 sm:px-12 py-4 sm:py-6"
             whileHover={{ scale: 1.02 }}
           >
             <motion.span 
@@ -74,198 +171,285 @@ export function AboutSection() {
             >
               Sobre Mim
             </motion.span>
-            {/* Estrelinhas decorativas */}
+            
+            {/* Decorações do título */}
             <motion.div
-              className="absolute -top-8 -right-8 text-3xl text-pastel-yellow dark:text-dark-yellow"
-              animate={{ rotate: 360, scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute -top-8 -right-8 text-4xl"
+              animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
+              transition={{ duration: 5, repeat: Infinity }}
             >
-              ✨
+              🌟
             </motion.div>
             <motion.div
-              className="absolute -bottom-6 -left-6 text-3xl text-pastel-pink dark:text-dark-pink transform -rotate-12"
-              animate={{ rotate: [-12, 12, -12] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute -bottom-8 -left-8 text-4xl"
+              animate={{ rotate: [-10, 10], scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity }}
             >
-              ⭐
+              ✨
             </motion.div>
           </motion.h2>
         </motion.div>
 
-        {/* Conteúdo */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Bio animada */}
-          <motion.div
-            className="space-y-6"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.div 
-              className="bg-white/90 dark:bg-dark-surface/90 backdrop-blur-md rounded-3xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 p-8 relative overflow-hidden group"
-              whileHover={{ scale: 1.02 }}
-            >
-              {/* Efeito de brilho no hover */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-1000"
-              />
-
-              {/* Emoji decorativo */}
-              <motion.div
-                className="absolute -top-2 -right-2 text-4xl"
-                animate={{ 
-                  rotate: [-10, 10, -10],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                👨‍💻
-              </motion.div>
-
-              <div className="space-y-4">
-                <motion.p 
-                  className="text-lg text-slate-600 dark:text-slate-300 font-cartoon leading-relaxed"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
+        {/* Conteúdo Principal */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-12">
+          {/* Coluna da Bio */}
+          <div className="space-y-6 sm:space-y-8">
+            {/* Card do Desenvolvedor */}
+            <ThoughtCloud delay={0.2}>
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-4 sm:mb-6">
+                <motion.div
+                  className="relative text-4xl sm:text-6xl"
+                  animate={{ 
+                    rotate: [-10, 10],
+                    y: [-5, 5]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
                 >
-                  Olá! Sou um desenvolvedor fullstack apaixonado por criar experiências digitais incríveis. Com mais de 5 anos de experiência, tenho trabalhado com as tecnologias mais modernas do mercado.
-                </motion.p>
-                <motion.p 
-                  className="text-lg text-slate-600 dark:text-slate-300 font-cartoon leading-relaxed"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
-                >
-                  Minha jornada inclui projetos desafiadores em diversas áreas, desde e-commerce até aplicativos mobile. Estou sempre em busca de novos desafios e aprendizados.
-                </motion.p>
-              </div>
-
-              {/* Decorações flutuantes */}
-              <motion.div
-                className="absolute bottom-4 right-4 text-2xl"
-                animate={{ 
-                  y: [-5, 5, -5],
-                  rotate: [-10, 10, -10]
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                🚀
-              </motion.div>
-            </motion.div>
-          </motion.div>
-
-          {/* Quadro negro com tecnologias */}
-          <motion.div
-            className="space-y-6"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Quadro Frontend */}
-            <motion.div
-              className="bg-slate-800 backdrop-blur-md rounded-3xl border-8 border-slate-700 p-8 relative overflow-hidden shadow-xl"
-              whileHover={{ scale: 1.02 }}
-            >
-              {/* Título do quadro */}
-              <motion.h3 
-                className="text-2xl font-cartoon font-bold text-white mb-8 relative inline-block"
-                animate={{ x: [-2, 2, -2] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                Frontend
-                <motion.span
-                  className="absolute -top-4 -right-4 text-2xl"
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 20, repeat: Infinity }}
-                >
-                  💻
-                </motion.span>
-              </motion.h3>
-
-              {/* Grid de ícones */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
-                {frontendTechs.map((tech, index) => (
+                  👨‍💻
                   <motion.div
-                    key={tech.name}
-                    className="flex flex-col items-center gap-2"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.1, rotate: [-5, 5, -5] }}
+                    className="absolute -top-2 -right-2 text-xl sm:text-2xl"
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      rotate: [0, 360]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
                   >
-                    <tech.icon className="text-4xl text-white/90" />
-                    <span className="text-sm text-white/70 font-cartoon">{tech.name}</span>
+                    ✨
+                  </motion.div>
+                </motion.div>
+                <div className="text-center sm:text-left">
+                  <h3 className="text-xl sm:text-2xl font-cartoon font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text">
+                    Desenvolvedor Fullstack
+                  </h3>
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+                    +5 anos de experiência
+                  </p>
+                </div>
+              </div>
+              <motion.p 
+                className="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-cartoon leading-relaxed text-center sm:text-left"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+              >
+                Olá! Sou um desenvolvedor apaixonado por criar experiências digitais incríveis. 
+                Minha jornada na programação começou com muita curiosidade e hoje se transformou em uma verdadeira aventura! 🚀
+              </motion.p>
+            </ThoughtCloud>
+
+            {/* Card de Interesses */}
+            <ThoughtCloud delay={0.4}>
+              <div className="flex items-center gap-6 mb-6">
+                <motion.div
+                  className="relative text-6xl"
+                  animate={{ 
+                    rotate: [10, -10],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  🎮
+                  <motion.div
+                    className="absolute -top-2 -right-2 text-2xl"
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      rotate: [0, 360]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    ✨
+                  </motion.div>
+                </motion.div>
+                <h3 className="text-2xl font-cartoon font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text">
+                  Interesses
+                </h3>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { emoji: "🎮", text: "Games" },
+                  { emoji: "🎵", text: "Música" },
+                  { emoji: "📚", text: "Livros" },
+                  { emoji: "✈️", text: "Viagens" }
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    className="flex items-center gap-3 bg-pastel-purple/10 dark:bg-dark-purple/10 rounded-xl p-3"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <motion.span
+                      animate={{ 
+                        rotate: [-10, 10],
+                        scale: [1, 1.1, 1]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      {item.emoji}
+                    </motion.span>
+                    <span className="font-cartoon text-slate-600 dark:text-slate-300">
+                      {item.text}
+                    </span>
                   </motion.div>
                 ))}
               </div>
+            </ThoughtCloud>
 
-              {/* Efeito de giz */}
-              {[...Array(3)].map((_, i) => (
-                <FloatingChalk
-                  key={i}
-                  delay={i * 0.5}
-                  top={`${20 + i * 30}%`}
-                  left={`${10 + i * 40}%`}
-                />
-              ))}
-            </motion.div>
-
-            {/* Quadro Backend */}
-            <motion.div
-              className="bg-slate-800 backdrop-blur-md rounded-3xl border-8 border-slate-700 p-8 relative overflow-hidden shadow-xl"
-              whileHover={{ scale: 1.02 }}
-            >
-              {/* Título do quadro */}
-              <motion.h3 
-                className="text-2xl font-cartoon font-bold text-white mb-8 relative inline-block"
-                animate={{ x: [-2, 2, -2] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                Backend
-                <motion.span
-                  className="absolute -top-4 -right-4 text-2xl"
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 20, repeat: Infinity }}
+            {/* Card de Objetivos */}
+            <ThoughtCloud delay={0.6}>
+              <div className="flex items-center gap-6 mb-6">
+                <motion.div
+                  className="relative text-6xl"
+                  animate={{ 
+                    y: [-5, 5],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
                 >
-                  ⚙️
-                </motion.span>
-              </motion.h3>
-
-              {/* Grid de ícones */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
-                {backendTechs.map((tech, index) => (
+                  🎯
                   <motion.div
-                    key={tech.name}
-                    className="flex flex-col items-center gap-2"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.1, rotate: [-5, 5, -5] }}
+                    className="absolute -top-2 -right-2 text-2xl"
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      rotate: [0, 360]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
                   >
-                    <tech.icon className="text-4xl text-white/90" />
-                    <span className="text-sm text-white/70 font-cartoon">{tech.name}</span>
+                    ✨
                   </motion.div>
-                ))}
+                </motion.div>
+                <h3 className="text-2xl font-cartoon font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text">
+                  Objetivos
+                </h3>
               </div>
+              <ul className="space-y-4">
+                {[
+                  { text: "Criar soluções inovadoras", emoji: "💡" },
+                  { text: "Aprender novas tecnologias", emoji: "📚" },
+                  { text: "Contribuir com a comunidade", emoji: "🤝" }
+                ].map((item, index) => (
+                  <motion.li
+                    key={index}
+                    className="flex items-center gap-3"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.2 }}
+                  >
+                    <motion.span
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        rotate: [-10, 10]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      {item.emoji}
+                    </motion.span>
+                    <span className="font-cartoon text-slate-600 dark:text-slate-300">
+                      {item.text}
+                    </span>
+                  </motion.li>
+                ))}
+              </ul>
+            </ThoughtCloud>
+          </div>
 
-              {/* Efeito de giz */}
-              {[...Array(3)].map((_, i) => (
-                <FloatingChalk
-                  key={i}
-                  delay={i * 0.5}
-                  top={`${20 + i * 30}%`}
-                  left={`${10 + i * 40}%`}
-                />
-              ))}
+          {/* Coluna de Tecnologias */}
+          <div className="space-y-6 sm:space-y-8">
+            {/* Frontend */}
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="bg-gradient-to-br from-pastel-purple/10 to-pastel-pink/10 dark:from-dark-purple/10 dark:to-dark-pink/10 backdrop-blur-md rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30">
+                <FloatingBubbles color="rgba(179, 157, 219, 0.1)" />
+                
+                <div className="relative">
+                  <motion.h3 
+                    className="text-2xl sm:text-3xl font-cartoon font-bold mb-6 sm:mb-8 bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text flex items-center gap-4"
+                    animate={{ x: [-2, 2] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <span>Frontend</span>
+                    <motion.span
+                      className="text-4xl"
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 20, repeat: Infinity }}
+                    >
+                      💻
+                    </motion.span>
+                  </motion.h3>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8">
+                    {[
+                      { icon: SiReact, name: 'React' },
+                      { icon: SiNextdotjs, name: 'Next.js' },
+                      { icon: SiTypescript, name: 'TypeScript' },
+                      { icon: SiTailwindcss, name: 'Tailwind' }
+                    ].map((tech, index) => (
+                      <FloatingTechIcon
+                        key={tech.name}
+                        Icon={tech.icon}
+                        name={tech.name}
+                        delay={index * 0.1}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </motion.div>
-          </motion.div>
+
+            {/* Backend */}
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="bg-gradient-to-br from-pastel-purple/10 to-pastel-pink/10 dark:from-dark-purple/10 dark:to-dark-pink/10 backdrop-blur-md rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30">
+                <FloatingBubbles color="rgba(179, 157, 219, 0.1)" />
+                
+                <div className="relative">
+                  <motion.h3 
+                    className="text-2xl sm:text-3xl font-cartoon font-bold mb-6 sm:mb-8 bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text flex items-center gap-4"
+                    animate={{ x: [-2, 2] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <span>Backend</span>
+                    <motion.span
+                      className="text-4xl"
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 20, repeat: Infinity }}
+                    >
+                      ⚙️
+                    </motion.span>
+                  </motion.h3>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8">
+                    {[
+                      { icon: SiNodedotjs, name: 'Node.js' },
+                      { icon: SiPostgresql, name: 'PostgreSQL' },
+                      { icon: SiMongodb, name: 'MongoDB' },
+                      { icon: SiDocker, name: 'Docker' },
+                      { icon: SiGit, name: 'Git' },
+                      { icon: SiAmazonwebservices, name: 'AWS' },
+                      { icon: SiFirebase, name: 'Firebase' },
+                      { icon: SiPrisma, name: 'Prisma' }
+                    ].map((tech, index) => (
+                      <FloatingTechIcon
+                        key={tech.name}
+                        Icon={tech.icon}
+                        name={tech.name}
+                        delay={index * 0.1}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
