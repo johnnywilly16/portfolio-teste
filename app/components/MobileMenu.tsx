@@ -8,6 +8,7 @@ import { useState } from 'react'
 export function MobileMenu() {
   const { theme, setTheme } = useTheme()
   const [isOpen, setIsOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('inicio')
 
   const menuVariants = {
     closed: {
@@ -34,6 +35,19 @@ export function MobileMenu() {
   const itemVariants = {
     closed: { y: 20, opacity: 0 },
     open: { y: 0, opacity: 1 }
+  }
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      const offsetTop = element.offsetTop
+      window.scrollTo({
+        top: offsetTop - 100,
+        behavior: 'smooth'
+      })
+      setActiveSection(sectionId)
+      setIsOpen(false)
+    }
   }
 
   return (
@@ -102,23 +116,93 @@ export function MobileMenu() {
           variants={menuVariants}
         >
           {/* Links de navegação em grid */}
-          <motion.nav className="grid grid-cols-2 gap-4 mb-6">
-            {['Início', 'Projetos', 'Sobre', 'Contato'].map((item) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="relative p-4 text-center font-cartoon font-bold text-pastel-purple dark:text-dark-purple hover:text-pastel-pink dark:hover:text-dark-pink transition-colors bg-white/50 dark:bg-dark-surface/50 rounded-xl border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30"
+          <motion.nav className="grid grid-cols-1 gap-4 mb-6">
+            {[
+              { id: 'inicio', label: 'Início' },
+              { id: 'projetos', label: 'Projetos' },
+              { id: 'sobre', label: 'Sobre' },
+              { id: 'contato', label: 'Contato' }
+            ].map((item) => (
+              <motion.button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="relative"
                 variants={itemVariants}
-                onClick={() => setIsOpen(false)}
-                whileHover={{ 
-                  scale: 1.05,
-                  y: -5,
-                  transition: { duration: 0.2 }
-                }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {item}
-              </motion.a>
+                <motion.div 
+                  className={`relative overflow-hidden rounded-xl transition-all duration-500 ${
+                    activeSection === item.id 
+                      ? 'bg-white dark:bg-slate-800 border-2 border-pastel-purple dark:border-dark-purple shadow-lg' 
+                      : 'border-2 border-transparent'
+                  }`}
+                  layout
+                >
+                  {/* Barra de título do terminal */}
+                  {activeSection === item.id && (
+                    <motion.div 
+                      className="absolute top-0 left-0 right-0 h-2 bg-slate-100 dark:bg-slate-700 flex items-center px-1"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <div className="flex gap-1">
+                        <div className="w-1 h-1 rounded-full bg-red-500" />
+                        <div className="w-1 h-1 rounded-full bg-yellow-500" />
+                        <div className="w-1 h-1 rounded-full bg-green-500" />
+                      </div>
+                    </motion.div>
+                  )}
+                  
+                  {/* Texto do menu */}
+                  <motion.div 
+                    className={`relative z-10 px-4 py-3 flex items-center justify-between ${
+                      activeSection === item.id 
+                        ? 'text-pastel-purple dark:text-emerald-400' 
+                        : 'text-pastel-purple/70 dark:text-dark-purple/70'
+                    }`}
+                    layout
+                  >
+                    <span className="flex items-center gap-2 font-bold">
+                      {activeSection === item.id && (
+                        <motion.span 
+                          className="text-pastel-purple dark:text-purple-400"
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          $
+                        </motion.span>
+                      )}
+                      {item.label}
+                    </span>
+
+                    {/* Cursor piscante */}
+                    {activeSection === item.id && (
+                      <motion.div
+                        className="w-1.5 h-4 bg-pastel-purple dark:bg-emerald-400"
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: [1, 0], scale: 1 }}
+                        transition={{ 
+                          opacity: { duration: 0.8, repeat: Infinity },
+                          scale: { duration: 0.2 }
+                        }}
+                      />
+                    )}
+                  </motion.div>
+
+                  {/* Efeito de brilho */}
+                  {activeSection === item.id && (
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-pastel-purple/10 to-pastel-pink/10 dark:from-dark-purple/10 dark:to-dark-pink/10"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: [0.5, 0.8, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  )}
+                </motion.div>
+              </motion.button>
             ))}
           </motion.nav>
 

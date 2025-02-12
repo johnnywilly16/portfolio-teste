@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { FaGithub, FaExternalLinkAlt, FaAngleDown, FaAngleUp } from 'react-icons/fa'
+import { SiAngular } from 'react-icons/si'
 
 const projects = [
   {
@@ -29,6 +30,16 @@ const projects = [
     githubUrl: 'https://github.com/johnnywilly/tasks',
     category: 'Mobile',
     emoji: '📱'
+  },
+  {
+    title: 'Sistema de Gestão de Clientes',
+    description: 'Aplicação web moderna para gestão de clientes, contratos e atendimentos com dashboard em tempo real.',
+    technologies: ['Angular', 'TypeScript', 'NestJS', 'PostgreSQL'],
+    projectUrl: 'https://crm-demo.com',
+    githubUrl: 'https://github.com/johnnywilly/crm',
+    category: 'Fullstack',
+    emoji: '👥',
+    icon: SiAngular
   }
 ]
 
@@ -141,9 +152,10 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
               {project.technologies.map((tech) => (
                 <motion.span
                   key={tech}
-                  className="px-4 py-2 rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple font-cartoon text-sm border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30"
+                  className="px-4 py-2 rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple font-cartoon text-sm border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 flex items-center gap-2"
                   whileHover={{ scale: 1.1 }}
                 >
+                  {tech === 'Angular' && project.icon && <project.icon className="w-4 h-4 text-[#DD0031]" />}
                   {tech}
                 </motion.span>
               ))}

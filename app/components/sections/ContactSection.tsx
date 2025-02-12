@@ -111,11 +111,11 @@ export function ContactSection() {
           transition={{ duration: 0.8 }}
         >
           <motion.h2 
-            className="text-6xl font-cartoon font-bold relative inline-block px-12 py-6"
+            className="text-4xl sm:text-5xl md:text-6xl font-cartoon font-bold relative inline-block px-6 sm:px-12 py-4 sm:py-6"
             whileHover={{ scale: 1.02 }}
           >
             <motion.span 
-              className="bg-gradient-to-r from-pastel-purple via-pastel-pink to-pastel-purple dark:from-dark-purple dark:via-dark-pink dark:to-dark-purple text-transparent bg-clip-text whitespace-nowrap relative"
+              className="bg-gradient-to-r from-pastel-purple via-pastel-pink to-pastel-purple dark:from-dark-purple dark:via-dark-pink dark:to-dark-purple text-transparent bg-clip-text break-words sm:whitespace-nowrap relative"
               animate={{
                 textShadow: [
                   "0 0 10px rgba(179, 157, 219, 0.5)",
@@ -130,14 +130,14 @@ export function ContactSection() {
             
             {/* Decorações do título */}
             <motion.div
-              className="absolute -top-8 -right-8 text-4xl"
+              className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 text-2xl sm:text-4xl"
               animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
               transition={{ duration: 5, repeat: Infinity }}
             >
               🌟
             </motion.div>
             <motion.div
-              className="absolute -bottom-8 -left-8 text-4xl"
+              className="absolute -bottom-4 -left-4 sm:-bottom-8 sm:-left-8 text-2xl sm:text-4xl"
               animate={{ rotate: [-10, 10], scale: [1, 1.1, 1] }}
               transition={{ duration: 3, repeat: Infinity }}
             >

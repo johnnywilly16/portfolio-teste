@@ -8,10 +8,40 @@ import { useEffect, useState } from 'react'
 export function Header() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [activeSection, setActiveSection] = useState('inicio')
 
   useEffect(() => {
     setMounted(true)
+
+    const handleScroll = () => {
+      const sections = ['inicio', 'projetos', 'sobre', 'contato']
+      const scrollPosition = window.scrollY + 100
+
+      sections.forEach(section => {
+        const element = document.getElementById(section)
+        if (element) {
+          const { offsetTop, offsetHeight } = element
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section)
+          }
+        }
+      })
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      const offsetTop = element.offsetTop
+      window.scrollTo({
+        top: offsetTop - 100,
+        behavior: 'smooth'
+      })
+    }
+  }
 
   if (!mounted) return null
 
@@ -64,56 +94,104 @@ export function Header() {
 
           <div className="relative px-6 py-4">
             <div className="flex items-center justify-between">
-              {/* Logo animado */}
-              <motion.a
-                href="#inicio"
-                className="relative text-5xl font-handwriting font-bold"
-                whileHover={{ scale: 1.1, rotate: -5 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-neon-purple dark:to-neon-pink text-transparent bg-clip-text">
-                  J
+              {/* Logo limpo */}
+              <div className="relative text-5xl font-handwriting font-bold">
+                <span className="bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text">
+                  
                 </span>
-                {/* Estrelinhas ao redor do logo */}
-                <motion.div
-                  className="absolute -top-2 -right-2 text-lg text-pastel-yellow dark:text-neon-yellow"
-                  animate={{ rotate: 360, scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  ✨
-                </motion.div>
-              </motion.a>
+              </div>
 
               {/* Menu de navegação */}
               <nav className="flex items-center gap-4">
-                {['Início', 'Projetos', 'Sobre', 'Contato'].map((item, index) => (
-                  <motion.a
-                    key={item}
-                    href={`#${item.toLowerCase()}`}
-                    className="relative px-4 py-2 text-lg font-bold border-2 border-dashed border-pastel-purple/50 dark:border-dark-purple/50 rounded-xl group overflow-hidden"
+                {[
+                  { id: 'inicio', label: 'Início' },
+                  { id: 'projetos', label: 'Projetos' },
+                  { id: 'sobre', label: 'Sobre' },
+                  { id: 'contato', label: 'Contato' }
+                ].map((item) => (
+                  <motion.button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className="relative px-4 py-2 text-lg font-bold group"
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{
-                      duration: 0.3,
-                      delay: index * 0.1,
-                      type: "spring",
-                      stiffness: 300
-                    }}
                   >
-                    {/* Fundo branco que aparece no hover */}
-                    <motion.div
-                      className="absolute inset-0 bg-white dark:bg-dark-surface -z-10"
-                      initial={{ y: "100%" }}
-                      whileHover={{ y: 0 }}
-                      transition={{ duration: 0.2 }}
-                    />
-                    
-                    <span className="relative text-pastel-purple/70 dark:text-dark-purple/70 group-hover:text-pastel-purple dark:group-hover:text-dark-purple transition-colors">
-                      {item}
-                    </span>
-                  </motion.a>
+                    {/* Container do Terminal */}
+                    <motion.div 
+                      className={`relative overflow-hidden rounded-xl transition-all duration-500 ${
+                        activeSection === item.id 
+                          ? 'bg-white dark:bg-slate-800 border-2 border-pastel-purple dark:border-dark-purple shadow-lg' 
+                          : 'border-2 border-transparent'
+                      }`}
+                      layout
+                      animate={{
+                        scale: activeSection === item.id ? 1.05 : 1,
+                        transition: { duration: 0.3 }
+                      }}
+                    >
+                      {/* Barra de título do terminal */}
+                      {activeSection === item.id && (
+                        <motion.div 
+                          className="absolute top-0 left-0 right-0 h-2 bg-slate-100 dark:bg-slate-700 flex items-center px-1"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <div className="flex gap-1">
+                            <div className="w-1 h-1 rounded-full bg-red-500" />
+                            <div className="w-1 h-1 rounded-full bg-yellow-500" />
+                            <div className="w-1 h-1 rounded-full bg-green-500" />
+                          </div>
+                        </motion.div>
+                      )}
+                      
+                      {/* Texto do menu */}
+                      <motion.span 
+                        className={`relative z-10 px-4 py-2 block transition-colors duration-300 ${
+                          activeSection === item.id 
+                            ? 'text-pastel-purple dark:text-emerald-400' 
+                            : 'text-pastel-purple/70 dark:text-dark-purple/70'
+                        }`}
+                        layout
+                      >
+                        <div className="flex items-center gap-2">
+                          {activeSection === item.id && (
+                            <motion.span 
+                              className="text-pastel-purple dark:text-purple-400"
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              $
+                            </motion.span>
+                          )}
+                          {item.label}
+                          {/* Cursor piscante */}
+                          {activeSection === item.id && (
+                            <motion.div
+                              className="w-1.5 h-4 bg-pastel-purple dark:bg-emerald-400 ml-2"
+                              initial={{ opacity: 0, scale: 0 }}
+                              animate={{ opacity: [1, 0], scale: 1 }}
+                              transition={{ 
+                                opacity: { duration: 0.8, repeat: Infinity },
+                                scale: { duration: 0.2 }
+                              }}
+                            />
+                          )}
+                        </div>
+                      </motion.span>
+
+                      {/* Efeito de brilho */}
+                      {activeSection === item.id && (
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-pastel-purple/10 to-pastel-pink/10 dark:from-dark-purple/10 dark:to-dark-pink/10"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: [0.5, 0.8, 0.5] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        />
+                      )}
+                    </motion.div>
+                  </motion.button>
                 ))}
               </nav>
 
@@ -146,9 +224,6 @@ export function Header() {
                     className={`relative p-3 group bg-gradient-to-r from-pastel-${item.color}/10 to-pastel-purple/10 dark:from-neon-${item.color}/10 dark:to-neon-purple/10 rounded-xl`}
                     whileHover={{ y: -4, rotate: 10 }}
                     whileTap={{ scale: 0.95 }}
-                    initial={{ x: 20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: index * 0.1 }}
                   >
                     <item.icon 
                       size={20} 
