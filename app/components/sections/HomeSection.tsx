@@ -14,10 +14,7 @@ const CodeTerminal = () => {
 const desenvolvedor = {
     nome: "Johnny",
     idade: 28,
-    funções: [
-        "Desenvolvedor Fullstack",
-        "Designer UX/UI"
-    ],
+    funções: ["Desenvolvedor Fullstack", "Designer UX/UI"],
     habilidades: {
         linguagens: ["TypeScript", "Python", "JavaScript"],
         frontend: ["React", "Next.js", "Angular", "Tailwind"],
@@ -49,10 +46,6 @@ desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
         if (currentIndex < codeText.length) {
           setText(prev => prev + codeText[currentIndex])
           currentIndex++
-          
-          if (terminalRef.current) {
-            terminalRef.current.scrollTop = terminalRef.current.scrollHeight
-          }
         } else {
           clearInterval(typingInterval)
           setIsTyping(false)
@@ -83,10 +76,6 @@ desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
         if (currentIndex < codeText.length) {
           setText(prev => prev + codeText[currentIndex])
           currentIndex++
-          
-          if (terminalRef.current) {
-            terminalRef.current.scrollTop = terminalRef.current.scrollHeight
-          }
         } else {
           clearInterval(typingInterval)
           setIsTyping(false)
@@ -104,11 +93,10 @@ desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
     >
       <motion.div
         ref={terminalRef}
-        className="bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all duration-300"
-        style={{ minHeight: "200px", maxHeight: "80vh", overflowY: "auto" }}
+        className="bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all duration-300"
       >
         {/* Barra de título do terminal */}
-        <div className="bg-slate-700 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
+        <div className="bg-slate-700 px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="flex gap-2">
               <div className="w-3 h-3 rounded-full bg-red-500/70" />
@@ -138,7 +126,7 @@ desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
           >
             <span className="text-purple-400">$</span> node portfolio.js
           </motion.div>
-          <div className="mt-6 whitespace-pre text-emerald-300 max-w-full" style={{ tabSize: 4 }}>
+          <div className="mt-6 whitespace-pre-wrap break-words text-emerald-300 max-w-full" style={{ tabSize: 4 }}>
             {text}
             {showCursor && (
               <motion.span 
@@ -285,7 +273,7 @@ export function HomeSection() {
       <div className="container mx-auto px-2 sm:px-4 relative z-10">
         <div className="flex flex-col items-center justify-center min-h-screen pt-32 sm:pt-40 pb-20">
           {/* Terminal Grande como foco principal */}
-          <div className="w-full max-w-[99vw] sm:max-w-[97vw] md:max-w-[95vw] lg:max-w-6xl">
+          <div className="w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-[85vw] lg:max-w-5xl mt-16 sm:mt-20">
             <CodeTerminal />
           </div>
 
