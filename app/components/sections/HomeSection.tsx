@@ -1,6 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, useState, useMemo } from 'react'
-import { FaAngleUp, FaAngleDown } from 'react-icons/fa'
+import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 // Terminal aprimorado com mais linhas de código
 const CodeTerminal = () => {
