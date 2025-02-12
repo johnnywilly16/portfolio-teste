@@ -1,8 +1,8 @@
 'use client'
 
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { FaGithub, FaExternalLinkAlt, FaCode, FaLayerGroup } from 'react-icons/fa'
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import anime from 'animejs'
@@ -124,9 +124,6 @@ export default function Home() {
   const backgroundParticlesRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const { scrollYProgress } = useScroll()
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
-
   useEffect(() => {
     // Criar partículas de fundo
     if (backgroundParticlesRef.current) {
@@ -195,7 +192,6 @@ export default function Home() {
             <motion.div 
               ref={backgroundParticlesRef}
               className="absolute inset-0"
-              style={{ y: backgroundY }}
             />
           </div>
 

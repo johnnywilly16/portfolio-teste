@@ -36,16 +36,6 @@ export function MobileMenu() {
     open: { y: 0, opacity: 1 }
   }
 
-  const Path = (props: any) => (
-    <motion.path
-      fill="transparent"
-      strokeWidth="3"
-      stroke="currentColor"
-      strokeLinecap="round"
-      {...props}
-    />
-  )
-
   return (
     <>
       {/* Botão de tema separado - apenas mobile */}

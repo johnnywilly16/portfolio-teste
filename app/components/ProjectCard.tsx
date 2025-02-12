@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Button, Flex, Badge, Card, CardBody, Image, Stack, Tag } from '@chakra-ui/react'
+import { Box, Heading, Text, Button, Flex, Card, CardBody, Image, Stack, Tag } from '@chakra-ui/react'
 
 interface ProjectCardProps {
   title: string

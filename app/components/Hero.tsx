@@ -134,8 +134,8 @@ export function Hero() {
                     repeatType: "loop"
                   }}
                 >
-                  console.log("Hello World!"); npm install; git commit -m "feat: ✨" &nbsp;&nbsp;&nbsp;&nbsp;
-                  console.log("Hello World!"); npm install; git commit -m "feat: ✨"
+                  console.log(&quot;Hello World!&quot;); npm install; git commit -m &quot;feat: ✨&quot; &nbsp;&nbsp;&nbsp;&nbsp;
+                  console.log(&quot;Hello World!&quot;); npm install; git commit -m &quot;feat: ✨&quot;
                 </motion.div>
               </div>
             </div>
