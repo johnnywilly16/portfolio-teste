@@ -69,7 +69,7 @@ const CodeTerminal = () => {
     }
 
     return () => clearTimeout(timeoutId)
-  }, [shouldRestart])
+  }, [shouldRestart, codeLines, text])
 
   const handleRestart = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -173,7 +173,7 @@ const CodeTerminal = () => {
                 >
                   {text.split('\n').map((line, i) => {
                     // Highlight keywords
-                    let coloredLine = line
+                    const coloredLine = line
                       .replace(/(const|let|var|function|while|if|else|return|this)/g, '<span class="text-pink-400">$1</span>')
                       .replace(/(".*?")/g, '<span class="text-amber-300">$1</span>')
                       .replace(/(\{|\}|\[|\]|\(|\))/g, '<span class="text-blue-300">$1</span>')

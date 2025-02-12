@@ -15,11 +15,6 @@ import {
   SiD3Dotjs
 } from 'react-icons/si'
 
-interface Technology {
-  name: string
-  icon: React.ComponentType<{ className?: string }>
-}
-
 const projects = [
   {
     title: 'Sistema de E-commerce',
