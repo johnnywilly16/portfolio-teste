@@ -14,6 +14,7 @@ import {
   SiAngular,
   SiD3Dotjs
 } from 'react-icons/si'
+import { TerminalTitle } from './HomeSection'
 
 const projects = [
   {
@@ -271,55 +272,9 @@ export function ProjectsSection() {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Título */}
-        <motion.div 
-          className="text-center mb-8 sm:mb-16 px-4"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <div className="flex justify-center">
-            <motion.h2 
-              className="text-4xl sm:text-5xl md:text-6xl font-cartoon font-bold relative inline-block px-6 sm:px-12 py-4 sm:py-6"
-              whileHover={{ scale: 1.02 }}
-            >
-              <motion.span 
-                className="bg-gradient-to-r from-pastel-purple via-pastel-pink to-pastel-purple dark:from-dark-purple dark:via-dark-pink dark:to-dark-purple text-transparent bg-clip-text break-words sm:whitespace-nowrap relative"
-                animate={{
-                  textShadow: [
-                    "0 0 10px rgba(179, 157, 219, 0.5)",
-                    "0 0 20px rgba(179, 157, 219, 0.7)",
-                    "0 0 10px rgba(179, 157, 219, 0.5)"
-                  ]
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                Projetos em Destaque
-              </motion.span>
-              
-              {/* Estrelas decorativas */}
-              <motion.div
-                className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 text-2xl sm:text-3xl text-pastel-yellow dark:text-dark-yellow"
-                animate={{ 
-                  rotate: 360,
-                  scale: [1, 1.2, 1]
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                ✨
-              </motion.div>
-              <motion.div
-                className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 text-2xl sm:text-3xl text-pastel-pink dark:text-dark-pink transform -rotate-12"
-                animate={{ 
-                  rotate: [-12, 12, -12]
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                ⭐
-              </motion.div>
-            </motion.h2>
-          </div>
-        </motion.div>
+        <div className="text-center mb-16">
+          <TerminalTitle title="Meus Projetos" isActive={true} />
+        </div>
 
         {/* Lista de Projetos */}
         <div className="max-w-4xl mx-auto space-y-8">
