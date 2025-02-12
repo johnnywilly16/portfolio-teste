@@ -68,10 +68,10 @@ export function Hero() {
   }, [])
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-white notebook-bg paper-texture">
+    <div className="relative min-h-screen w-full overflow-hidden bg-white dark:bg-dark-surface notebook-bg paper-texture">
       {/* Fundo animado com gradiente */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-pastel-purple/5 via-pastel-pink/5 to-pastel-yellow/5"
+        className="absolute inset-0 bg-gradient-to-br from-pastel-purple/5 via-pastel-pink/5 to-pastel-yellow/5 dark:from-dark-purple/5 dark:via-dark-pink/5 dark:to-dark-yellow/5"
         animate={{
           backgroundPosition: ['0% 0%', '100% 100%'],
           scale: [1, 1.1, 1]
@@ -88,7 +88,7 @@ export function Hero() {
 
       {/* Container dos doodles com máscara de opacidade nas bordas */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white pointer-events-none z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white dark:from-dark-surface dark:to-dark-surface pointer-events-none z-10" />
         <div ref={doodlesRef} className="absolute inset-0 z-0" />
       </div>
 
@@ -169,66 +169,44 @@ export function Hero() {
         <div className="space-y-6 md:space-y-8">
           {/* Nome JOHNNY com efeitos */}
           <motion.div className="flex justify-center space-x-2 md:space-x-4 mb-4 md:mb-8">
-            <motion.span
-              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
-              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
-              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, type: "spring", stiffness: 200 }}
-              whileHover={{ scale: 1.2, rotate: -10 }}
-              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
-            >
-              J
-            </motion.span>
-            <motion.span
-              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
-              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
-              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, type: "spring", stiffness: 200 }}
-              whileHover={{ scale: 1.2, rotate: 10 }}
-              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
-            >
-              O
-            </motion.span>
-            <motion.span
-              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
-              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
-              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 200 }}
-              whileHover={{ scale: 1.2, rotate: -10 }}
-              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
-            >
-              H
-            </motion.span>
-            <motion.span
-              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
-              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
-              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, type: "spring", stiffness: 200 }}
-              whileHover={{ scale: 1.2, rotate: 10 }}
-              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
-            >
-              N
-            </motion.span>
-            <motion.span
-              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
-              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
-              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 200 }}
-              whileHover={{ scale: 1.2, rotate: -10 }}
-              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
-            >
-              N
-            </motion.span>
-            <motion.span
-              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
-              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
-              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, type: "spring", stiffness: 200 }}
-              whileHover={{ scale: 1.2, rotate: 10 }}
-              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
-            >
-              Y
-            </motion.span>
+            {['J', 'O', 'H', 'N', 'N', 'Y'].map((letter, index) => (
+              <motion.div
+                key={letter + index}
+                className="relative"
+                initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
+                animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.1, type: "spring", stiffness: 200 }}
+              >
+                {/* Efeito de glow base */}
+                <motion.div
+                  className="absolute inset-0 bg-pastel-purple/20 dark:bg-dark-purple/30 blur-2xl rounded-full"
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.2
+                  }}
+                />
+                
+                {/* Letra com sombra e efeitos */}
+                <motion.span
+                  className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple dark:text-dark-purple relative inline-block"
+                  whileHover={{ 
+                    scale: 1.2, 
+                    rotate: index % 2 === 0 ? -10 : 10,
+                    transition: { duration: 0.3 }
+                  }}
+                  drag 
+                  dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
+                >
+                  {letter}
+                </motion.span>
+              </motion.div>
+            ))}
           </motion.div>
 
           {/* Container do título */}

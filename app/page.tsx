@@ -201,7 +201,7 @@ export default function Home() {
 
           <motion.div 
             ref={containerRef}
-            className="min-h-screen py-20 bg-gradient-to-b from-base-300/80 to-base-200/80 backdrop-blur-sm relative z-10"
+            className="min-h-screen py-20 bg-gradient-to-b from-white/80 to-pastel-purple/5 dark:from-dark-surface/80 dark:to-dark-purple/5 backdrop-blur-sm relative z-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 2 }}
@@ -219,13 +219,13 @@ export default function Home() {
                   className="inline-block"
                   whileHover={{ scale: 1.05 }}
                 >
-                  <span className="text-sm font-semibold text-purple-400 tracking-wider uppercase">
+                  <span className="text-sm font-semibold text-pastel-purple dark:text-dark-purple tracking-wider uppercase">
                     Portfólio
                   </span>
                 </motion.div>
                 
                 <motion.h2 
-                  className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-purple-600 text-transparent bg-clip-text"
+                  className="text-5xl font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text"
                   whileHover={{ scale: 1.02 }}
                 >
                   Projetos em Destaque
@@ -236,19 +236,19 @@ export default function Home() {
                   whileHover={{ scale: 1.02 }}
                 >
                   <motion.div 
-                    className="badge badge-primary gap-2"
+                    className="badge badge-primary gap-2 bg-pastel-purple/20 dark:bg-dark-purple/20"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                   >
                     <FaLayerGroup /> Fullstack
                   </motion.div>
                   <motion.div 
-                    className="badge badge-secondary gap-2"
+                    className="badge badge-secondary gap-2 bg-pastel-pink/20 dark:bg-dark-pink/20"
                     whileHover={{ scale: 1.1, rotate: -5 }}
                   >
                     <FaCode /> Frontend
                   </motion.div>
                   <motion.div 
-                    className="badge badge-accent gap-2"
+                    className="badge badge-accent gap-2 bg-pastel-blue/20 dark:bg-dark-blue/20"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                   >
                     Mobile
@@ -263,7 +263,7 @@ export default function Home() {
                 {projects.map((project, index) => (
                   <motion.div
                     key={project.title}
-                    className="project-card card bg-base-100/80 shadow-xl group hover:shadow-2xl transition-all duration-300 backdrop-blur-sm"
+                    className="project-card card bg-white/80 dark:bg-dark-surface/80 shadow-xl group hover:shadow-2xl transition-all duration-300 backdrop-blur-sm"
                     whileHover={{ 
                       y: -10,
                       scale: 1.02,
@@ -280,9 +280,9 @@ export default function Home() {
                         <div className="particle-container" />
                       </motion.div>
 
-                      <div className="h-32 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-500/10 via-purple-400/20 to-purple-600/10 mb-4">
+                      <div className="h-32 flex items-center justify-center rounded-xl bg-gradient-to-br from-pastel-purple/10 via-pastel-pink/20 to-pastel-purple/10 dark:from-dark-purple/10 dark:via-dark-pink/20 dark:to-dark-purple/10 mb-4">
                         <motion.span 
-                          className="text-6xl font-bold bg-gradient-to-r from-purple-400 to-purple-600 text-transparent bg-clip-text"
+                          className="text-6xl font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text"
                           whileHover={{ 
                             scale: 1.2,
                             rotate: 360,
@@ -294,20 +294,20 @@ export default function Home() {
                       </div>
 
                       <motion.div 
-                        className="badge badge-primary mb-4"
+                        className="badge badge-primary mb-4 bg-pastel-purple/20 dark:bg-dark-purple/20"
                         whileHover={{ scale: 1.1 }}
                       >
                         {project.category}
                       </motion.div>
                       
                       <motion.h3 
-                        className="card-title text-2xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-purple-600 text-transparent bg-clip-text"
+                        className="card-title text-2xl font-bold mb-2 bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text"
                         whileHover={{ scale: 1.02 }}
                       >
                         {project.title}
                       </motion.h3>
                       
-                      <p className="text-base-content/70 mb-4 line-clamp-3">
+                      <p className="text-slate-600 dark:text-slate-300 mb-4 line-clamp-3">
                         {project.description}
                       </p>
 
@@ -315,7 +315,7 @@ export default function Home() {
                         {project.technologies.map((tech) => (
                           <motion.span
                             key={tech}
-                            className="badge badge-outline badge-sm bg-purple-500/10"
+                            className="badge badge-outline badge-sm bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple"
                             whileHover={{ 
                               scale: 1.1,
                               backgroundColor: 'rgba(168, 85, 247, 0.2)'
@@ -329,8 +329,8 @@ export default function Home() {
                       <div className="card-actions justify-between mt-auto">
                         <motion.a
                           href={project.projectUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
+          target="_blank"
+          rel="noopener noreferrer"
                           className="btn bg-purple-500 hover:bg-purple-600 border-none btn-sm flex-1"
                           whileHover={{ 
                             scale: 1.05,
@@ -343,8 +343,8 @@ export default function Home() {
                         </motion.a>
                         <motion.a
                           href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
+          target="_blank"
+          rel="noopener noreferrer"
                           className="btn btn-outline border-purple-500 text-purple-500 hover:bg-purple-500 hover:border-purple-500 btn-sm flex-1"
                           whileHover={{ 
                             scale: 1.05,
@@ -370,8 +370,8 @@ export default function Home() {
               >
                 <motion.a
                   href="https://github.com/johnnywilly"
-                  target="_blank"
-                  rel="noopener noreferrer"
+          target="_blank"
+          rel="noopener noreferrer"
                   className="btn btn-outline border-purple-500 text-purple-500 hover:bg-purple-500 hover:border-purple-500 btn-wide"
                   whileHover={{ 
                     scale: 1.05,
@@ -383,7 +383,7 @@ export default function Home() {
                   <FaGithub className="ml-2 text-lg" />
                 </motion.a>
               </motion.div>
-            </div>
+    </div>
           </motion.div>
         </section>
       </main>

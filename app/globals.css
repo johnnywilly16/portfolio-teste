@@ -8,6 +8,12 @@
   --doodle-color: rgba(156, 39, 176, 0.6);
 }
 
+[data-theme='dark'] {
+  --notebook-line-color: rgba(149, 117, 205, 0.2);
+  --notebook-margin-color: rgba(209, 133, 159, 0.3);
+  --doodle-color: rgba(149, 117, 205, 0.8);
+}
+
 /* Fundo estilo caderno */
 .notebook-bg {
   background-image: 
@@ -29,6 +35,10 @@
   background-size: 100% 2rem;
 }
 
+.dark .notebook-bg {
+  background-image: none;
+}
+
 /* Doodles */
 .doodle {
   display: block;
@@ -41,12 +51,17 @@
   stroke-width: 2;
   stroke: currentColor;
   pointer-events: none;
-  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.1));
+}
+
+.dark .doodle {
+  display: none;
 }
 
 .doodle:hover {
   opacity: 1;
   transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(3px 3px 0 rgba(0, 0, 0, 0.2)) drop-shadow(0 0 12px var(--doodle-color));
 }
 
 /* Removendo duplicação do .paper-texture::before */
@@ -92,20 +107,26 @@
   /* Título estilo cartoon */
   .title-cartoon {
     @apply font-cartoon font-bold;
+    color: #B39DDB;
     text-shadow: 
-      /* Contorno preto */
-      -2px -2px 0 rgba(0, 0, 0, 0.8),
-      2px -2px 0 rgba(0, 0, 0, 0.8),
-      -2px 2px 0 rgba(0, 0, 0, 0.8),
-      2px 2px 0 rgba(0, 0, 0, 0.8),
-      /* Sombra principal */
-      4px 4px 0 rgba(0, 0, 0, 0.6),
-      /* Sombras em camadas para profundidade */
-      8px 8px 0 rgba(0, 0, 0, 0.4),
-      12px 12px 0 rgba(0, 0, 0, 0.2),
-      /* Sombra suave para acabamento */
-      16px 16px 20px rgba(0, 0, 0, 0.2);
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000,
+      2px 2px 0 rgba(0, 0, 0, 0.3),
+      4px 4px 8px rgba(0, 0, 0, 0.2);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+  }
+
+  .dark .title-cartoon {
+    @apply font-cartoon font-bold;
+    color: #9575CD;
+    text-shadow: 
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+    animation: glow 2s ease-in-out infinite;
   }
 }
 
@@ -130,6 +151,17 @@
   }
   50% {
     transform: rotate(3deg);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 15px rgba(149, 117, 205, 0.5))
+           drop-shadow(0 0 30px rgba(149, 117, 205, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgba(149, 117, 205, 0.7))
+           drop-shadow(0 0 40px rgba(149, 117, 205, 0.5));
   }
 }
 
@@ -179,4 +211,17 @@
 @keyframes slide {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+[data-theme='dark'] .doodle {
+  filter: 
+    drop-shadow(0 0 4px rgba(255, 255, 255, 0.2))
+    drop-shadow(2px 2px 8px rgba(255, 255, 255, 0.1));
+  opacity: 0.85;
+}
+
+[data-theme='dark'] .notebook-bg {
+  --notebook-line-color: rgba(255, 255, 255, 0.08);
+  --notebook-margin-color: rgba(255, 255, 255, 0.12);
+  --doodle-color: rgba(255, 255, 255, 0.15);
 }

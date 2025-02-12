@@ -23,19 +23,21 @@ const config: Config = {
           green: '#A5D6A7',  // Verde suave
           bg: '#F3E5F5',     // Fundo roxo bem claro
         },
-        // Cores para o tema escuro (tons neon mais vibrantes)
-        neon: {
-          purple: '#A855F7', // Roxo neon mais vibrante
-          pink: '#EC4899',   // Rosa neon mais vibrante
-          blue: '#3B82F6',   // Azul neon mais vibrante
-          yellow: '#EAB308', // Amarelo neon mais vibrante
-          green: '#22C55E',  // Verde neon mais vibrante
-          bg: '#6D28D9',     // Fundo roxo escuro mais vibrante
+        // Cores para o tema escuro (tons suaves e escuros)
+        dark: {
+          purple: '#9575CD', // Roxo suave escuro
+          pink: '#D1859F',   // Rosa suave escuro
+          blue: '#7986CB',   // Azul suave escuro
+          yellow: '#D4B475', // Amarelo suave escuro
+          green: '#81C784',  // Verde suave escuro
+          bg: '#4A148C',     // Fundo roxo escuro
+          surface: '#1A1625', // Superfície escura
+          overlay: 'rgba(26, 22, 37, 0.9)', // Overlay escuro
         },
         paper: {
           light: '#F3E5F5',  // Fundo roxo claro
           DEFAULT: '#E1BEE7', // Fundo roxo médio
-          dark: '#CE93D8',    // Fundo roxo escuro
+          dark: '#4A148C',    // Fundo roxo escuro
         }
       },
       backgroundImage: {

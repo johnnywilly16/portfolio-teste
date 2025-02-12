@@ -48,10 +48,10 @@ export function MobileMenu() {
 
   return (
     <>
-      {/* Botão de tema separado */}
+      {/* Botão de tema separado - apenas mobile */}
       <motion.button
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        className="fixed top-4 left-4 lg:top-6 lg:left-6 z-50 p-4 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-4 border-dashed border-pastel-purple/50 dark:border-neon-purple/50 shadow-lg"
+        className="fixed top-4 left-4 lg:hidden z-50 p-4 rounded-full bg-white/90 dark:bg-dark-surface/90 backdrop-blur-lg border-4 border-dashed border-pastel-purple/50 dark:border-dark-purple/50 shadow-lg"
         whileHover={{ 
           scale: 1.1,
           rotate: 180,
@@ -60,7 +60,7 @@ export function MobileMenu() {
         whileTap={{ scale: 0.9 }}
       >
         {theme === 'dark' ? (
-          <FaSun className="text-neon-yellow w-6 h-6" />
+          <FaSun className="text-dark-yellow w-6 h-6" />
         ) : (
           <FaMoon className="text-pastel-purple w-6 h-6" />
         )}
@@ -69,7 +69,7 @@ export function MobileMenu() {
       <div className="lg:hidden fixed top-0 right-0 z-50 p-4">
         {/* Botão do menu animado */}
         <motion.button
-          className="relative z-50 p-4 bg-white/90 dark:bg-slate-900/90 rounded-full backdrop-blur-lg border-4 border-dashed border-pastel-purple/50 dark:border-neon-purple/50 shadow-lg w-16 h-16 flex items-center justify-center"
+          className="relative z-50 p-4 bg-white/90 dark:bg-dark-surface/90 rounded-full backdrop-blur-lg border-4 border-dashed border-pastel-purple/50 dark:border-dark-purple/50 shadow-lg w-16 h-16 flex items-center justify-center"
           onClick={() => setIsOpen(!isOpen)}
           whileHover={{ 
             scale: 1.1,
@@ -87,7 +87,7 @@ export function MobileMenu() {
                   exit={{ opacity: 0, rotate: 180 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <FaBars className="text-pastel-purple dark:text-neon-purple w-6 h-6" />
+                  <FaBars className="text-pastel-purple dark:text-dark-purple w-6 h-6" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -97,7 +97,7 @@ export function MobileMenu() {
                   exit={{ opacity: 0, rotate: -180 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <FaTimes className="text-pastel-purple dark:text-neon-purple w-6 h-6" />
+                  <FaTimes className="text-pastel-purple dark:text-dark-purple w-6 h-6" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -106,7 +106,7 @@ export function MobileMenu() {
 
         {/* Menu em formato quadrado com bordas arredondadas */}
         <motion.div
-          className="absolute top-4 right-4 w-80 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg rounded-xl border-4 border-dashed border-pastel-purple/50 dark:border-neon-purple/50 p-6 origin-top-right shadow-lg"
+          className="absolute top-4 right-4 w-80 bg-white/90 dark:bg-dark-surface/90 backdrop-blur-lg rounded-xl border-4 border-dashed border-pastel-purple/50 dark:border-dark-purple/50 p-6 origin-top-right shadow-lg"
           initial="closed"
           animate={isOpen ? "open" : "closed"}
           variants={menuVariants}
@@ -117,7 +117,7 @@ export function MobileMenu() {
               <motion.a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="relative p-4 text-center font-cartoon font-bold text-pastel-purple dark:text-neon-purple hover:text-pastel-pink dark:hover:text-neon-pink transition-colors bg-white/50 dark:bg-slate-800/50 rounded-xl border-2 border-dashed border-pastel-purple/30 dark:border-neon-purple/30"
+                className="relative p-4 text-center font-cartoon font-bold text-pastel-purple dark:text-dark-purple hover:text-pastel-pink dark:hover:text-dark-pink transition-colors bg-white/50 dark:bg-dark-surface/50 rounded-xl border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30"
                 variants={itemVariants}
                 onClick={() => setIsOpen(false)}
                 whileHover={{ 
@@ -144,7 +144,7 @@ export function MobileMenu() {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`p-4 flex items-center justify-center bg-gradient-to-r from-pastel-${item.color}/10 to-pastel-purple/10 dark:from-neon-${item.color}/10 dark:to-neon-purple/10 rounded-xl border-2 border-dashed border-pastel-${item.color}/30 dark:border-neon-${item.color}/30`}
+                className={`p-4 flex items-center justify-center bg-gradient-to-r from-pastel-${item.color}/10 to-pastel-purple/10 dark:from-dark-${item.color}/10 dark:to-dark-purple/10 rounded-xl border-2 border-dashed border-pastel-${item.color}/30 dark:border-dark-${item.color}/30`}
                 whileHover={{ 
                   scale: 1.1,
                   rotate: [0, -10, 10, 0],
@@ -153,7 +153,7 @@ export function MobileMenu() {
                 whileTap={{ scale: 0.9 }}
               >
                 <item.icon 
-                  className={`w-6 h-6 text-pastel-${item.color} dark:text-neon-${item.color}`}
+                  className={`w-6 h-6 text-pastel-${item.color} dark:text-dark-${item.color}`}
                 />
               </motion.a>
             ))}

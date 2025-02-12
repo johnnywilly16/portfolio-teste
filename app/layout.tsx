@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${comicNeue.variable} ${indieFlower.variable} font-cartoon bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300`}>
+      <body className={`${comicNeue.variable} ${indieFlower.variable} font-cartoon bg-white dark:bg-dark-surface text-slate-800 dark:text-slate-200 transition-colors duration-300`}>
         <Providers>
           {children}
         </Providers>

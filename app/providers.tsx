@@ -19,7 +19,12 @@ const flowbiteTheme = {
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <ThemeProvider 
+      attribute="class" 
+      defaultTheme="light"
+      enableSystem={true}
+      disableTransitionOnChange
+    >
       <Flowbite theme={{ theme: flowbiteTheme }}>
         {children}
       </Flowbite>
