@@ -6,6 +6,7 @@ import anime from 'animejs'
 
 export function Hero() {
   const doodlesRef = useRef<HTMLDivElement>(null)
+  const terminalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!doodlesRef.current) return;
@@ -65,6 +66,21 @@ export function Hero() {
       direction: "alternate",
       delay: anime.stagger(100)
     });
+
+    // Controle de visibilidade do terminal com scroll
+    const handleScroll = () => {
+      if (terminalRef.current) {
+        const scrollY = window.scrollY
+        const opacity = Math.max(0, 1 - (scrollY / 500)) // Desaparece gradualmente em 500px de scroll
+        const translateY = Math.min(100, scrollY / 2) // Move para baixo conforme scroll
+        
+        terminalRef.current.style.opacity = opacity.toString()
+        terminalRef.current.style.transform = `translateY(${translateY}px)`
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
@@ -92,9 +108,10 @@ export function Hero() {
         <div ref={doodlesRef} className="absolute inset-0 z-0" />
       </div>
 
-      {/* Mini Terminal */}
+      {/* Mini Terminal com fade out no scroll */}
       <motion.div 
-        className="terminal-container"
+        ref={terminalRef}
+        className="terminal-container transition-all duration-300"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1 }}
