@@ -278,6 +278,20 @@ export function TerminalTitle({ title, isActive }: TerminalTitleProps) {
 }
 
 export function HomeSection() {
+  const [showScroll, setShowScroll] = useState(true)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY
+      const threshold = window.innerHeight * 0.3 // 30% da altura da viewport
+
+      setShowScroll(scrollPosition < threshold)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <section id="inicio" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-pastel-purple/5 to-white dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface pt-16 lg:pt-48">
       {/* Elementos de fundo */}
@@ -292,28 +306,29 @@ export function HomeSection() {
           </div>
 
           {/* Scroll Indicator */}
-          <motion.div
-            className="fixed bottom-8 left-1/2 -translate-x-1/2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, y: [0, 10, 0] }}
-            transition={{ 
-              opacity: { delay: 2 },
-              y: { duration: 1.5, repeat: Infinity }
-            }}
-          >
-            <motion.div
-              className="w-8 h-12 border-3 border-pastel-purple dark:border-dark-purple rounded-full p-2"
-              initial={{ opacity: 0.5 }}
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
+          <AnimatePresence>
+            {showScroll && (
               <motion.div
-                className="w-3 h-3 bg-pastel-purple dark:bg-dark-purple rounded-full mx-auto"
-                animate={{ y: [0, 14, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              />
-            </motion.div>
-          </motion.div>
+                className="fixed bottom-8 left-1/2 -translate-x-1/2"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.div
+                  className="w-8 h-12 border-3 border-pastel-purple dark:border-dark-purple rounded-full p-2"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <motion.div
+                    className="w-3 h-3 bg-pastel-purple dark:bg-dark-purple rounded-full mx-auto"
+                    animate={{ y: [0, 14, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>

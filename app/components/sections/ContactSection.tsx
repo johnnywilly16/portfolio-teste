@@ -3,294 +3,171 @@ import { FaLinkedin, FaEnvelope, FaWhatsapp } from 'react-icons/fa'
 import { TerminalTitle } from './HomeSection'
 
 // Componente de bolhas flutuantes
-const FloatingBubbles = ({ color }: { color: string }) => (
+const FloatingBubbles = () => (
   <div className="absolute inset-0 overflow-hidden">
-    {[...Array(6)].map((_, i) => (
+    {[...Array(15)].map((_, i) => (
       <motion.div
         key={i}
-        className="absolute rounded-full"
+        className="absolute rounded-full bg-gradient-to-br from-pastel-purple/20 to-pastel-pink/20 dark:from-dark-purple/20 dark:to-dark-pink/20"
         style={{
-          background: `radial-gradient(circle at 30% 30%, ${color}, transparent)`,
-          width: `${Math.random() * 100 + 50}px`,
-          height: `${Math.random() * 100 + 50}px`,
+          width: Math.random() * 60 + 20,
+          height: Math.random() * 60 + 20,
           left: `${Math.random() * 100}%`,
           top: `${Math.random() * 100}%`,
         }}
-        initial={{ opacity: 0.3, scale: 0.8 }}
         animate={{
-          y: [-20, 20],
-          x: [-10, 10],
-          scale: [0.8, 1.2],
-          opacity: [0.3, 0.6],
-        }}
-        transition={{
-          duration: Math.random() * 3 + 2,
-          repeat: Infinity,
-          repeatType: "reverse",
-          delay: i * 0.3,
-        }}
-      />
-    ))}
-  </div>
-)
-
-// Componente de estrelas decorativas aprimorado
-const Stars = () => (
-  <>
-    {[...Array(20)].map((_, i) => (
-      <motion.div
-        key={i}
-        className="absolute text-yellow-300/30 dark:text-yellow-300/20"
-        style={{
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 100}%`,
-          fontSize: `${Math.random() * 20 + 10}px`,
-        }}
-        initial={{ opacity: 0.2, scale: 0.8 }}
-        animate={{
-          scale: [0.8, 1.2, 0.8],
-          opacity: [0.2, 0.5, 0.2],
+          y: [-50, 50],
+          x: [-30, 30],
+          scale: [1, 1.2, 1],
           rotate: [0, 360],
         }}
         transition={{
-          duration: Math.random() * 3 + 2,
-          repeat: Infinity,
-          delay: i * 0.2,
-        }}
-      >
-        ✨
-      </motion.div>
-    ))}
-  </>
-)
-
-// Componente de círculos decorativos
-const BackgroundCircles = () => (
-  <div className="absolute inset-0 overflow-hidden">
-    {[...Array(5)].map((_, i) => (
-      <motion.div
-        key={i}
-        className="absolute rounded-full bg-gradient-to-br from-pastel-purple/5 to-pastel-pink/5 dark:from-dark-purple/5 dark:to-dark-pink/5"
-        style={{
-          width: `${Math.random() * 300 + 200}px`,
-          height: `${Math.random() * 300 + 200}px`,
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 100}%`,
-        }}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{
-          x: [0, 30, 0],
-          y: [0, 30, 0],
-          scale: [0.8, 1, 0.8],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: Math.random() * 10 + 10,
+          duration: Math.random() * 8 + 8,
           repeat: Infinity,
           repeatType: "reverse",
-          ease: "easeInOut",
         }}
       />
     ))}
   </div>
+)
+
+// Componente de Terminal de Contato
+const ContactTerminal = ({ 
+  icon: Icon, 
+  title, 
+  value, 
+  link, 
+  delay = 0,
+  command
+}: { 
+  icon: React.ComponentType, 
+  title: string, 
+  value: string,
+  link: string,
+  delay?: number,
+  command: string
+}) => (
+  <motion.a
+    href={link}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group relative"
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay }}
+  >
+    <motion.div
+      className="relative bg-white/90 dark:bg-slate-800/90 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden shadow-xl transform-gpu hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
+      whileHover={{ rotate: [-1, 1] }}
+      transition={{ duration: 0.2 }}
+    >
+      {/* Barra de título do terminal */}
+      <div className="bg-gradient-to-r from-pastel-purple/20 to-pastel-pink/20 dark:from-dark-purple/20 dark:to-dark-pink/20 px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="flex gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-500/70" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
+            <div className="w-3 h-3 rounded-full bg-green-500/70" />
+          </div>
+          <span className="text-pastel-purple/50 dark:text-white/50 text-xs sm:text-sm font-mono ml-2">
+            contact@terminal ~ {title.toLowerCase()}
+          </span>
+        </div>
+      </div>
+
+      {/* Conteúdo do terminal */}
+      <div className="p-6 font-mono space-y-4">
+        <div className="flex items-center gap-3">
+          <span className="text-pastel-pink dark:text-purple-400">$</span>
+          <motion.span 
+            className="text-pastel-purple dark:text-emerald-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            {command}
+          </motion.span>
+        </div>
+
+        <motion.div
+          className="flex items-center gap-6 pl-6 text-pastel-purple dark:text-emerald-300"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <Icon className="text-4xl" />
+          <div className="space-y-1">
+            <h3 className="text-lg font-bold">{title}</h3>
+            <p className="text-sm opacity-80">{value}</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="pl-6 pt-2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <motion.div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-emerald-400 text-sm group-hover:bg-pastel-purple/20 dark:group-hover:bg-dark-purple/20 transition-colors"
+            whileHover={{ scale: 1.05 }}
+          >
+            <span className="text-pastel-pink dark:text-purple-400">→</span>
+            Clique para conectar
+            <motion.span
+              animate={{ opacity: [1, 0] }}
+              transition={{ duration: 0.8, repeat: Infinity }}
+              className="w-2 h-4 bg-pastel-purple dark:bg-emerald-400 ml-2"
+            />
+          </motion.div>
+        </motion.div>
+      </div>
+    </motion.div>
+  </motion.a>
 )
 
 export function ContactSection() {
   return (
-    <section id="contato" className="min-h-screen py-20 bg-gradient-to-b from-pastel-purple/5 via-white/80 to-pastel-purple/10 dark:from-dark-purple/5 dark:via-dark-surface/80 dark:to-dark-purple/10 backdrop-blur-sm">
-      <div className="container mx-auto px-4">
-        {/* Título */}
-        <div className="text-center mb-16">
-          <TerminalTitle title="Entre em Contato" isActive={true} />
-        </div>
+    <section id="contato" className="min-h-[70vh] w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-pastel-purple/5 to-white dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface py-20">
+      {/* Elementos de fundo */}
+      <FloatingBubbles />
 
-        {/* Fundo com círculos e estrelas */}
-        <BackgroundCircles />
-        <Stars />
+      <div className="w-full flex items-center justify-center relative z-10">
+        <div className="w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center">
+          {/* Título */}
+          <div className="text-center mb-12">
+            <TerminalTitle title="Entre em Contato" isActive={true} />
+          </div>
 
-        <div className="container mx-auto px-4 relative">
-          {/* Grid de contatos */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* WhatsApp */}
-            <motion.a
-              href="https://wa.me/5511999999999"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <div className="absolute inset-0 bg-[#25D366] rounded-[2.5rem] rotate-2 scale-105 opacity-20 group-hover:rotate-3 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-[#25D366] rounded-[2.5rem] -rotate-2 scale-105 opacity-20 group-hover:-rotate-3 transition-transform duration-300" />
-              
-              <div className="relative bg-gradient-to-br from-[#25D366] to-[#128C7E] rounded-[2rem] p-8 h-full flex flex-col items-center justify-center gap-6 shadow-xl border-4 border-white/30">
-                <FloatingBubbles color="#25D366" />
-                
-                <motion.div
-                  className="relative text-7xl text-white drop-shadow-lg"
-                  animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <FaWhatsapp />
-                  <motion.div
-                    className="absolute -top-2 -right-2 text-2xl"
-                    animate={{ scale: [1, 1.2, 1], rotate: [0, 360] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  >
-                    ✨
-                  </motion.div>
-                </motion.div>
+          {/* Grid de terminais de contato */}
+          <div className="w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+            <ContactTerminal
+              icon={FaWhatsapp}
+              title="WhatsApp"
+              value="(11) 99999-9999"
+              link="https://wa.me/5511999999999"
+              delay={0}
+              command="whatsapp --send-message"
+            />
 
-                <div className="relative text-center z-10">
-                  <motion.h3 
-                    className="text-3xl font-cartoon font-bold text-white mb-3 drop-shadow-lg"
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    WhatsApp
-                  </motion.h3>
-                  <p className="text-xl text-white/90 font-cartoon mb-2">(11) 99999-9999</p>
-                  <motion.span 
-                    className="inline-block text-sm text-white/80 font-cartoon px-4 py-2 bg-white/20 rounded-full"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    Vamos conversar! 💬
-                  </motion.span>
-                </div>
+            <ContactTerminal
+              icon={FaLinkedin}
+              title="LinkedIn"
+              value="@johnnywilly"
+              link="https://linkedin.com/in/johnnywilly"
+              delay={0.2}
+              command="linkedin --connect"
+            />
 
-                {/* Elementos decorativos */}
-                <motion.div
-                  className="absolute -bottom-3 -right-3 text-4xl"
-                  animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
-                  transition={{ duration: 5, repeat: Infinity }}
-                >
-                  🌟
-                </motion.div>
-              </div>
-            </motion.a>
-
-            {/* LinkedIn */}
-            <motion.a
-              href="https://linkedin.com/in/johnnywilly"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <div className="absolute inset-0 bg-[#0077B5] rounded-[2.5rem] rotate-2 scale-105 opacity-20 group-hover:rotate-3 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-[#0077B5] rounded-[2.5rem] -rotate-2 scale-105 opacity-20 group-hover:-rotate-3 transition-transform duration-300" />
-              
-              <div className="relative bg-gradient-to-br from-[#0077B5] to-[#00A0DC] rounded-[2rem] p-8 h-full flex flex-col items-center justify-center gap-6 shadow-xl border-4 border-white/30">
-                <FloatingBubbles color="#0077B5" />
-                
-                <motion.div
-                  className="relative text-7xl text-white drop-shadow-lg"
-                  animate={{ y: [0, -10, 0], rotate: [0, -5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <FaLinkedin />
-                  <motion.div
-                    className="absolute -top-2 -right-2 text-2xl"
-                    animate={{ scale: [1, 1.2, 1], rotate: [0, 360] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  >
-                    ✨
-                  </motion.div>
-                </motion.div>
-
-                <div className="relative text-center z-10">
-                  <motion.h3 
-                    className="text-3xl font-cartoon font-bold text-white mb-3 drop-shadow-lg"
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    LinkedIn
-                  </motion.h3>
-                  <p className="text-xl text-white/90 font-cartoon mb-2">@johnnywilly</p>
-                  <motion.span 
-                    className="inline-block text-sm text-white/80 font-cartoon px-4 py-2 bg-white/20 rounded-full"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    Vamos conectar! 🤝
-                  </motion.span>
-                </div>
-
-                {/* Elementos decorativos */}
-                <motion.div
-                  className="absolute -bottom-3 -left-3 text-4xl"
-                  animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
-                  transition={{ duration: 5, repeat: Infinity }}
-                >
-                  🌟
-                </motion.div>
-              </div>
-            </motion.a>
-
-            {/* Email */}
-            <motion.a
-              href="mailto:contato@johnny.dev"
-              className="group relative"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <div className="absolute inset-0 bg-pastel-purple rounded-[2.5rem] rotate-2 scale-105 opacity-20 group-hover:rotate-3 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-pastel-pink rounded-[2.5rem] -rotate-2 scale-105 opacity-20 group-hover:-rotate-3 transition-transform duration-300" />
-              
-              <div className="relative bg-gradient-to-br from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink rounded-[2rem] p-8 h-full flex flex-col items-center justify-center gap-6 shadow-xl border-4 border-white/30">
-                <FloatingBubbles color="#B39DDB" />
-                
-                <motion.div
-                  className="relative text-7xl text-white drop-shadow-lg"
-                  animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <FaEnvelope />
-                  <motion.div
-                    className="absolute -top-2 -right-2 text-2xl"
-                    animate={{ scale: [1, 1.2, 1], rotate: [0, 360] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  >
-                    ✨
-                  </motion.div>
-                </motion.div>
-
-                <div className="relative text-center z-10">
-                  <motion.h3 
-                    className="text-3xl font-cartoon font-bold text-white mb-3 drop-shadow-lg"
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    Email
-                  </motion.h3>
-                  <p className="text-xl text-white/90 font-cartoon mb-2">contato@johnny.dev</p>
-                  <motion.span 
-                    className="inline-block text-sm text-white/80 font-cartoon px-4 py-2 bg-white/20 rounded-full"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    Manda um email! ✉️
-                  </motion.span>
-                </div>
-
-                {/* Elementos decorativos */}
-                <motion.div
-                  className="absolute -bottom-3 -right-3 text-4xl"
-                  animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
-                  transition={{ duration: 5, repeat: Infinity }}
-                >
-                  📨
-                </motion.div>
-              </div>
-            </motion.a>
+            <ContactTerminal
+              icon={FaEnvelope}
+              title="Email"
+              value="contato@johnny.dev"
+              link="mailto:contato@johnny.dev"
+              delay={0.4}
+              command="email --compose"
+            />
           </div>
         </div>
       </div>
