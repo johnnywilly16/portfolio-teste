@@ -4,201 +4,116 @@ import { FaAngleUp, FaAngleDown } from 'react-icons/fa'
 
 // Terminal aprimorado com mais linhas de código
 const CodeTerminal = () => {
-  const [text, setText] = useState('')
   const [isMinimized, setIsMinimized] = useState(false)
-  const [shouldRestart, setShouldRestart] = useState(false)
-  
-  const codeLines = useMemo(() => [
-    'const desenvolvedor = {',
-    '  nome: "Johnny",',
-    '  idade: 28,',
-    '  funções: [',
-    '    "Desenvolvedor Fullstack",',
-    '    "Designer UX/UI"',
-    '  ],',
-    '  habilidades: {',
-    '    linguagens: ["TypeScript", "Python", "JavaScript"],',
-    '    frontend: ["React", "Next.js", "Angular", "Tailwind"],',
-    '    backend: ["Node.js", "Express", "NestJS"],',
-    '    design: ["Figma", "Adobe XD", "UI/UX"],',
-    '    bancosDeDados: ["PostgreSQL", "MongoDB"]',
-    '  },',
-    '',
-    '  criarCoisasIncríveis() {',
-    '    while(true) {',
-    '      this.programar()',
-    '      this.desenhar()',
-    '      this.inovar()',
-    '      this.tomarCafé("☕")',
-    '    }',
-    '  }',
-    '}',
-    '',
-    'desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨'
-  ], [])
+  const [currentText, setCurrentText] = useState('')
+  const [isTyping, setIsTyping] = useState(true)
+
+  const text = `const desenvolvedor = {
+  nome: "Johnny",
+  idade: 28,
+  funções: [
+    "Desenvolvedor Fullstack",
+    "Designer UX/UI"
+  ],
+  habilidades: {
+    linguagens: ["TypeScript", "Python", "JavaScript"],
+    frontend: ["React", "Next.js", "Angular", "Tailwind"],
+    backend: ["Node.js", "Express", "NestJS"],
+    design: ["Figma", "Adobe XD", "UI/UX"],
+    bancosDeDados: ["PostgreSQL", "MongoDB"]
+  },
+
+  criarCoisasIncríveis() {
+    while(true) {
+      this.programar()
+      this.desenhar()
+      this.inovar()
+      this.tomarCafé("☕")
+    }
+  }
+}
+
+desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
 
   useEffect(() => {
-    let currentLine = 0
-    let currentChar = 0
-    let timeoutId: NodeJS.Timeout
+    if (!isTyping) return
 
-    const type = () => {
-      if (currentLine >= codeLines.length) return
-
-      const line = codeLines[currentLine]
-      
-      if (currentChar < line.length) {
-        setText(prev => prev + line[currentChar])
-        currentChar++
-        timeoutId = setTimeout(type, Math.random() * 50 + 30)
+    let index = 0
+    const interval = setInterval(() => {
+      if (index <= text.length) {
+        setCurrentText(text.slice(0, index))
+        index++
       } else {
-        setText(prev => prev + '\n')
-        currentLine++
-        currentChar = 0
-        timeoutId = setTimeout(type, 100)
+        setIsTyping(false)
+        clearInterval(interval)
       }
-    }
+    }, 30)
 
-    if (shouldRestart) {
-      setText('')
-      timeoutId = setTimeout(type, 1000)
-      setShouldRestart(false)
-    } else if (text === '') {
-      timeoutId = setTimeout(type, 1000)
-    }
+    return () => clearInterval(interval)
+  }, [isTyping, text])
 
-    return () => clearTimeout(timeoutId)
-  }, [shouldRestart, codeLines, text])
-
-  const handleRestart = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    setShouldRestart(true)
+  const handleRestart = () => {
+    setCurrentText('')
+    setIsTyping(true)
   }
 
   return (
     <motion.div
-      className={`relative w-full mx-auto transform transition-all duration-300 ${
-        isMinimized ? 'max-w-none scale-100' : 
-        'max-w-4xl -rotate-2'
-      }`}
+      className="relative w-full mx-auto transform transition-all duration-300 max-w-4xl -rotate-2"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
-      style={{
-        position: isMinimized ? 'fixed' : 'relative',
-        inset: isMinimized ? '0' : 'auto',
-        margin: isMinimized ? '0' : 'auto',
-        zIndex: isMinimized ? 50 : 10,
-      }}
     >
-      <AnimatePresence>
-        <motion.div
-          className={`bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden shadow-2xl transition-all duration-300 ${
-            isMinimized ? 'rounded-none' : 
-            'shadow-xl hover:shadow-2xl hover:scale-[1.01]'
-          }`}
-          animate={{
-            height: isMinimized ? '3rem' : 'auto',
-          }}
-        >
-          {/* Barra de título do terminal */}
-          <div className="bg-slate-700 px-4 py-3 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="flex gap-2">
-                <button 
-                  className="w-3 h-3 rounded-full bg-red-500/70 hover:bg-red-500 transition-colors"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    setIsMinimized(!isMinimized)
-                  }}
-                />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
-                <div className="w-3 h-3 rounded-full bg-green-500/70" />
-              </div>
-              <span className="text-white/50 text-xs sm:text-sm font-mono ml-2">johnny@portfolio:~</span>
+      <motion.div className="bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden shadow-2xl">
+        {/* Barra de título do terminal */}
+        <div className="bg-slate-700 px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="flex gap-2">
+              <button 
+                className="w-3 h-3 rounded-full bg-red-500/70 hover:bg-red-500 transition-colors"
+                onClick={() => setIsMinimized(!isMinimized)}
+              />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
+              <div className="w-3 h-3 rounded-full bg-green-500/70" />
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleRestart}
-                className="text-white/50 hover:text-white transition-colors p-1"
-                title="Recomeçar animação"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
-                </svg>
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setIsMinimized(!isMinimized)
-                }}
-                className="text-white/50 hover:text-white transition-colors p-1"
-                title={isMinimized ? "Expandir" : "Minimizar"}
-              >
-                {isMinimized ? <FaAngleUp size={12} /> : <FaAngleDown size={12} />}
-              </button>
-            </div>
+            <span className="text-white/50 text-xs sm:text-sm font-mono ml-2">johnny@portfolio:~</span>
           </div>
-
-          {/* Conteúdo do terminal */}
-          <motion.div
-            className="overflow-hidden"
-            animate={{
-              height: isMinimized ? 0 : 'auto',
-              opacity: isMinimized ? 0 : 1
-            }}
-            transition={{
-              duration: 0.6,
-              ease: "easeInOut"
-            }}
+          <button
+            onClick={handleRestart}
+            className="text-white/50 hover:text-white transition-colors"
           >
-            <div className="p-6 sm:p-10 font-mono text-xs sm:text-sm md:text-base overflow-x-auto">
-              <motion.div
-                className="text-emerald-400"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <span className="text-purple-400">$</span> node portfolio.js
-              </motion.div>
-              <pre className="mt-4 whitespace-pre-wrap break-words">
-                <motion.div
-                  className="text-emerald-300"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  {text.split('\n').map((line, i) => {
-                    // Highlight keywords
-                    const coloredLine = line
-                      .replace(/(const|let|var|function|while|if|else|return|this)/g, '<span class="text-pink-400">$1</span>')
-                      .replace(/(".*?")/g, '<span class="text-amber-300">$1</span>')
-                      .replace(/(\{|\}|\[|\]|\(|\))/g, '<span class="text-blue-300">$1</span>')
-                      .replace(/(true|false|null|undefined)/g, '<span class="text-orange-400">$1</span>')
-                      .replace(/(\w+):/g, '<span class="text-sky-300">$1</span>:')
-                      .replace(/(\w+)\(/g, '<span class="text-yellow-200">$1</span>(')
-                      .replace(/(\/\/.+)$/g, '<span class="text-slate-500">$1</span>')
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
 
-                    return (
-                      <span 
-                        key={i} 
-                        dangerouslySetInnerHTML={{ __html: coloredLine + '\n' }}
-                      />
-                    )
-                  })}
-                  <motion.span
-                    className="inline-block w-2 h-4 bg-white/70 ml-1"
-                    animate={{ opacity: [1, 0] }}
-                    transition={{ duration: 0.8, repeat: Infinity }}
-                  />
-                </motion.div>
-              </pre>
+        {/* Conteúdo do terminal */}
+        <motion.div
+          className="overflow-hidden"
+          animate={{
+            height: isMinimized ? '0px' : 'auto',
+            opacity: isMinimized ? 0 : 1
+          }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+        >
+          <div className="p-6 sm:p-10 font-mono text-xs sm:text-sm md:text-base">
+            <div className="text-emerald-400">
+              <span className="text-purple-400">$</span> node portfolio.js
             </div>
-          </motion.div>
+            <pre className="mt-4 text-emerald-300 whitespace-pre-wrap">
+              {currentText}
+              <motion.span
+                className="inline-block w-2 h-4 bg-white/70 ml-1 align-middle"
+                animate={{ opacity: [1, 0] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+              />
+            </pre>
+          </div>
         </motion.div>
-      </AnimatePresence>
+      </motion.div>
 
-      {/* Elementos decorativos ao redor do terminal */}
+      {/* Elementos decorativos */}
       {!isMinimized && (
         <>
           <motion.div
