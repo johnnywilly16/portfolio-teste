@@ -1,4 +1,5 @@
-import { Box, Heading, Text, Button, Flex, Card, CardBody, Image, Stack, Tag } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 
 interface ProjectCardProps {
   title: string
@@ -18,85 +19,75 @@ export function ProjectCard({
   githubUrl
 }: ProjectCardProps) {
   return (
-    <Card
-      className="card-hover"
-      bg="whiteAlpha.100"
-      borderRadius="xl"
-      overflow="hidden"
+    <motion.div
+      className="card bg-white/80 dark:bg-dark-surface/80 shadow-xl group hover:shadow-2xl transition-all duration-300 backdrop-blur-sm rounded-xl overflow-hidden"
+      whileHover={{ 
+        y: -10,
+        scale: 1.02,
+        transition: { duration: 0.2 }
+      }}
     >
-      <CardBody>
+      <div className="p-6 space-y-4">
         {imageUrl && (
-          <Box mb={4} overflow="hidden" borderRadius="lg">
-            <Image
+          <div className="relative h-48 mb-4 overflow-hidden rounded-lg">
+            <img
               src={imageUrl}
               alt={title}
-              objectFit="cover"
-              w="100%"
-              h="200px"
-              transition="transform 0.3s ease"
-              _hover={{ transform: 'scale(1.05)' }}
+              className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
             />
-          </Box>
+          </div>
         )}
-        <Stack spacing={4}>
-          <Heading size="lg" bgGradient="linear(to-r, blue.400, purple.500)" bgClip="text">
-            {title}
-          </Heading>
-          <Text color="gray.300">{description}</Text>
+        
+        <h3 className="text-2xl font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text">
+          {title}
+        </h3>
+        
+        <p className="text-slate-600 dark:text-slate-300">
+          {description}
+        </p>
+        
+        <div className="flex flex-wrap gap-2">
+          {technologies.map((tech) => (
+            <motion.span
+              key={tech}
+              className="px-3 py-1 text-sm rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple"
+              whileHover={{ scale: 1.1 }}
+            >
+              {tech}
+            </motion.span>
+          ))}
+        </div>
+        
+        <div className="flex gap-4 pt-4">
+          {projectUrl && (
+            <motion.a
+              href={projectUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 font-semibold text-white rounded-lg bg-pastel-purple dark:bg-dark-purple hover:opacity-90 transition-opacity"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaExternalLinkAlt />
+              Demo
+            </motion.a>
+          )}
           
-          <Flex gap={2} wrap="wrap">
-            {technologies.map((tech) => (
-              <Tag
-                key={tech}
-                colorScheme="blue"
-                variant="subtle"
-                size="md"
-              >
-                {tech}
-              </Tag>
-            ))}
-          </Flex>
-          
-          <Flex gap={4}>
-            {projectUrl && (
-              <Button
-                as="a"
-                href={projectUrl}
-                target="_blank"
-                colorScheme="blue"
-                variant="solid"
-              >
-                Ver Projeto
-              </Button>
-            )}
-            {githubUrl && (
-              <Button
-                as="a"
-                href={githubUrl}
-                target="_blank"
-                variant="outline"
-                leftIcon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                  </svg>
-                }
-              >
-                GitHub
-              </Button>
-            )}
-          </Flex>
-        </Stack>
-      </CardBody>
-    </Card>
+          {githubUrl && (
+            <motion.a
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 font-semibold border-2 rounded-lg border-pastel-purple dark:border-dark-purple text-pastel-purple dark:text-dark-purple hover:bg-pastel-purple/10 dark:hover:bg-dark-purple/10 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaGithub />
+              Código
+            </motion.a>
+          )}
+        </div>
+      </div>
+    </motion.div>
   )
 } 
