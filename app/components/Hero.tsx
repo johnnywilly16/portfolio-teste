@@ -1,192 +1,393 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import anime from 'animejs'
 
 export function Hero() {
-  const starsContainerRef = useRef<HTMLDivElement>(null)
+  const doodlesRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (starsContainerRef.current) {
-      // Limpar estrelas existentes
-      while (starsContainerRef.current.firstChild) {
-        starsContainerRef.current.removeChild(starsContainerRef.current.firstChild)
-      }
+    if (!doodlesRef.current) return;
 
-      // Criar diferentes tipos de estrelas
-      const createStars = (count: number, className: string) => {
-        return Array.from({ length: count }).map(() => {
-          const star = document.createElement('div')
-          star.className = className
-          star.style.left = `${Math.random() * 100}%`
-          star.style.top = `${Math.random() * 100}%`
-          starsContainerRef.current?.appendChild(star)
-          return star
-        })
-      }
-
-      // Criar três tipos de estrelas com tamanhos diferentes
-      const smallStars = createStars(100, 'absolute w-1 h-1 rounded-full bg-white opacity-40')
-      const mediumStars = createStars(50, 'absolute w-1.5 h-1.5 rounded-full bg-white opacity-60')
-      const largeStars = createStars(20, 'absolute w-2 h-2 rounded-full bg-white opacity-80')
-
-      // Animação para estrelas pequenas
-      anime({
-        targets: smallStars,
-        opacity: [0.4, 0.8],
-        scale: [1, 1.2],
-        translateY: [-10, 10],
-        translateX: [-10, 10],
-        duration: () => anime.random(2000, 4000),
-        delay: () => anime.random(0, 2000),
-        loop: true,
-        direction: 'alternate',
-        easing: 'easeInOutQuad'
-      })
-
-      // Animação para estrelas médias
-      anime({
-        targets: mediumStars,
-        opacity: [0.6, 1],
-        scale: [1, 1.4],
-        translateY: [-15, 15],
-        translateX: [-15, 15],
-        boxShadow: [
-          '0 0 2px rgba(255,255,255,0.5)',
-          '0 0 4px rgba(255,255,255,0.8)',
-          '0 0 8px rgba(168,85,247,0.5)'
-        ],
-        duration: () => anime.random(3000, 5000),
-        delay: () => anime.random(0, 3000),
-        loop: true,
-        direction: 'alternate',
-        easing: 'easeInOutSine'
-      })
-
-      // Animação para estrelas grandes
-      anime({
-        targets: largeStars,
-        opacity: [0.8, 1],
-        scale: [1, 1.6],
-        translateY: [-20, 20],
-        translateX: [-20, 20],
-        boxShadow: [
-          '0 0 4px rgba(255,255,255,0.8)',
-          '0 0 8px rgba(255,255,255,1)',
-          '0 0 12px rgba(168,85,247,0.8)'
-        ],
-        duration: () => anime.random(4000, 6000),
-        delay: () => anime.random(0, 4000),
-        loop: true,
-        direction: 'alternate',
-        easing: 'easeInOutExpo'
-      })
+    // Limpa doodles existentes
+    while (doodlesRef.current.firstChild) {
+      doodlesRef.current.removeChild(doodlesRef.current.firstChild);
     }
+
+    const doodleTypes = [
+      "star", "circle", "squiggle", "cloud", "heart", "sun"
+    ];
+    const container = doodlesRef.current;
+    const containerRect = container.getBoundingClientRect();
+
+    // Cria 50 doodles
+    for (let i = 0; i < 50; i++) {
+      const doodleType = doodleTypes[Math.floor(Math.random() * doodleTypes.length)];
+      const img = document.createElement("img");
+      img.src = `/doodles/${doodleType}.svg`;
+      img.className = "doodle";
+      
+      // Posição aleatória
+      const x = Math.random() * (containerRect.width - 60);
+      const y = Math.random() * (containerRect.height - 60);
+      
+      img.style.left = `${x}px`;
+      img.style.top = `${y}px`;
+      
+      container.appendChild(img);
+    }
+
+    // Anima os doodles com mais variação
+    anime({
+      targets: ".doodle",
+      rotate: [
+        { value: () => anime.random(-15, 15), duration: 3000, easing: "easeInOutSine" },
+        { value: () => anime.random(-15, 15), duration: 3000, easing: "easeInOutSine" }
+      ],
+      scale: [
+        { value: () => anime.random(0.8, 1.2), duration: 2000, easing: "easeInOutQuad" },
+        { value: () => anime.random(0.8, 1.2), duration: 2000, easing: "easeInOutQuad" }
+      ],
+      opacity: [
+        { value: () => anime.random(0.4, 1), duration: 2000, easing: "easeInOutQuad" },
+        { value: () => anime.random(0.4, 1), duration: 2000, easing: "easeInOutQuad" }
+      ],
+      translateY: [
+        { value: () => anime.random(-20, 20), duration: 3000, easing: "easeInOutQuad" },
+        { value: () => anime.random(-20, 20), duration: 3000, easing: "easeInOutQuad" }
+      ],
+      translateX: [
+        { value: () => anime.random(-20, 20), duration: 3000, easing: "easeInOutQuad" },
+        { value: () => anime.random(-20, 20), duration: 3000, easing: "easeInOutQuad" }
+      ],
+      loop: true,
+      direction: "alternate",
+      delay: anime.stagger(100)
+    });
   }, [])
 
   return (
-    <>
-      {/* Container de estrelas com fundo gradiente */}
-      <div
-        ref={starsContainerRef}
-        className="fixed inset-0 z-0"
+    <div className="relative min-h-screen w-full overflow-hidden bg-white notebook-bg paper-texture">
+      {/* Fundo animado com gradiente */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-pastel-purple/5 via-pastel-pink/5 to-pastel-yellow/5"
+        animate={{
+          backgroundPosition: ['0% 0%', '100% 100%'],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear"
+        }}
         style={{
-          background: 'radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)'
+          backgroundSize: '200% 200%'
         }}
       />
 
-      {/* Conteúdo principal */}
-      <motion.section
-        className="relative min-h-screen flex items-center justify-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
+      {/* Container dos doodles com máscara de opacidade nas bordas */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white pointer-events-none z-10" />
+        <div ref={doodlesRef} className="absolute inset-0 z-0" />
+      </div>
+
+      {/* Mini Terminal */}
+      <motion.div 
+        className="terminal-container"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1 }}
       >
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center space-y-8">
-            <motion.h1 
-              className="text-8xl md:text-9xl font-bold tracking-tighter gradient-text"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.5 }}
-            >
-              JOHNNY
-              <style jsx global>{`
-                .gradient-text {
-                  background: linear-gradient(
-                    45deg,
-                    #A855F7,
-                    #E9D5FF,
-                    #A855F7
-                  );
-                  background-size: 200% 200%;
-                  animation: gradient 8s ease infinite;
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                }
+        {/* Monitor */}
+        <motion.div 
+          className="terminal-window"
+          animate={{
+            y: [-2, 2, -2],
+            rotate: [-1, 1, -1]
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          {/* Tela */}
+          <div className="terminal-screen">
+            {/* Terminal */}
+            <div className="overflow-hidden rounded-md">
+              <div className="terminal-header">
+                <div className="terminal-button bg-pastel-pink/50" />
+                <div className="terminal-button bg-pastel-yellow/50" />
+                <div className="terminal-button bg-pastel-purple/50" />
+              </div>
+              <div className="terminal-content">
+                <motion.div
+                  className="terminal-text"
+                  animate={{
+                    x: ["0%", "-50%"]
+                  }}
+                  transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "linear",
+                    repeatType: "loop"
+                  }}
+                >
+                  console.log("Hello World!"); npm install; git commit -m "feat: ✨" &nbsp;&nbsp;&nbsp;&nbsp;
+                  console.log("Hello World!"); npm install; git commit -m "feat: ✨"
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
-                @keyframes gradient {
-                  0% { background-position: 0% 50% }
-                  50% { background-position: 100% 50% }
-                  100% { background-position: 0% 50% }
-                }
-              `}</style>
-            </motion.h1>
+        {/* Base do Monitor */}
+        <motion.div 
+          className="w-8 h-8 bg-gradient-to-b from-pastel-purple/20 to-pastel-pink/20 mx-auto -mt-1 rounded-lg"
+          animate={{
+            scaleX: [1, 1.1, 1],
+            y: [0, -1, 0]
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="w-12 h-2 bg-pastel-purple/30 mx-auto mt-1 rounded-lg" />
+        </motion.div>
+      </motion.div>
 
-            <motion.p
-              className="text-xl md:text-2xl text-gray-300"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.8 }}
+      {/* Conteúdo Principal */}
+      <motion.div 
+        className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        <div className="space-y-6 md:space-y-8">
+          {/* Nome JOHNNY com efeitos */}
+          <motion.div className="flex justify-center space-x-2 md:space-x-4 mb-4 md:mb-8">
+            <motion.span
+              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
+              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
+              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, type: "spring", stiffness: 200 }}
+              whileHover={{ scale: 1.2, rotate: -10 }}
+              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
             >
-              Desenvolvedor Fullstack & UI/UX Designer
-            </motion.p>
+              J
+            </motion.span>
+            <motion.span
+              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
+              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
+              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, type: "spring", stiffness: 200 }}
+              whileHover={{ scale: 1.2, rotate: 10 }}
+              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
+            >
+              O
+            </motion.span>
+            <motion.span
+              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
+              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
+              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 200 }}
+              whileHover={{ scale: 1.2, rotate: -10 }}
+              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
+            >
+              H
+            </motion.span>
+            <motion.span
+              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
+              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
+              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, type: "spring", stiffness: 200 }}
+              whileHover={{ scale: 1.2, rotate: 10 }}
+              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
+            >
+              N
+            </motion.span>
+            <motion.span
+              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
+              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
+              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 200 }}
+              whileHover={{ scale: 1.2, rotate: -10 }}
+              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
+            >
+              N
+            </motion.span>
+            <motion.span
+              className="title-cartoon text-7xl md:text-8xl lg:text-9xl font-bold text-pastel-purple"
+              initial={{ y: 50, opacity: 0, scale: 0.5, rotate: -10 }}
+              animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, delay: 0.5, type: "spring", stiffness: 200 }}
+              whileHover={{ scale: 1.2, rotate: 10 }}
+              drag dragConstraints={{ top: -10, right: 10, bottom: 10, left: -10 }}
+            >
+              Y
+            </motion.span>
+          </motion.div>
 
-            <motion.div
-              className="flex justify-center gap-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1 }}
+          {/* Container do título */}
+          <div className="relative inline-block bg-white/10 backdrop-blur-sm rounded-xl px-4 md:px-6 py-2 md:py-3 border-2 border-dashed border-pastel-purple/50 hover:border-pastel-pink/50 transition-colors duration-300">
+            {/* Palavra "Desenvolvedor" */}
+            <span className="relative font-bold text-lg md:text-xl lg:text-3xl bg-gradient-to-r from-pastel-purple via-pastel-pink to-pastel-purple text-transparent bg-clip-text">
+              Desenvolvedor
+            </span>
+            
+            {/* Espaço animado */}
+            <motion.span
+              className="inline-block mx-1 md:mx-2 text-xl md:text-2xl"
+              animate={{ 
+                rotate: [0, 180]
+              }}
+              transition={{ 
+                duration: 8,
+                repeat: Infinity,
+                ease: "linear"
+              }}
             >
-              <motion.a
-                href="#projetos"
-                className="btn bg-purple-500 hover:bg-purple-600 border-none"
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: '0 0 20px rgba(168, 85, 247, 0.5)'
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Ver Projetos
-              </motion.a>
-              <motion.a
-                href="#contato"
-                className="btn btn-outline border-purple-500 text-purple-500 hover:bg-purple-500 hover:border-purple-500"
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: '0 0 20px rgba(168, 85, 247, 0.3)'
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contato
-              </motion.a>
-            </motion.div>
+              ⚡
+            </motion.span>
+
+            {/* Palavra "Fullstack" */}
+            <span className="relative font-bold text-lg md:text-xl lg:text-3xl bg-gradient-to-r from-pastel-pink via-pastel-purple to-pastel-pink text-transparent bg-clip-text">
+              Fullstack
+            </span>
           </div>
         </div>
+        
+        <motion.div
+          className="flex flex-col sm:flex-row gap-6 mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1 }}
+        >
+          {/* Botão Ver Projetos */}
+          <motion.a 
+            href="#projetos" 
+            className="relative group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {/* Efeito de sombra */}
+            <div className="absolute inset-0 bg-pastel-pink/30 rounded-xl transform translate-x-2 translate-y-2" />
+            
+            {/* Botão principal */}
+            <div className="relative px-8 py-4 bg-gradient-to-r from-pastel-purple to-pastel-pink rounded-xl overflow-hidden">
+              {/* Partículas flutuantes */}
+              <motion.div
+                className="absolute inset-0"
+                initial="initial"
+                animate="animate"
+                variants={{
+                  animate: {
+                    transition: {
+                      staggerChildren: 0.3
+                    }
+                  }
+                }}
+              >
+                {[...Array(3)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-2 h-2 bg-white/30 rounded-full"
+                    style={{
+                      left: `${20 + i * 30}%`,
+                      top: '50%'
+                    }}
+                    animate={{
+                      y: [-20, 20],
+                      opacity: [0.2, 0.5, 0.2],
+                      scale: [1, 1.2, 1]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: i * 0.4,
+                      ease: "easeInOut"
+                    }}
+                  />
+                ))}
+              </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div 
+              {/* Texto e ícone */}
+              <div className="relative flex items-center justify-center">
+                <span className="font-cartoon text-xl text-white group-hover:text-pastel-yellow transition-colors">
+                  Ver Projetos
+                </span>
+                
+                {/* Ícone de seta animado */}
+                <motion.div
+                  className="ml-2 text-white group-hover:text-pastel-yellow"
+                  animate={{
+                    x: [0, 5, 0],
+                    rotate: [0, 10, 0]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  →
+                </motion.div>
+              </div>
+
+              {/* Efeito de brilho no hover */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full"
+                animate={{
+                  x: ['0%', '200%']
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "linear",
+                  repeatDelay: 0.5
+                }}
+              />
+            </div>
+          </motion.a>
+          
+          {/* Botão Contato */}
+          <motion.a 
+            href="#contato"
+            className="relative group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {/* Efeito de sombra */}
+            <div className="absolute inset-0 bg-pastel-purple/30 rounded-xl transform translate-x-2 translate-y-2" />
+            
+            {/* Botão principal */}
+            <div className="relative px-8 py-4 bg-pastel-purple rounded-xl">
+              <span className="font-cartoon text-xl text-white group-hover:text-pastel-yellow transition-colors">
+                Contato
+              </span>
+            </div>
+          </motion.a>
+        </motion.div>
+
+        {/* Scroll Indicator */}
+        <motion.div
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.2 }}
+          transition={{ delay: 1.5 }}
         >
-          <div className="w-6 h-10 border-2 border-purple-500 rounded-full p-1">
-            <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce mx-auto" />
-          </div>
+          <motion.div
+            className="w-6 h-10 border-3 border-pastel-purple rounded-full p-2"
+            animate={{ y: [0, 5, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+          >
+            <div className="w-2 h-2 bg-pastel-purple rounded-full mx-auto" />
+          </motion.div>
         </motion.div>
-      </motion.section>
-    </>
+      </motion.div>
+    </div>
   )
 } 

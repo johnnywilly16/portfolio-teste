@@ -5,78 +5,65 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "node_modules/flowbite-react/lib/esm/**/*.js",
   ],
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        cartoon: ['var(--font-cartoon)', 'cursive'],
+        handwriting: ['var(--font-handwriting)', 'cursive'],
+      },
       colors: {
-        primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-          950: '#082f49',
+        // Cores para o tema claro (tons pastéis)
+        pastel: {
+          purple: '#B39DDB', // Roxo suave
+          pink: '#F8BBD0',   // Rosa suave
+          blue: '#90CAF9',   // Azul suave
+          yellow: '#FFE082', // Amarelo suave
+          green: '#A5D6A7',  // Verde suave
+          bg: '#F3E5F5',     // Fundo roxo bem claro
         },
-        secondary: {
-          50: '#f0f7ff',
-          100: '#e0f0ff',
-          200: '#bae2ff',
-          300: '#7dcfff',
-          400: '#38beff',
-          500: '#0ea5ff',
-          600: '#0284e7',
-          700: '#0369c1',
-          800: '#075995',
-          900: '#0c4a6e',
-          950: '#082f49',
+        // Cores para o tema escuro (tons neon mais vibrantes)
+        neon: {
+          purple: '#A855F7', // Roxo neon mais vibrante
+          pink: '#EC4899',   // Rosa neon mais vibrante
+          blue: '#3B82F6',   // Azul neon mais vibrante
+          yellow: '#EAB308', // Amarelo neon mais vibrante
+          green: '#22C55E',  // Verde neon mais vibrante
+          bg: '#6D28D9',     // Fundo roxo escuro mais vibrante
         },
+        paper: {
+          light: '#F3E5F5',  // Fundo roxo claro
+          DEFAULT: '#E1BEE7', // Fundo roxo médio
+          dark: '#CE93D8',    // Fundo roxo escuro
+        }
+      },
+      backgroundImage: {
+        'notebook-lines': "repeating-linear-gradient(transparent, transparent 27px, rgba(179, 157, 219, 0.3) 28px)",
+        'doodle-pattern': "url('/patterns/doodle-bg.png')",
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-in-out',
+        'wiggle': 'wiggle 1s ease-in-out infinite',
+        'bounce-slow': 'bounce 3s ease-in-out infinite',
+        'float': 'float 6s ease-in-out infinite',
       },
       keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
         },
-        slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
       },
+      boxShadow: {
+        'crayon': '4px 4px 0 rgba(179, 157, 219, 0.4)',
+        'paper': '8px 8px 0 rgba(179, 157, 219, 0.2)',
+      }
     },
   },
-  plugins: [
-    require('flowbite/plugin'),
-    require("daisyui")
-  ],
-  daisyui: {
-    themes: [
-      {
-        mytheme: {
-          "primary": "#0ea5e9",
-          "secondary": "#0ea5ff",
-          "accent": "#4F46E5",
-          "neutral": "#1F2937",
-          "base-100": "#111827",
-          "base-200": "#1a2234",
-          "base-300": "#232b3b",
-          "info": "#3ABFF8",
-          "success": "#36D399",
-          "warning": "#FBBD23",
-          "error": "#F87272",
-        },
-      },
-    ],
-  },
+  plugins: [],
 }
 
 export default config;

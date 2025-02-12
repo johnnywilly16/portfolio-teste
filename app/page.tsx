@@ -7,6 +7,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import anime from 'animejs'
 import { Header } from './components/Header'
+import { MobileMenu } from './components/MobileMenu'
 import { Hero } from './components/Hero'
 import { Footer } from './components/Footer'
 
@@ -183,6 +184,7 @@ export default function Home() {
   return (
     <>
       <Header />
+      <MobileMenu />
       
       <main>
         <Hero />

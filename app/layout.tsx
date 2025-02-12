@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
-import { Inter, Great_Vibes } from "next/font/google";
+import { Comic_Neue, Indie_Flower } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
-const inter = Inter({ subsets: ["latin"] });
-const cursive = Great_Vibes({ 
+const comicNeue = Comic_Neue({ 
+  weight: ['300', '400', '700'],
+  subsets: ["latin"],
+  variable: '--font-cartoon'
+});
+
+const indieFlower = Indie_Flower({ 
   weight: "400",
   subsets: ["latin"],
-  variable: '--font-cursive'
+  variable: '--font-handwriting'
 });
 
 export const metadata: Metadata = {
-  title: "Johnny Willy - Desenvolvedor Fullstack",
-  description: "Portfólio profissional de Johnny Willy, desenvolvedor fullstack especializado em soluções web modernas.",
+  title: "JOHNNY - Desenvolvedor Fullstack",
+  description: "Portfólio profissional de JOHNNY, desenvolvedor fullstack especializado em soluções web modernas.",
 };
 
 export default function RootLayout({
@@ -21,12 +26,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="dark">
-      <body className={`${inter.className} ${cursive.variable} bg-gray-900 text-gray-100`}>
+    <html lang="pt-BR" suppressHydrationWarning>
+      <body className={`${comicNeue.variable} ${indieFlower.variable} font-cartoon bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300`}>
         <Providers>
-          <main className="flex min-h-screen flex-col">
-            {children}
-          </main>
+          {children}
         </Providers>
       </body>
     </html>

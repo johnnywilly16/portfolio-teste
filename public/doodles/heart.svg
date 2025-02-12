@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 35 L5 20 C0 15, 0 5, 10 5 C15 5, 20 10, 20 10 C20 10, 25 5, 30 5 C40 5, 40 15, 35 20 L20 35" 
+    stroke="currentColor" 
+    stroke-width="2.5"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-dasharray="6,6"
+  >
+    <animate attributeName="stroke-dashoffset" 
+      from="0" 
+      to="24" 
+      dur="3s" 
+      repeatCount="indefinite" 
+    />
+  </path>
+</svg> 
