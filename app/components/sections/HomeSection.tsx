@@ -92,21 +92,21 @@ desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
     >
       <motion.div
         ref={terminalRef}
-        className="bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all duration-300"
+        className="bg-white dark:bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all duration-300"
       >
         {/* Barra de título do terminal */}
-        <div className="bg-slate-700 px-4 py-3 flex items-center justify-between">
+        <div className="bg-white dark:bg-slate-700 px-4 py-3 flex items-center justify-between border-b-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30">
           <div className="flex items-center gap-2">
             <div className="flex gap-2">
               <div className="w-3 h-3 rounded-full bg-red-500/70" />
               <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
               <div className="w-3 h-3 rounded-full bg-green-500/70" />
             </div>
-            <span className="text-white/50 text-xs sm:text-sm font-mono ml-2">johnny@portfolio:~</span>
+            <span className="text-pastel-purple/50 dark:text-white/50 text-xs sm:text-sm font-mono ml-2">johnny@portfolio:~</span>
           </div>
           <button
             onClick={handleRestart}
-            className="text-white/50 hover:text-white transition-colors p-1"
+            className="text-pastel-purple/50 dark:text-white/50 hover:text-pastel-purple dark:hover:text-white transition-colors p-1"
             title="Recomeçar animação"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -118,18 +118,18 @@ desenvolvedor.criarCoisasIncríveis() // Iniciando a mágica... ✨`
         {/* Conteúdo do terminal */}
         <div className="p-6 sm:p-8 font-mono text-sm sm:text-base">
           <motion.div
-            className="text-emerald-400"
+            className="text-pastel-purple dark:text-emerald-400"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="text-purple-400">$</span> node portfolio.js
+            <span className="text-pastel-pink dark:text-purple-400">$</span> node portfolio.js
           </motion.div>
-          <div className="mt-6 whitespace-pre-wrap break-words text-emerald-300 max-w-full" style={{ tabSize: 4 }}>
+          <div className="mt-6 whitespace-pre-wrap break-words text-pastel-purple dark:text-emerald-300 max-w-full" style={{ tabSize: 4 }}>
             {text}
             {showCursor && (
               <motion.span 
-                className="inline-block w-2 h-5 bg-white/70 ml-1 align-middle"
+                className="inline-block w-2 h-5 bg-pastel-purple/70 dark:bg-white/70 ml-1 align-middle"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
