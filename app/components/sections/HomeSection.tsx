@@ -162,7 +162,7 @@ const CodeTerminal = () => {
                 <span className="text-purple-400">$</span> node portfolio.js
               </motion.div>
               <pre className="mt-4 whitespace-pre-wrap break-words">
-                <motion.span
+                <motion.div
                   className="text-emerald-300"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -186,12 +186,12 @@ const CodeTerminal = () => {
                       />
                     )
                   })}
-                </motion.span>
-                <motion.span
-                  className="inline-block w-2 h-4 bg-white/70 ml-1"
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ duration: 0.8, repeat: Infinity }}
-                />
+                  <motion.span
+                    className="inline-block w-2 h-4 bg-white/70 ml-1"
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ duration: 0.8, repeat: Infinity }}
+                  />
+                </motion.div>
               </pre>
             </div>
           </motion.div>
