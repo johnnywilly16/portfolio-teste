@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { FaLinkedin, FaEnvelope, FaWhatsapp } from 'react-icons/fa'
 import { TerminalTitle } from './HomeSection'
+import { IconType } from 'react-icons'
 
 // Componente de bolhas flutuantes
 const FloatingBubbles = () => (
@@ -40,7 +41,7 @@ const ContactTerminal = ({
   delay = 0,
   command
 }: { 
-  icon: React.ComponentType, 
+  icon: IconType, 
   title: string, 
   value: string,
   link: string,
