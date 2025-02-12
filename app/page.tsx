@@ -80,7 +80,7 @@ export default function Home() {
     if (containerRef.current) {
       const cards = containerRef.current.querySelectorAll('.project-card')
       
-      cards.forEach((card, index) => {
+      cards.forEach((card) => {
         gsap.from(card, {
           scrollTrigger: {
             trigger: card,
