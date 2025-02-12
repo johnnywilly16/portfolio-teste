@@ -90,8 +90,8 @@ export function Header() {
                   <motion.a
                     key={item}
                     href={`#${item.toLowerCase()}`}
-                    className="relative px-4 py-2 text-lg font-bold group"
-                    whileHover={{ y: -4, scale: 1.1 }}
+                    className="relative px-4 py-2 text-lg font-bold border-2 border-dashed border-pastel-purple/50 dark:border-dark-purple/50 rounded-xl group overflow-hidden"
+                    whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -102,39 +102,16 @@ export function Header() {
                       stiffness: 300
                     }}
                   >
-                    <motion.div 
-                      className="absolute -inset-1 rounded-xl border-4 border-dashed border-pastel-purple/50 dark:border-neon-purple/50"
-                      initial={{ opacity: 0 }}
-                      whileHover={{ 
-                        opacity: 1,
-                        rotate: [0, 360]
-                      }}
-                      transition={{
-                        rotate: {
-                          duration: 20,
-                          repeat: Infinity,
-                          ease: "linear"
-                        }
-                      }}
-                    />
-                    
+                    {/* Fundo branco que aparece no hover */}
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-pastel-purple/20 to-pastel-pink/20 dark:from-neon-purple/20 dark:to-neon-pink/20 rounded-xl -z-10"
-                      initial={{ scale: 0 }}
-                      whileHover={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 300 }}
+                      className="absolute inset-0 bg-white dark:bg-dark-surface -z-10"
+                      initial={{ y: "100%" }}
+                      whileHover={{ y: 0 }}
+                      transition={{ duration: 0.2 }}
                     />
                     
-                    <span className="font-cartoon relative">
-                      <span className="relative z-10 text-pastel-purple dark:text-neon-purple group-hover:text-pastel-pink dark:group-hover:text-neon-pink transition-colors">
-                        {item}
-                      </span>
-                      <motion.div
-                        className="absolute bottom-0 left-0 w-full h-0.5 bg-pastel-purple/30 dark:bg-neon-purple/30"
-                        initial={{ scaleX: 0 }}
-                        whileHover={{ scaleX: 1 }}
-                        transition={{ duration: 0.2 }}
-                      />
+                    <span className="relative text-pastel-purple/70 dark:text-dark-purple/70 group-hover:text-pastel-purple dark:group-hover:text-dark-purple transition-colors">
+                      {item}
                     </span>
                   </motion.a>
                 ))}
