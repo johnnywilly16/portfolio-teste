@@ -9,7 +9,7 @@ import { TerminalTitle } from './HomeSection'
 
 // Componente de bolhas flutuantes
 const FloatingBubbles = ({ color }: { color: string }) => (
-  <div className="absolute inset-0 overflow-hidden">
+  <div className="absolute inset-0 overflow-hidden -z-20">
     {[...Array(6)].map((_, i) => (
       <motion.div
         key={i}

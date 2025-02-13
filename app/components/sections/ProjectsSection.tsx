@@ -1,6 +1,5 @@
-import { motion, LazyMotion, m } from 'framer-motion'
-import { useState, useMemo } from 'react'
-import { FaGithub, FaExternalLinkAlt, FaAngleDown, FaAngleUp } from 'react-icons/fa'
+import { useState, useEffect, useRef } from 'react'
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 import { 
   SiNextdotjs, 
   SiNodedotjs, 
@@ -15,7 +14,7 @@ import {
   SiD3Dotjs
 } from 'react-icons/si'
 import { TerminalTitle } from './HomeSection'
-import { domAnimation } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const projects = [
   {
@@ -75,119 +74,232 @@ const projects = [
   }
 ]
 
-// Componente de estrela flutuante
-const FloatingStar = ({ delay = 0, size = 20, top, left }: { delay: number, size?: number, top: string, left: string }) => (
+const cardVariants = {
+  hidden: { 
+    opacity: 0,
+    y: 20,
+    scale: 0.95
+  },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.4,
+      delay: index * 0.1,
+      ease: [0.215, 0.61, 0.355, 1]
+    }
+  })
+}
+
+// Componente de estrela de fundo
+const BackgroundStar = ({ delay = 0, size = 20, top, left }: { delay: number, size?: number, top: string, left: string }) => (
   <motion.div
-    className="absolute text-pastel-yellow dark:text-dark-yellow will-change-transform pointer-events-none"
+    className="absolute text-pastel-yellow dark:text-dark-yellow pointer-events-none -z-10"
     style={{ 
       top, 
       left, 
-      fontSize: size,
-      transform: 'translate3d(0,0,0)'
+      fontSize: size
     }}
-    initial={{ opacity: 0.3, scale: 0.5 }}
     animate={{ 
-      opacity: [0.3, 1, 0.3],
-      scale: [0.5, 1, 0.5],
-      rotate: 360
+      rotate: 360,
+      scale: [1, 1.2, 1],
+      opacity: [0.6, 0.8, 0.6]
     }}
     transition={{
-      duration: 3,
-      delay,
-      repeat: Infinity,
-      ease: "linear"
+      rotate: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "linear"
+      },
+      scale: {
+        duration: 1.5,
+        repeat: Infinity,
+        repeatType: "reverse",
+        ease: "easeInOut",
+        delay
+      },
+      opacity: {
+        duration: 1.5,
+        repeat: Infinity,
+        repeatType: "reverse",
+        ease: "easeInOut",
+        delay
+      }
     }}
   >
     ⭐
   </motion.div>
 )
 
-// Card de Projeto Expandível
+// Card de Projeto
 const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
-  const [isExpanded, setIsExpanded] = useState(false)
-
-  // Memoize os elementos que não mudam
-  const cardHeader = useMemo(() => (
-    <div className="flex items-center gap-4">
-      <motion.div
-        className="relative text-4xl sm:text-5xl"
-        animate={{ 
-          rotate: isExpanded ? [0, -10, 10, 0] : 0,
-          scale: isExpanded ? [1, 1.2, 1] : 1
-        }}
-        transition={{ duration: 0.5 }}
-        layoutId={`emoji-${project.title}`}
-      >
-        {project.emoji}
-        <motion.div
-          className="absolute -top-2 -right-2 text-xl text-yellow-400"
-          animate={{ 
-            scale: [1, 1.2, 1],
-            rotate: 360
-          }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          ✨
-        </motion.div>
-      </motion.div>
-      <div>
-        <h3 className="text-xl sm:text-2xl font-cartoon font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text">
-          {project.title}
-        </h3>
-        <span className="text-sm text-pastel-purple/70 dark:text-dark-purple/70 font-cartoon">
-          {project.category}
-        </span>
-      </div>
-    </div>
-  ), [project.title, project.emoji, project.category, isExpanded])
-
-  // Memoize o conteúdo expandido
-  const expandedContent = useMemo(() => (
-    <motion.div
-      initial={false}
-      animate={{
-        height: isExpanded ? 'auto' : 0,
-        opacity: isExpanded ? 1 : 0
+  return (
+    <motion.div 
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ 
+        once: true,
+        margin: "-50px",
+        amount: 0.3
       }}
-      className="overflow-hidden will-change-transform"
-      style={{ 
-        transform: 'translate3d(0,0,0)',
-        backfaceVisibility: 'hidden'
-      }}
-      transition={{ 
-        height: { duration: 0.3, ease: 'easeOut' },
-        opacity: { duration: 0.2 }
-      }}
+      custom={index}
+      className="relative bg-white/90 dark:bg-dark-surface/90 rounded-[2rem] border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-[1.02] will-change-transform"
     >
-      <div className="p-6 sm:p-8 pt-0 space-y-6">
-        <div className="border-t-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30" />
+      <motion.div 
+        className="p-6 sm:p-8 space-y-6"
+        initial={{ opacity: 0 }}
+        whileInView={{ 
+          opacity: 1,
+          transition: {
+            duration: 0.3,
+            delay: index * 0.1
+          }
+        }}
+        viewport={{ once: true }}
+      >
+        {/* Cabeçalho */}
+        <div className="flex items-center gap-4">
+          <motion.div 
+            className="relative text-4xl sm:text-5xl"
+            animate={{ 
+              rotate: [-5, 5],
+              y: [-2, 2]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }}
+          >
+            {project.emoji}
+            <motion.div 
+              className="absolute -top-2 -right-2 text-xl text-yellow-400"
+              animate={{ 
+                scale: [1, 1.2, 1],
+                rotate: [0, 360],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            >
+              ✨
+            </motion.div>
+          </motion.div>
+          <div>
+            <motion.h3 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ 
+                opacity: 1, 
+                x: 0,
+                transition: {
+                  duration: 0.3,
+                  delay: index * 0.1 + 0.1
+                }
+              }}
+              viewport={{ once: true }}
+              className="text-xl sm:text-2xl font-cartoon font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text cursor-default"
+            >
+              {project.title}
+            </motion.h3>
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ 
+                opacity: 1, 
+                scale: 1,
+                transition: {
+                  duration: 0.3,
+                  delay: index * 0.1 + 0.15
+                }
+              }}
+              viewport={{ once: true }}
+              className="inline-flex px-3 py-1 rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple font-cartoon text-sm border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 cursor-default"
+            >
+              {project.category}
+            </motion.span>
+          </div>
+        </div>
 
-        <div className="flex flex-wrap gap-2">
-          {project.technologies.map((tech) => (
+        {/* Descrição */}
+        <motion.p 
+          initial={{ opacity: 0 }}
+          whileInView={{ 
+            opacity: 1,
+            transition: {
+              duration: 0.3,
+              delay: index * 0.1 + 0.2
+            }
+          }}
+          viewport={{ once: true }}
+          className="text-slate-600 dark:text-slate-300 font-cartoon leading-relaxed"
+        >
+          {project.description}
+        </motion.p>
+
+        {/* Tecnologias */}
+        <motion.div 
+          className="flex flex-wrap gap-2"
+          initial={{ opacity: 0 }}
+          whileInView={{ 
+            opacity: 1,
+            transition: {
+              duration: 0.3,
+              delay: index * 0.1 + 0.25
+            }
+          }}
+          viewport={{ once: true }}
+        >
+          {project.technologies.map((tech, techIndex) => (
             <motion.span
               key={tech.name}
-              className="px-4 py-2 rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple font-cartoon text-sm border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 flex items-center gap-2"
-              whileHover={{ scale: 1.1 }}
-              layout
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ 
+                opacity: 1, 
+                scale: 1,
+                transition: {
+                  duration: 0.2,
+                  delay: (index * 0.1) + (techIndex * 0.05) + 0.25
+                }
+              }}
+              viewport={{ once: true }}
+              className="px-3 py-1.5 rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple font-cartoon text-sm border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 flex items-center gap-2 hover:bg-pastel-purple/20 dark:hover:bg-dark-purple/20 transition-colors cursor-default"
             >
               <tech.icon className="w-4 h-4" />
               {tech.name}
             </motion.span>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="flex flex-wrap gap-4">
+        {/* Links */}
+        <motion.div 
+          className="flex flex-wrap gap-4 pt-2"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ 
+            opacity: 1, 
+            y: 0,
+            transition: {
+              duration: 0.3,
+              delay: index * 0.1 + 0.3
+            }
+          }}
+          viewport={{ once: true }}
+        >
           {project.projectUrl && (
             <motion.a
               href={project.projectUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 font-cartoon font-bold text-white rounded-xl bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink hover:opacity-90 transition-opacity"
+              className="z-50 inline-flex items-center gap-2 px-5 py-2.5 font-cartoon font-bold text-white rounded-xl bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink hover:opacity-90 transform hover:scale-105 transition-all duration-300 cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <FaExternalLinkAlt />
-              Ver Projeto
+              <FaExternalLinkAlt className="text-sm" />
+              <span>Ver Projeto</span>
             </motion.a>
           )}
           
@@ -196,118 +308,70 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 font-cartoon font-bold text-pastel-purple dark:text-dark-purple rounded-xl border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 hover:bg-pastel-purple/10 dark:hover:bg-dark-purple/10 transition-colors"
+              className="z-50 inline-flex items-center gap-2 px-5 py-2.5 font-cartoon font-bold text-pastel-purple dark:text-dark-purple rounded-xl border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 hover:bg-pastel-purple/10 dark:hover:bg-dark-purple/10 transform hover:scale-105 transition-all duration-300 cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <FaGithub />
-              Ver Código
+              <FaGithub className="text-sm" />
+              <span>Ver Código</span>
             </motion.a>
           )}
-        </div>
-      </div>
-    </motion.div>
-  ), [isExpanded, project.technologies, project.projectUrl, project.githubUrl])
-
-  return (
-    <motion.div
-      className="relative"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ 
-        opacity: 1, 
-        y: 0,
-        transition: { delay: index * 0.2 }
-      }}
-      viewport={{ once: true }}
-    >
-      <LazyMotion features={domAnimation}>
-        <m.div
-          className={`bg-white/90 dark:bg-dark-surface/90 rounded-[2rem] border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden transition-all duration-500 ${isExpanded ? 'shadow-2xl scale-[1.02]' : 'shadow-xl hover:shadow-2xl hover:scale-[1.01]'}`}
-          style={{ 
-            transform: 'translate3d(0,0,0)',
-            backfaceVisibility: 'hidden',
-            willChange: 'transform'
-          }}
-        >
-          <m.button
-            className="w-full text-left p-6 sm:p-8 focus:outline-none"
-            onClick={() => setIsExpanded(!isExpanded)}
-            type="button"
-            aria-expanded={isExpanded}
-          >
-            <div className="flex items-center justify-between mb-4">
-              {cardHeader}
-              <motion.div
-                animate={{ rotate: isExpanded ? 180 : 0 }}
-                className="text-pastel-purple dark:text-dark-purple text-2xl"
-                transition={{ duration: 0.3 }}
-              >
-                {isExpanded ? <FaAngleUp /> : <FaAngleDown />}
-              </motion.div>
-            </div>
-
-            <p className="text-slate-600 dark:text-slate-300 font-cartoon leading-relaxed">
-              {project.description}
-            </p>
-          </m.button>
-
-          {expandedContent}
-        </m.div>
-      </LazyMotion>
-
-      <motion.div
-        className="absolute -top-2 -right-2 text-2xl pointer-events-none"
-        animate={{ 
-          rotate: [0, 360],
-          scale: [1, 1.2, 1]
-        }}
-        transition={{ duration: 5, repeat: Infinity }}
-      >
-        ✨
-      </motion.div>
-      <motion.div
-        className="absolute -bottom-2 -left-2 text-2xl pointer-events-none"
-        animate={{ 
-          rotate: [-10, 10],
-          scale: [1, 1.1, 1]
-        }}
-        transition={{ duration: 3, repeat: Infinity }}
-      >
-        ⭐
+        </motion.div>
       </motion.div>
     </motion.div>
   )
 }
 
 export function ProjectsSection() {
-  const [stars] = useState(() => 
-    Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      top: `${Math.random() * 100}%`,
-      left: `${Math.random() * 100}%`,
-      delay: Math.random() * 2
-    }))
-  )
+  const stars = Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    top: `${Math.random() * 100}%`,
+    left: `${Math.random() * 100}%`,
+    delay: Math.random() * 2
+  }))
 
   return (
-    <section id="projetos" className="min-h-screen py-20 bg-gradient-to-b from-pastel-purple/5 via-white/80 to-pastel-purple/10 dark:from-dark-purple/5 dark:via-dark-surface/80 dark:to-dark-purple/10 backdrop-blur-sm relative overflow-hidden">
+    <section 
+      id="projetos" 
+      className="relative min-h-screen py-20 bg-gradient-to-b from-pastel-purple/5 via-white/80 to-pastel-purple/10 dark:from-dark-purple/5 dark:via-dark-surface/80 dark:to-dark-purple/10 backdrop-blur-sm"
+    >
       {/* Background com estrelas */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 -z-10 pointer-events-none">
         {stars.map((star) => (
-          <FloatingStar key={star.id} delay={star.delay} top={star.top} left={star.left} />
+          <BackgroundStar 
+            key={star.id} 
+            delay={star.delay} 
+            top={star.top} 
+            left={star.left} 
+          />
         ))}
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Título */}
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ 
+            opacity: 1, 
+            y: 0,
+            transition: { 
+              duration: 0.5,
+              ease: "easeOut"
+            }
+          }}
+          viewport={{ once: true, margin: "-50px" }}
+        >
           <TerminalTitle title="Meus Projetos" isActive={true} />
-        </div>
+        </motion.div>
 
         {/* Lista de Projetos */}
         <div className="max-w-4xl mx-auto space-y-8">
           {projects.map((project, index) => (
-            <ProjectCard key={project.title} project={project} index={index} />
+            <div key={project.title} className="relative">
+              <ProjectCard project={project} index={index} />
+            </div>
           ))}
         </div>
       </div>

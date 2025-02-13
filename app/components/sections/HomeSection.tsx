@@ -170,7 +170,7 @@ desenvolvedor.criarCoisasIncriveis() // ✨`
 
 // Componente de nuvens flutuantes
 const FloatingClouds = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+  <div className="absolute inset-0 overflow-hidden pointer-events-none -z-20">
     {[...Array(6)].map((_, i) => (
       <motion.div
         key={i}
@@ -200,7 +200,7 @@ const FloatingClouds = () => (
 
 // Componente de bolhas flutuantes
 const FloatingBubbles = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+  <div className="absolute inset-0 overflow-hidden pointer-events-none -z-20">
     {[...Array(15)].map((_, i) => (
       <motion.div
         key={i}

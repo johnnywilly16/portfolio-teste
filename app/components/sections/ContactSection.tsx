@@ -5,7 +5,7 @@ import { IconType } from 'react-icons'
 
 // Componente de bolhas flutuantes
 const FloatingBubbles = () => (
-  <div className="absolute inset-0 overflow-hidden">
+  <div className="absolute inset-0 overflow-hidden -z-20">
     {[...Array(15)].map((_, i) => (
       <motion.div
         key={i}
