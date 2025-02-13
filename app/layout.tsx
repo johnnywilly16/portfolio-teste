@@ -18,11 +18,7 @@ const indieFlower = Indie_Flower({
 export const metadata: Metadata = {
   title: "JOHNNY - Desenvolvedor Fullstack",
   description: "Portfólio profissional de JOHNNY, desenvolvedor fullstack especializado em soluções web modernas.",
-  manifest: '/manifest.json',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#F5F3FF' },
-    { media: '(prefers-color-scheme: dark)', color: '#1A1625' }
-  ],
+  manifest: '/manifest.json'
 };
 
 export const viewport: Viewport = {
@@ -30,6 +26,10 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#F5F3FF' },
+    { media: '(prefers-color-scheme: dark)', color: '#1A1625' }
+  ]
 };
 
 export default function RootLayout({
