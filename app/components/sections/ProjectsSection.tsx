@@ -229,16 +229,11 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
             willChange: 'transform'
           }}
         >
-          <m.div
-            className="p-6 sm:p-8"
+          <m.button
+            className="w-full text-left p-6 sm:p-8 focus:outline-none"
             onClick={() => setIsExpanded(!isExpanded)}
-            role="button"
-            tabIndex={0}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                setIsExpanded(!isExpanded)
-              }
-            }}
+            type="button"
+            aria-expanded={isExpanded}
           >
             <div className="flex items-center justify-between mb-4">
               {cardHeader}
@@ -254,14 +249,14 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
             <p className="text-slate-600 dark:text-slate-300 font-cartoon leading-relaxed">
               {project.description}
             </p>
-          </m.div>
+          </m.button>
 
           {expandedContent}
         </m.div>
       </LazyMotion>
 
       <motion.div
-        className="absolute -top-2 -right-2 text-2xl"
+        className="absolute -top-2 -right-2 text-2xl pointer-events-none"
         animate={{ 
           rotate: [0, 360],
           scale: [1, 1.2, 1]
@@ -271,7 +266,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
         ✨
       </motion.div>
       <motion.div
-        className="absolute -bottom-2 -left-2 text-2xl"
+        className="absolute -bottom-2 -left-2 text-2xl pointer-events-none"
         animate={{ 
           rotate: [-10, 10],
           scale: [1, 1.1, 1]
