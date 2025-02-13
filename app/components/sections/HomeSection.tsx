@@ -8,7 +8,7 @@ const CodeTerminal = () => {
   const [isTyping, setIsTyping] = useState(false)
   const terminalRef = useRef<HTMLDivElement>(null)
   
-  const codeText = `$ node portfolio.js
+  const codeText = `$ johnny portfolio
 
 const desenvolvedor = {
     nome: "Johnny",
@@ -123,25 +123,28 @@ desenvolvedor.criarCoisasIncríveis() // ✨`
 
         {/* Conteúdo do terminal */}
         <div className="p-6 sm:p-8 font-mono text-sm sm:text-base">
-          <motion.div
-            className="text-pastel-purple dark:text-emerald-400"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="text-pastel-pink dark:text-purple-400">$</span> node portfolio.js
-          </motion.div>
-          <div className="mt-6 whitespace-pre text-pastel-purple dark:text-emerald-300 max-w-full" style={{ tabSize: 4 }}>
-            {text}
-            {showCursor && (
-              <motion.span 
-                className="inline-block w-2 h-5 bg-pastel-purple/70 dark:bg-white/70 ml-1 align-middle"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-            )}
+          <div className="mt-6 whitespace-pre">
+            <span className="text-pastel-pink dark:text-purple-400">$</span>
+            <span className="text-pastel-purple dark:text-emerald-300"> johnny portfolio</span>
+            <div className="text-pastel-purple dark:text-emerald-300 mt-4">
+              {text.substring(text.indexOf('const'))}
+              {isTyping && (
+                <motion.span 
+                  className="inline-block w-2 h-5 bg-pastel-purple/70 dark:bg-white/70 ml-1 align-middle"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+              {!isTyping && showCursor && (
+                <motion.span 
+                  className="inline-block w-2 h-5 bg-pastel-purple/70 dark:bg-white/70 ml-1 align-middle"
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ duration: 0.5, repeat: Infinity }}
+                />
+              )}
+            </div>
           </div>
         </div>
       </motion.div>
