@@ -76,17 +76,15 @@ const projects = [
 const cardVariants = {
   hidden: { 
     opacity: 0,
-    y: 20,
-    scale: 0.95
+    y: 20
   },
   visible: (index: number) => ({
     opacity: 1,
     y: 0,
-    scale: 1,
     transition: {
-      duration: 0.4,
+      duration: 0.3,
       delay: index * 0.1,
-      ease: [0.215, 0.61, 0.355, 1]
+      ease: "easeOut"
     }
   })
 }
@@ -140,153 +138,51 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
       whileInView="visible"
       viewport={{ 
         once: true,
-        margin: "-50px",
-        amount: 0.3
+        margin: "0px",
+        amount: 0.1
       }}
       custom={index}
       className="relative bg-white/90 dark:bg-dark-surface/90 rounded-[2rem] border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-[1.02] will-change-transform"
     >
-      <motion.div 
-        className="p-6 sm:p-8 space-y-6"
-        initial={{ opacity: 0 }}
-        whileInView={{ 
-          opacity: 1,
-          transition: {
-            duration: 0.3,
-            delay: index * 0.1
-          }
-        }}
-        viewport={{ once: true }}
-      >
+      <div className="p-6 sm:p-8 space-y-6">
         {/* Cabeçalho */}
         <div className="flex items-center gap-4">
-          <motion.div 
-            className="relative text-4xl sm:text-5xl"
-            animate={{ 
-              rotate: [-5, 5],
-              y: [-2, 2]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut"
-            }}
-          >
+          <div className="relative text-4xl sm:text-5xl">
             {project.emoji}
-            <motion.div 
-              className="absolute -top-2 -right-2 text-xl text-yellow-400"
-              animate={{ 
-                scale: [1, 1.2, 1],
-                rotate: [0, 360],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            >
+            <div className="absolute -top-2 -right-2 text-xl text-yellow-400">
               ✨
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
           <div>
-            <motion.h3 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ 
-                opacity: 1, 
-                x: 0,
-                transition: {
-                  duration: 0.3,
-                  delay: index * 0.1 + 0.1
-                }
-              }}
-              viewport={{ once: true }}
-              className="text-xl sm:text-2xl font-cartoon font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text cursor-default"
-            >
+            <h3 className="text-xl sm:text-2xl font-cartoon font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text cursor-default">
               {project.title}
-            </motion.h3>
-            <motion.span 
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ 
-                opacity: 1, 
-                scale: 1,
-                transition: {
-                  duration: 0.3,
-                  delay: index * 0.1 + 0.15
-                }
-              }}
-              viewport={{ once: true }}
-              className="inline-flex px-3 py-1 rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple font-cartoon text-sm border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 cursor-default"
-            >
+            </h3>
+            <span className="inline-flex px-3 py-1 rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple font-cartoon text-sm border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 cursor-default">
               {project.category}
-            </motion.span>
+            </span>
           </div>
         </div>
 
         {/* Descrição */}
-        <motion.p 
-          initial={{ opacity: 0 }}
-          whileInView={{ 
-            opacity: 1,
-            transition: {
-              duration: 0.3,
-              delay: index * 0.1 + 0.2
-            }
-          }}
-          viewport={{ once: true }}
-          className="text-slate-600 dark:text-slate-300 font-cartoon leading-relaxed"
-        >
+        <p className="text-slate-600 dark:text-slate-300 font-cartoon leading-relaxed">
           {project.description}
-        </motion.p>
+        </p>
 
         {/* Tecnologias */}
-        <motion.div 
-          className="flex flex-wrap gap-2"
-          initial={{ opacity: 0 }}
-          whileInView={{ 
-            opacity: 1,
-            transition: {
-              duration: 0.3,
-              delay: index * 0.1 + 0.25
-            }
-          }}
-          viewport={{ once: true }}
-        >
-          {project.technologies.map((tech, techIndex) => (
-            <motion.span
+        <div className="flex flex-wrap gap-2">
+          {project.technologies.map((tech) => (
+            <span
               key={tech.name}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ 
-                opacity: 1, 
-                scale: 1,
-                transition: {
-                  duration: 0.2,
-                  delay: (index * 0.1) + (techIndex * 0.05) + 0.25
-                }
-              }}
-              viewport={{ once: true }}
               className="px-3 py-1.5 rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple font-cartoon text-sm border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 flex items-center gap-2 hover:bg-pastel-purple/20 dark:hover:bg-dark-purple/20 transition-colors cursor-default"
             >
               <tech.icon className="w-4 h-4" />
               {tech.name}
-            </motion.span>
+            </span>
           ))}
-        </motion.div>
+        </div>
 
         {/* Links */}
-        <motion.div 
-          className="flex flex-wrap gap-4 pt-2"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ 
-            opacity: 1, 
-            y: 0,
-            transition: {
-              duration: 0.3,
-              delay: index * 0.1 + 0.3
-            }
-          }}
-          viewport={{ once: true }}
-        >
+        <div className="flex flex-wrap gap-4 pt-2">
           {project.projectUrl && (
             <motion.a
               href={project.projectUrl}
@@ -316,8 +212,8 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
               <span>Ver Código</span>
             </motion.a>
           )}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </motion.div>
   )
 }
