@@ -78,15 +78,14 @@ const cardVariants = {
     opacity: 0,
     y: 20
   },
-  visible: (index: number) => ({
+  visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.3,
-      delay: index * 0.1,
+      duration: 0.5,
       ease: "easeOut"
     }
-  })
+  }
 }
 
 // Componente de estrela de fundo
@@ -133,26 +132,53 @@ const BackgroundStar = ({ delay = 0, size = 20, top, left }: { delay: number, si
 const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
   return (
     <motion.div 
-      variants={cardVariants}
-      initial="hidden"
-      whileInView="visible"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ 
+        opacity: 1, 
+        y: 0,
+        transition: { 
+          duration: 0.5,
+          ease: "easeOut"
+        }
+      }}
       viewport={{ 
         once: true,
-        margin: "0px",
-        amount: 0.1
+        amount: 0.2
       }}
-      custom={index}
       className="relative bg-white/90 dark:bg-dark-surface/90 rounded-[2rem] border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-[1.02] will-change-transform"
     >
       <div className="p-6 sm:p-8 space-y-6">
         {/* Cabeçalho */}
         <div className="flex items-center gap-4">
-          <div className="relative text-4xl sm:text-5xl">
+          <motion.div 
+            className="relative text-4xl sm:text-5xl"
+            animate={{ 
+              rotate: [-2, 2],
+              y: [-1, 1]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }}
+          >
             {project.emoji}
-            <div className="absolute -top-2 -right-2 text-xl text-yellow-400">
+            <motion.div 
+              className="absolute -top-2 -right-2 text-xl text-yellow-400"
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 360],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            >
               ✨
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
           <div>
             <h3 className="text-xl sm:text-2xl font-cartoon font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text cursor-default">
               {project.title}
