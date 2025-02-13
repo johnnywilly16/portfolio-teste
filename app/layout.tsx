@@ -18,6 +18,12 @@ const indieFlower = Indie_Flower({
 export const metadata: Metadata = {
   title: "JOHNNY - Desenvolvedor Fullstack",
   description: "Portfólio profissional de JOHNNY, desenvolvedor fullstack especializado em soluções web modernas.",
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
 };
 
 export default function RootLayout({
@@ -27,6 +33,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      </head>
       <body className={`${comicNeue.variable} ${indieFlower.variable} font-cartoon bg-gradient-to-br from-light-surface via-light-muted to-light-surface dark:from-dark-surface dark:via-dark-surface dark:to-dark-surface text-slate-800 dark:text-slate-200 transition-colors duration-300 overflow-x-hidden`}>
         <Providers>
           {children}
