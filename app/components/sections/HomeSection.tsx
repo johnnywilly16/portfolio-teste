@@ -64,7 +64,7 @@ desenvolvedor.criarCoisasIncriveis() // ✨`
     }
 
     typingTimeoutRef.current = setTimeout(typeNextCharacter, 200)
-  }, [])
+  }, [codeText])
 
   useEffect(() => {
     startTyping()

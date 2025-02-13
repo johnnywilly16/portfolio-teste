@@ -26,7 +26,7 @@ export function Header() {
       sections.forEach(section => {
         const element = document.getElementById(section)
         if (element) {
-          const { offsetTop, offsetHeight } = element
+          const { offsetTop } = element
           if (scrollPosition >= offsetTop) {
             currentSection = section
           }
