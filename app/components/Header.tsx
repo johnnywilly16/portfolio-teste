@@ -16,20 +16,24 @@ export function Header() {
 
     const handleScroll = () => {
       const sections = ['inicio', 'projetos', 'sobre', 'contato']
-      const scrollPosition = window.scrollY + 100
+      const scrollPosition = window.scrollY + window.innerHeight / 2
 
       // Atualiza o estado de scroll
       setScrolled(window.scrollY > 50)
 
+      // Encontra a última seção visível
+      let currentSection = sections[0]
       sections.forEach(section => {
         const element = document.getElementById(section)
         if (element) {
           const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
+          if (scrollPosition >= offsetTop) {
+            currentSection = section
           }
         }
       })
+
+      setActiveSection(currentSection)
     }
 
     window.addEventListener('scroll', handleScroll)
