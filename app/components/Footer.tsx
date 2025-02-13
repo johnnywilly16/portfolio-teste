@@ -6,37 +6,52 @@ import { FaHeart } from 'react-icons/fa'
 export function Footer() {
   return (
     <motion.footer 
-      className="w-full bg-base-300/50 backdrop-blur-lg border-t border-purple-500/10 py-8"
+      className="w-full bg-light-card/50 dark:bg-dark-surface/80 backdrop-blur-lg border-t border-pastel-purple/10 dark:border-dark-purple/30"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="container mx-auto px-4 py-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Copyright */}
           <motion.div 
-            className="text-gray-400 text-sm"
+            className="text-slate-600 dark:text-slate-300 text-sm font-cartoon"
             whileHover={{ scale: 1.02 }}
           >
             © 2024 Johnny Willy. Todos os direitos reservados.
           </motion.div>
 
+          {/* Feito com */}
           <motion.div 
-            className="flex items-center gap-2 text-gray-400 text-sm"
+            className="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-cartoon order-first md:order-none"
             whileHover={{ scale: 1.02 }}
           >
-            Feito com <FaHeart className="text-purple-500" /> usando Next.js e Tailwind
+            Feito com <FaHeart className="text-pastel-purple dark:text-dark-purple" /> usando Next.js e Tailwind
           </motion.div>
 
-          <motion.div className="flex gap-4">
-            <motion.a
-              href="#inicio"
-              className="text-gray-400 hover:text-purple-400 transition-colors text-sm"
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.95 }}
+          {/* Voltar ao topo */}
+          <motion.a
+            href="#inicio"
+            className="text-slate-600 hover:text-pastel-purple dark:text-slate-300 dark:hover:text-dark-purple transition-colors text-sm font-cartoon flex items-center gap-2"
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Voltar ao topo
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-4 w-4" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
             >
-              Voltar ao topo
-            </motion.a>
-          </motion.div>
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M5 10l7-7m0 0l7 7m-7-7v18" 
+              />
+            </svg>
+          </motion.a>
         </div>
       </div>
     </motion.footer>

@@ -14,30 +14,36 @@ const config: Config = {
         handwriting: ['var(--font-handwriting)', 'cursive'],
       },
       colors: {
-        // Cores para o tema claro (tons pastéis)
+        // Cores para o tema claro (tons suaves)
+        light: {
+          surface: '#F8F7FC',    // Fundo principal suave
+          card: '#FDFBFF',       // Fundo dos cards
+          hover: '#F5F2FF',      // Hover state
+          border: '#EAE8F7'      // Bordas
+        },
         pastel: {
-          purple: '#B39DDB', // Roxo suave
-          pink: '#F8BBD0',   // Rosa suave
-          blue: '#90CAF9',   // Azul suave
-          yellow: '#FFE082', // Amarelo suave
-          green: '#A5D6A7',  // Verde suave
-          bg: '#F3E5F5',     // Fundo roxo bem claro
+          purple: '#B39DDB',     // Roxo suave
+          pink: '#F8BBD0',       // Rosa suave
+          blue: '#90CAF9',       // Azul suave
+          yellow: '#FFE082',     // Amarelo suave
+          green: '#A5D6A7',      // Verde suave
+          bg: '#F3E5F5',         // Fundo roxo bem claro
         },
         // Cores para o tema escuro (tons suaves e escuros)
         dark: {
-          purple: '#9575CD', // Roxo suave escuro
-          pink: '#D1859F',   // Rosa suave escuro
-          blue: '#7986CB',   // Azul suave escuro
-          yellow: '#D4B475', // Amarelo suave escuro
-          green: '#81C784',  // Verde suave escuro
-          bg: '#4A148C',     // Fundo roxo escuro
-          surface: '#1A1625', // Superfície escura
+          purple: '#9575CD',     // Roxo suave escuro
+          pink: '#D1859F',       // Rosa suave escuro
+          blue: '#7986CB',       // Azul suave escuro
+          yellow: '#D4B475',     // Amarelo suave escuro
+          green: '#81C784',      // Verde suave escuro
+          bg: '#4A148C',         // Fundo roxo escuro
+          surface: '#1A1625',    // Superfície escura
           overlay: 'rgba(26, 22, 37, 0.9)', // Overlay escuro
         },
         paper: {
-          light: '#F3E5F5',  // Fundo roxo claro
-          DEFAULT: '#E1BEE7', // Fundo roxo médio
-          dark: '#4A148C',    // Fundo roxo escuro
+          light: '#F3E5F5',      // Fundo roxo claro
+          DEFAULT: '#E1BEE7',    // Fundo roxo médio
+          dark: '#4A148C',       // Fundo roxo escuro
         }
       },
       backgroundImage: {

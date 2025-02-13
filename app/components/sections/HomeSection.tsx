@@ -17,14 +17,6 @@ const desenvolvedor = {
         "Desenvolvedor Fullstack",
         "Designer UX/UI"
     ],
-    habilidades: {
-        linguagens: ["TypeScript", "Python", "JavaScript"],
-        frontend: ["React", "Next.js", "Angular", "Tailwind"],
-        backend: ["Node.js", "Express", "NestJS"],
-        design: ["Figma", "Adobe XD", "UI/UX"],
-        bancosDeDados: ["PostgreSQL", "MongoDB"]
-    },
-
     criarCoisasIncríveis() {
         while(true) {
             this.programar()
@@ -106,10 +98,10 @@ desenvolvedor.criarCoisasIncríveis() // ✨`
     >
       <motion.div
         ref={terminalRef}
-        className="bg-white dark:bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden shadow-xl transform-gpu hover:shadow-2xl hover:scale-[1.01] transition-all duration-300"
+        className="bg-light-card dark:bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden shadow-xl transform-gpu hover:shadow-2xl hover:scale-[1.01] transition-all duration-300"
       >
         {/* Barra de título do terminal */}
-        <div className="bg-gradient-to-r from-pastel-purple/20 to-pastel-pink/20 dark:from-dark-purple/20 dark:to-dark-pink/20 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
+        <div className="bg-gradient-to-r from-pastel-purple/10 to-pastel-pink/10 dark:from-dark-purple/20 dark:to-dark-pink/20 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
           <div className="flex items-center gap-2">
             <div className="flex gap-2">
               <div className="w-3 h-3 rounded-full bg-red-500/70" />
@@ -228,7 +220,7 @@ export function TerminalTitle({ title, isActive }: TerminalTitleProps) {
       transition={{ duration: 0.5 }}
     >
       <motion.div 
-        className="relative overflow-hidden rounded-[2rem] border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 bg-white/90 dark:bg-dark-surface/90 backdrop-blur-lg"
+        className="relative overflow-hidden rounded-[2rem] border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 bg-light-card dark:bg-dark-surface/90 backdrop-blur-lg"
         animate={{
           rotate: [-0.5, 0.5, -0.5]
         }}
@@ -239,7 +231,7 @@ export function TerminalTitle({ title, isActive }: TerminalTitleProps) {
         }}
       >
         {/* Barra de título do terminal */}
-        <div className="bg-gradient-to-r from-pastel-purple/20 to-pastel-pink/20 dark:from-dark-purple/20 dark:to-dark-pink/20 h-8 flex items-center px-4">
+        <div className="bg-gradient-to-r from-pastel-purple/10 to-pastel-pink/10 dark:from-dark-purple/20 dark:to-dark-pink/20 h-8 flex items-center px-4">
           <div className="flex gap-2">
             <div className="w-3 h-3 rounded-full bg-red-500" />
             <div className="w-3 h-3 rounded-full bg-yellow-500" />
@@ -292,7 +284,7 @@ export function HomeSection() {
   }, [])
 
   return (
-    <section id="inicio" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-pastel-purple/5 to-white dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface pt-16 lg:pt-48">
+    <section id="inicio" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-light-surface via-pastel-purple/5 to-light-surface dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface pt-16 lg:pt-48">
       {/* Elementos de fundo */}
       <FloatingClouds />
       <FloatingBubbles />

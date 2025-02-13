@@ -146,8 +146,8 @@ export function ContactSection() {
             <ContactTerminal
               icon={FaWhatsapp}
               title="WhatsApp"
-              value="(11) 99999-9999"
-              link="https://wa.me/5511999999999"
+              value="Clique para conversar"
+              link="https://wa.me/5574991382563"
               delay={0}
               command="whatsapp --send-message"
             />
@@ -155,8 +155,8 @@ export function ContactSection() {
             <ContactTerminal
               icon={FaLinkedin}
               title="LinkedIn"
-              value="@johnnywilly"
-              link="https://linkedin.com/in/johnnywilly"
+              value="Conecte-se comigo"
+              link="https://www.linkedin.com/in/johnny-willy/"
               delay={0.2}
               command="linkedin --connect"
             />
@@ -164,8 +164,8 @@ export function ContactSection() {
             <ContactTerminal
               icon={FaEnvelope}
               title="Email"
-              value="contato@johnny.dev"
-              link="mailto:contato@johnny.dev"
+              value="Envie uma mensagem"
+              link="mailto:johnnywilly16@gmail.com"
               delay={0.4}
               command="email --compose"
             />
