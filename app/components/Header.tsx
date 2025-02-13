@@ -224,9 +224,9 @@ export function Header() {
 
                 {/* Links sociais */}
                 {[
-                  { icon: FaGithub, href: 'https://github.com/johnny', color: 'purple' },
-                  { icon: FaLinkedin, href: 'https://linkedin.com/in/johnny', color: 'blue' },
-                  { icon: FaEnvelope, href: 'mailto:contato@johnny.dev', color: 'pink' }
+                  { icon: FaGithub, href: 'https://github.com/johnnywilly16', color: 'purple' },
+                  { icon: FaLinkedin, href: 'https://www.linkedin.com/in/johnny-willy/', color: 'blue' },
+                  { icon: FaEnvelope, href: 'mailto:johnnywilly16@gmail.com', color: 'pink' }
                 ].map((item, index) => (
                   <motion.a
                     key={index}
