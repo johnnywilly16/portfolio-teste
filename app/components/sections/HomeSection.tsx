@@ -151,16 +151,17 @@ desenvolvedor.criarCoisasIncríveis() // ✨`
 
 // Componente de nuvens flutuantes
 const FloatingClouds = () => (
-  <div className="absolute inset-0 overflow-hidden">
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
     {[...Array(6)].map((_, i) => (
       <motion.div
         key={i}
-        className="absolute bg-white/40 dark:bg-white/10 rounded-full filter blur-xl"
+        className="absolute bg-white/40 dark:bg-white/10 rounded-full filter blur-xl will-change-transform"
         style={{
           width: Math.random() * 300 + 100,
           height: Math.random() * 200 + 100,
           left: `${Math.random() * 100}%`,
           top: `${Math.random() * 100}%`,
+          transform: 'translate3d(0,0,0)'
         }}
         animate={{
           x: [-20, 20],
@@ -171,6 +172,7 @@ const FloatingClouds = () => (
           duration: Math.random() * 10 + 10,
           repeat: Infinity,
           repeatType: "reverse",
+          ease: "linear"
         }}
       />
     ))}
@@ -179,16 +181,17 @@ const FloatingClouds = () => (
 
 // Componente de bolhas flutuantes
 const FloatingBubbles = () => (
-  <div className="absolute inset-0 overflow-hidden">
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
     {[...Array(15)].map((_, i) => (
       <motion.div
         key={i}
-        className="absolute rounded-full bg-gradient-to-br from-pastel-purple/20 to-pastel-pink/20 dark:from-dark-purple/20 dark:to-dark-pink/20"
+        className="absolute rounded-full bg-gradient-to-br from-pastel-purple/20 to-pastel-pink/20 dark:from-dark-purple/20 dark:to-dark-pink/20 will-change-transform"
         style={{
           width: Math.random() * 60 + 20,
           height: Math.random() * 60 + 20,
           left: `${Math.random() * 100}%`,
           top: `${Math.random() * 100}%`,
+          transform: 'translate3d(0,0,0)'
         }}
         animate={{
           y: [-50, 50],
@@ -200,6 +203,7 @@ const FloatingBubbles = () => (
           duration: Math.random() * 8 + 8,
           repeat: Infinity,
           repeatType: "reverse",
+          ease: "linear"
         }}
       />
     ))}

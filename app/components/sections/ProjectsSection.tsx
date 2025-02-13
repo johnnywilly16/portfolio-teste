@@ -77,8 +77,13 @@ const projects = [
 // Componente de estrela flutuante
 const FloatingStar = ({ delay = 0, size = 20, top, left }: { delay: number, size?: number, top: string, left: string }) => (
   <motion.div
-    className="absolute text-pastel-yellow dark:text-dark-yellow"
-    style={{ top, left, fontSize: size }}
+    className="absolute text-pastel-yellow dark:text-dark-yellow will-change-transform pointer-events-none"
+    style={{ 
+      top, 
+      left, 
+      fontSize: size,
+      transform: 'translate3d(0,0,0)'
+    }}
     initial={{ opacity: 0.3, scale: 0.5 }}
     animate={{ 
       opacity: [0.3, 1, 0.3],
@@ -89,7 +94,7 @@ const FloatingStar = ({ delay = 0, size = 20, top, left }: { delay: number, size
       duration: 3,
       delay,
       repeat: Infinity,
-      ease: "easeInOut"
+      ease: "linear"
     }}
   >
     ⭐
@@ -264,7 +269,7 @@ export function ProjectsSection() {
   return (
     <section id="projetos" className="min-h-screen py-20 bg-gradient-to-b from-pastel-purple/5 via-white/80 to-pastel-purple/10 dark:from-dark-purple/5 dark:via-dark-surface/80 dark:to-dark-purple/10 backdrop-blur-sm relative overflow-hidden">
       {/* Background com estrelas */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {stars.map((star) => (
           <FloatingStar key={star.id} delay={star.delay} top={star.top} left={star.left} />
         ))}
