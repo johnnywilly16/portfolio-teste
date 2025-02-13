@@ -307,7 +307,7 @@ export function HomeSection() {
   }, [])
 
   return (
-    <section id="inicio" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-light-surface via-pastel-purple/5 to-light-surface dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface pt-16 lg:pt-48">
+    <section id="inicio" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-light-surface via-pastel-purple/5 to-light-surface dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface pt-16 lg:pt-24">
       {/* Elementos de fundo */}
       <FloatingClouds />
       <FloatingBubbles />
@@ -315,7 +315,7 @@ export function HomeSection() {
       <div className="w-full h-full flex items-center justify-center relative z-10">
         <div className="w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center min-h-screen">
           {/* Terminal Grande como foco principal */}
-          <div className="w-full max-w-[92vw] sm:max-w-[95vw] md:max-w-[90vw] lg:max-w-4xl mt-8 lg:mt-0 transform-gpu">
+          <div className="w-full max-w-[92vw] sm:max-w-[95vw] md:max-w-[90vw] lg:max-w-4xl mt-8 lg:-mt-20 transform-gpu">
             <CodeTerminal />
           </div>
 
