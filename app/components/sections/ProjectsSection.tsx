@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { motion, LazyMotion, m } from 'framer-motion'
+import { useState, useMemo } from 'react'
 import { FaGithub, FaExternalLinkAlt, FaAngleDown, FaAngleUp } from 'react-icons/fa'
 import { 
   SiNextdotjs, 
@@ -15,6 +15,7 @@ import {
   SiD3Dotjs
 } from 'react-icons/si'
 import { TerminalTitle } from './HomeSection'
+import { domAnimation } from 'framer-motion'
 
 const projects = [
   {
@@ -105,6 +106,109 @@ const FloatingStar = ({ delay = 0, size = 20, top, left }: { delay: number, size
 const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
+  // Memoize os elementos que não mudam
+  const cardHeader = useMemo(() => (
+    <div className="flex items-center gap-4">
+      <motion.div
+        className="relative text-4xl sm:text-5xl"
+        animate={{ 
+          rotate: isExpanded ? [0, -10, 10, 0] : 0,
+          scale: isExpanded ? [1, 1.2, 1] : 1
+        }}
+        transition={{ duration: 0.5 }}
+        layoutId={`emoji-${project.title}`}
+      >
+        {project.emoji}
+        <motion.div
+          className="absolute -top-2 -right-2 text-xl text-yellow-400"
+          animate={{ 
+            scale: [1, 1.2, 1],
+            rotate: 360
+          }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          ✨
+        </motion.div>
+      </motion.div>
+      <div>
+        <h3 className="text-xl sm:text-2xl font-cartoon font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text">
+          {project.title}
+        </h3>
+        <span className="text-sm text-pastel-purple/70 dark:text-dark-purple/70 font-cartoon">
+          {project.category}
+        </span>
+      </div>
+    </div>
+  ), [project.title, project.emoji, project.category, isExpanded])
+
+  // Memoize o conteúdo expandido
+  const expandedContent = useMemo(() => (
+    <motion.div
+      initial={false}
+      animate={{
+        height: isExpanded ? 'auto' : 0,
+        opacity: isExpanded ? 1 : 0
+      }}
+      className="overflow-hidden will-change-transform"
+      style={{ 
+        transform: 'translate3d(0,0,0)',
+        backfaceVisibility: 'hidden'
+      }}
+      transition={{ 
+        height: { duration: 0.3, ease: 'easeOut' },
+        opacity: { duration: 0.2 }
+      }}
+    >
+      <div className="p-6 sm:p-8 pt-0 space-y-6">
+        <div className="border-t-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30" />
+
+        <div className="flex flex-wrap gap-2">
+          {project.technologies.map((tech) => (
+            <motion.span
+              key={tech.name}
+              className="px-4 py-2 rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple font-cartoon text-sm border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 flex items-center gap-2"
+              whileHover={{ scale: 1.1 }}
+              layout
+            >
+              <tech.icon className="w-4 h-4" />
+              {tech.name}
+            </motion.span>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap gap-4">
+          {project.projectUrl && (
+            <motion.a
+              href={project.projectUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 font-cartoon font-bold text-white rounded-xl bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink hover:opacity-90 transition-opacity"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaExternalLinkAlt />
+              Ver Projeto
+            </motion.a>
+          )}
+          
+          {project.githubUrl && (
+            <motion.a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 font-cartoon font-bold text-pastel-purple dark:text-dark-purple rounded-xl border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 hover:bg-pastel-purple/10 dark:hover:bg-dark-purple/10 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaGithub />
+              Ver Código
+            </motion.a>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  ), [isExpanded, project.technologies, project.projectUrl, project.githubUrl])
+
   return (
     <motion.div
       className="relative"
@@ -116,122 +220,39 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
       }}
       viewport={{ once: true }}
     >
-      {/* Card Principal */}
-      <motion.div
-        className={`bg-white/90 dark:bg-dark-surface/90 rounded-[2rem] border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden transition-all duration-500 ${isExpanded ? 'shadow-2xl scale-[1.02]' : 'shadow-xl hover:shadow-2xl hover:scale-[1.01]'}`}
-      >
-        {/* Cabeçalho do Card */}
-        <motion.div
-          className="p-6 sm:p-8 cursor-pointer"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
-              <motion.div
-                className="relative text-4xl sm:text-5xl"
-                animate={{ 
-                  rotate: isExpanded ? [0, -10, 10, 0] : 0,
-                  scale: isExpanded ? [1, 1.2, 1] : 1
-                }}
-                transition={{ duration: 0.5 }}
-              >
-                {project.emoji}
-                <motion.div
-                  className="absolute -top-2 -right-2 text-xl text-yellow-400"
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    rotate: 360
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  ✨
-                </motion.div>
-              </motion.div>
-              <div>
-                <h3 className="text-xl sm:text-2xl font-cartoon font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text">
-                  {project.title}
-                </h3>
-                <span className="text-sm text-pastel-purple/70 dark:text-dark-purple/70 font-cartoon">
-                  {project.category}
-                </span>
-              </div>
-            </div>
-            <motion.div
-              animate={{ rotate: isExpanded ? 180 : 0 }}
-              className="text-pastel-purple dark:text-dark-purple text-2xl"
-            >
-              {isExpanded ? <FaAngleUp /> : <FaAngleDown />}
-            </motion.div>
-          </div>
-
-          {/* Descrição Curta */}
-          <p className="text-slate-600 dark:text-slate-300 font-cartoon leading-relaxed">
-            {project.description}
-          </p>
-        </motion.div>
-
-        {/* Conteúdo Expandido */}
-        <motion.div
-          initial={false}
-          animate={{
-            height: isExpanded ? 'auto' : 0,
-            opacity: isExpanded ? 1 : 0
+      <LazyMotion features={domAnimation}>
+        <m.div
+          className={`bg-white/90 dark:bg-dark-surface/90 rounded-[2rem] border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden transition-all duration-500 ${isExpanded ? 'shadow-2xl scale-[1.02]' : 'shadow-xl hover:shadow-2xl hover:scale-[1.01]'}`}
+          style={{ 
+            transform: 'translate3d(0,0,0)',
+            backfaceVisibility: 'hidden',
+            willChange: 'transform'
           }}
-          className="overflow-hidden"
         >
-          <div className="p-6 sm:p-8 pt-0 space-y-6">
-            {/* Linha Decorativa */}
-            <div className="border-t-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30" />
-
-            {/* Tecnologias */}
-            <div className="flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
-                <motion.span
-                  key={tech.name}
-                  className="px-4 py-2 rounded-full bg-pastel-purple/10 dark:bg-dark-purple/10 text-pastel-purple dark:text-dark-purple font-cartoon text-sm border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 flex items-center gap-2"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <tech.icon className="w-4 h-4" />
-                  {tech.name}
-                </motion.span>
-              ))}
+          <m.div
+            className="p-6 sm:p-8 cursor-pointer"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            <div className="flex items-center justify-between mb-4">
+              {cardHeader}
+              <motion.div
+                animate={{ rotate: isExpanded ? 180 : 0 }}
+                className="text-pastel-purple dark:text-dark-purple text-2xl"
+                transition={{ duration: 0.3 }}
+              >
+                {isExpanded ? <FaAngleUp /> : <FaAngleDown />}
+              </motion.div>
             </div>
 
-            {/* Links */}
-            <div className="flex flex-wrap gap-4">
-              {project.projectUrl && (
-                <motion.a
-                  href={project.projectUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-3 font-cartoon font-bold text-white rounded-xl bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink hover:opacity-90 transition-opacity"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <FaExternalLinkAlt />
-                  Ver Projeto
-                </motion.a>
-              )}
-              
-              {project.githubUrl && (
-                <motion.a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-3 font-cartoon font-bold text-pastel-purple dark:text-dark-purple rounded-xl border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 hover:bg-pastel-purple/10 dark:hover:bg-dark-purple/10 transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <FaGithub />
-                  Ver Código
-                </motion.a>
-              )}
-            </div>
-          </div>
-        </motion.div>
-      </motion.div>
+            <p className="text-slate-600 dark:text-slate-300 font-cartoon leading-relaxed">
+              {project.description}
+            </p>
+          </m.div>
 
-      {/* Elementos Decorativos */}
+          {expandedContent}
+        </m.div>
+      </LazyMotion>
+
       <motion.div
         className="absolute -top-2 -right-2 text-2xl"
         animate={{ 
