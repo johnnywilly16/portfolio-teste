@@ -315,7 +315,7 @@ export function HomeSection() {
       <div className="w-full h-full flex items-center justify-center relative z-10">
         <div className="w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center min-h-screen">
           {/* Terminal Grande como foco principal */}
-          <div className="w-full max-w-[92vw] sm:max-w-[95vw] md:max-w-[90vw] lg:max-w-4xl mt-8 lg:-mt-20 transform-gpu">
+          <div className="w-full max-w-[92vw] sm:max-w-[95vw] md:max-w-[90vw] lg:max-w-4xl mt-12 sm:mt-10 md:mt-8 lg:-mt-20 transform-gpu">
             <CodeTerminal />
           </div>
 
