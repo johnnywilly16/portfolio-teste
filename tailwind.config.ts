@@ -16,10 +16,11 @@ const config: Config = {
       colors: {
         // Cores para o tema claro (tons suaves)
         light: {
-          surface: '#F8F7FC',    // Fundo principal suave
-          card: '#FDFBFF',       // Fundo dos cards
-          hover: '#F5F2FF',      // Hover state
-          border: '#EAE8F7'      // Bordas
+          surface: '#F5F3FF',    // Fundo principal com tom levemente roxo
+          card: '#FDFAFF',       // Fundo dos cards com tom muito suave de roxo
+          hover: '#F3F0FF',      // Hover state com tom roxo suave
+          border: '#E9E5FF',     // Bordas com tom roxo claro
+          muted: '#F8F7FF'       // Cor para elementos secundários
         },
         pastel: {
           purple: '#B39DDB',     // Roxo suave

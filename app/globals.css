@@ -165,6 +165,15 @@
   }
 }
 
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -224,4 +233,8 @@
   --notebook-line-color: rgba(255, 255, 255, 0.08);
   --notebook-margin-color: rgba(255, 255, 255, 0.12);
   --doodle-color: rgba(255, 255, 255, 0.15);
+}
+
+.cursor-blink {
+  animation: blink 0.8s ease-in-out infinite;
 }

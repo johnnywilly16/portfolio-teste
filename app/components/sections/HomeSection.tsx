@@ -3,87 +3,124 @@ import { useEffect, useState, useRef } from 'react'
 
 // Terminal aprimorado com mais linhas de código
 const CodeTerminal = () => {
-  const [text, setText] = useState('')
-  const [showCursor, setShowCursor] = useState(true)
-  const [isTyping, setIsTyping] = useState(false)
-  const terminalRef = useRef<HTMLDivElement>(null)
-  
+  const [text, setText] = useState<string>('')
+  const [isTyping, setIsTyping] = useState<boolean>(false)
+  const [currentLine, setCurrentLine] = useState<number>(0)
+  const [currentChar, setCurrentChar] = useState<number>(0)
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const textRef = useRef<string>('')
+
   const codeText = `$ johnny portfolio
 
 const desenvolvedor = {
     nome: "Johnny",
     idade: 28,
-    funções: [
+    funcoes: [
         "Desenvolvedor Fullstack",
         "Designer UX/UI"
     ],
-    criarCoisasIncríveis() {
+    criarCoisasIncriveis() {
         while(true) {
             this.programar()
             this.desenhar()
             this.inovar()
-            this.tomarCafé("☕")
+            this.tomarCafe("☕")
         }
     }
 }
 
-desenvolvedor.criarCoisasIncríveis() // ✨`
+desenvolvedor.criarCoisasIncriveis() // ✨`
+
+  const startTyping = () => {
+    setIsTyping(true)
+    setText('')
+    textRef.current = ''
+    setCurrentLine(0)
+    setCurrentChar(0)
+    let currentIndex = 0
+
+    const typeNextCharacter = () => {
+      if (currentIndex < codeText.length) {
+        const newText = textRef.current + codeText[currentIndex]
+        setText(newText)
+        textRef.current = newText
+        
+        // Atualiza a posição atual do cursor
+        const lines = newText.split('\n')
+        setCurrentLine(lines.length - 1)
+        setCurrentChar(lines[lines.length - 1].length)
+        
+        currentIndex++
+        
+        const delay = codeText[currentIndex - 1] === '\n' ? 150 :
+                     codeText[currentIndex - 1] === '{' || codeText[currentIndex - 1] === '}' ? 100 :
+                     codeText[currentIndex - 1] === '(' || codeText[currentIndex - 1] === ')' ? 80 :
+                     Math.random() * 30 + 30
+
+        typingTimeoutRef.current = setTimeout(typeNextCharacter, delay)
+      } else {
+        setIsTyping(false)
+      }
+    }
+
+    typingTimeoutRef.current = setTimeout(typeNextCharacter, 200)
+  }
 
   useEffect(() => {
-    let currentIndex = 0
-    let typingInterval: NodeJS.Timeout
-
-    const typeText = () => {
-      setIsTyping(true)
-      
-      typingInterval = setInterval(() => {
-        if (currentIndex < codeText.length) {
-          setText(prev => prev + codeText[currentIndex])
-          currentIndex++
-          
-          if (terminalRef.current) {
-            terminalRef.current.scrollTop = terminalRef.current.scrollHeight
-          }
-        } else {
-          clearInterval(typingInterval)
-          setIsTyping(false)
-        }
-      }, 50) // Velocidade da digitação
-    }
-
-    typeText()
-
-    // Cursor piscante
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev)
-    }, 500)
-
+    startTyping()
     return () => {
-      clearInterval(typingInterval)
-      clearInterval(cursorInterval)
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current)
+      }
     }
-  }, [codeText])
+  }, [])
 
   const handleRestart = () => {
-    if (!isTyping) {
-      setText('')
-      setIsTyping(true)
-      let currentIndex = 0
-      
-      const typingInterval = setInterval(() => {
-        if (currentIndex < codeText.length) {
-          setText(prev => prev + codeText[currentIndex])
-          currentIndex++
-          
-          if (terminalRef.current) {
-            terminalRef.current.scrollTop = terminalRef.current.scrollHeight
-          }
-        } else {
-          clearInterval(typingInterval)
-          setIsTyping(false)
-        }
-      }, 50)
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current)
     }
+    startTyping()
+  }
+
+  const renderTextWithCursor = () => {
+    const lines = text.split('\n')
+    
+    return lines.map((line, lineIndex) => {
+      if (lineIndex === 0) {
+        return (
+          <div key={lineIndex} className="mb-4">
+            <span className="text-pastel-pink dark:text-purple-400">$</span>
+            <span className="text-pastel-purple dark:text-emerald-300"> johnny portfolio</span>
+            {currentLine === lineIndex && (
+              <span className={`inline-block w-2 h-5 bg-pastel-purple/70 dark:bg-white/70 ml-1 align-middle transition-opacity duration-100 ${isTyping ? '' : 'cursor-blink'}`} />
+            )}
+          </div>
+        )
+      }
+
+      // Divide a linha em caracteres para inserir o cursor na posição correta
+      const chars = line.split('')
+      
+      return (
+        <div key={lineIndex} className="min-h-[1.5em]">
+          <span className={
+            line.includes('const') || line.includes('while') ? 'text-blue-500 dark:text-blue-400' :
+            line.includes('function') || line.includes('()') ? 'text-yellow-600 dark:text-yellow-400' :
+            line.includes('"') ? 'text-green-600 dark:text-green-400' :
+            'text-pastel-purple dark:text-emerald-300'
+          }>
+            {chars.map((char, charIndex) => (
+              <span key={charIndex}>
+                {char}
+                {currentLine === lineIndex && currentChar === charIndex + 1 && (
+                  <span className={`inline-block w-2 h-5 bg-pastel-purple/70 dark:bg-white/70 align-middle transition-opacity duration-100 ${isTyping ? '' : 'cursor-blink'}`} />
+                )}
+              </span>
+            ))}
+          </span>
+        </div>
+      )
+    })
   }
 
   return (
@@ -93,11 +130,10 @@ desenvolvedor.criarCoisasIncríveis() // ✨`
       animate={{ opacity: 1, scale: 1 }}
       transition={{ 
         duration: 0.5,
-        ease: [0.23, 1, 0.32, 1] // Curva de animação suave
+        ease: [0.23, 1, 0.32, 1]
       }}
     >
       <motion.div
-        ref={terminalRef}
         className="bg-light-card dark:bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden shadow-xl transform-gpu hover:shadow-2xl hover:scale-[1.01] transition-all duration-300"
       >
         {/* Barra de título do terminal */}
@@ -123,28 +159,8 @@ desenvolvedor.criarCoisasIncríveis() // ✨`
 
         {/* Conteúdo do terminal */}
         <div className="p-6 sm:p-8 font-mono text-sm sm:text-base">
-          <div className="mt-6 whitespace-pre">
-            <span className="text-pastel-pink dark:text-purple-400">$</span>
-            <span className="text-pastel-purple dark:text-emerald-300"> johnny portfolio</span>
-            <div className="text-pastel-purple dark:text-emerald-300 mt-4">
-              {text.substring(text.indexOf('const'))}
-              {isTyping && (
-                <motion.span 
-                  className="inline-block w-2 h-5 bg-pastel-purple/70 dark:bg-white/70 ml-1 align-middle"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
-              )}
-              {!isTyping && showCursor && (
-                <motion.span 
-                  className="inline-block w-2 h-5 bg-pastel-purple/70 dark:bg-white/70 ml-1 align-middle"
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ duration: 0.5, repeat: Infinity }}
-                />
-              )}
-            </div>
+          <div className="mt-6 whitespace-pre text-pastel-purple dark:text-emerald-300">
+            {renderTextWithCursor()}
           </div>
         </div>
       </motion.div>
