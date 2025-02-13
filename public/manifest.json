@@ -1,0 +1,24 @@
+{
+  "name": "Johnny - Desenvolvedor Fullstack",
+  "short_name": "Johnny Dev",
+  "description": "Portfólio profissional de Johnny, desenvolvedor fullstack especializado em soluções web modernas.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F3FF",
+  "theme_color": "#F5F3FF",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+} 
