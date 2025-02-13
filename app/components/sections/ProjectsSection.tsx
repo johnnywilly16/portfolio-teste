@@ -230,8 +230,15 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
           }}
         >
           <m.div
-            className="p-6 sm:p-8 cursor-pointer"
+            className="p-6 sm:p-8"
             onClick={() => setIsExpanded(!isExpanded)}
+            role="button"
+            tabIndex={0}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setIsExpanded(!isExpanded)
+              }
+            }}
           >
             <div className="flex items-center justify-between mb-4">
               {cardHeader}
