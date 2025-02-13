@@ -3,13 +3,6 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
-export const viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#F5F3FF' },
-    { media: '(prefers-color-scheme: dark)', color: '#1A1625' }
-  ]
-}
-
 export default function NotFound() {
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-light-surface via-pastel-purple/5 to-light-surface dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface">
