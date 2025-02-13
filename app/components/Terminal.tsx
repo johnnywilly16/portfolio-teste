@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+
 <motion.div
   className="w-full max-w-3xl bg-light-card dark:bg-base-300 rounded-lg shadow-lg overflow-hidden will-change-transform"
   style={{ transform: 'translate3d(0,0,0)' }}
