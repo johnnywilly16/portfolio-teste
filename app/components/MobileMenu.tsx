@@ -3,12 +3,36 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaEnvelope, FaSun, FaMoon } from 'react-icons/fa'
 import { useTheme } from 'next-themes'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export function MobileMenu() {
   const { theme, setTheme } = useTheme()
   const [isOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('inicio')
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['inicio', 'projetos', 'sobre', 'contato']
+      const scrollPosition = window.scrollY + window.innerHeight / 2
+
+      // Encontra a última seção visível
+      let currentSection = sections[0]
+      sections.forEach(section => {
+        const element = document.getElementById(section)
+        if (element) {
+          const { offsetTop } = element
+          if (scrollPosition >= offsetTop) {
+            currentSection = section
+          }
+        }
+      })
+
+      setActiveSection(currentSection)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const menuVariants = {
     closed: {
@@ -100,7 +124,7 @@ export function MobileMenu() {
                   className="w-full text-left"
                   whileHover={{ x: 4 }}
                 >
-                  <div className="flex items-center gap-2 text-pastel-purple dark:text-emerald-400">
+                  <div className={`flex items-center gap-2 ${activeSection === item.id ? 'text-pastel-purple dark:text-emerald-400' : 'text-pastel-purple/70 dark:text-emerald-400/70'}`}>
                     <span className="text-pastel-pink dark:text-purple-400">$</span>
                     <span>{item.command}</span>
                     {activeSection === item.id && (
