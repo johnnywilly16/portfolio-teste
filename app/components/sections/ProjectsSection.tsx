@@ -1,4 +1,3 @@
-import { useState, useEffect, useRef } from 'react'
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 import { 
   SiNextdotjs, 
