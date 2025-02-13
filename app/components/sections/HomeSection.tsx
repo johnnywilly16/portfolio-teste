@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
 // Terminal aprimorado com mais linhas de código
 const CodeTerminal = () => {
@@ -31,7 +31,7 @@ const desenvolvedor = {
 
 desenvolvedor.criarCoisasIncriveis() // ✨`
 
-  const startTyping = () => {
+  const startTyping = useCallback(() => {
     setIsTyping(true)
     setText('')
     textRef.current = ''
@@ -64,7 +64,7 @@ desenvolvedor.criarCoisasIncriveis() // ✨`
     }
 
     typingTimeoutRef.current = setTimeout(typeNextCharacter, 200)
-  }
+  }, [])
 
   useEffect(() => {
     startTyping()
@@ -73,7 +73,7 @@ desenvolvedor.criarCoisasIncriveis() // ✨`
         clearTimeout(typingTimeoutRef.current)
       }
     }
-  }, [])
+  }, [startTyping])
 
   const handleRestart = () => {
     if (typingTimeoutRef.current) {

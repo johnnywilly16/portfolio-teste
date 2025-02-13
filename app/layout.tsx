@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Comic_Neue, Indie_Flower } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
@@ -18,12 +18,13 @@ const indieFlower = Indie_Flower({
 export const metadata: Metadata = {
   title: "JOHNNY - Desenvolvedor Fullstack",
   description: "Portfólio profissional de JOHNNY, desenvolvedor fullstack especializado em soluções web modernas.",
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
