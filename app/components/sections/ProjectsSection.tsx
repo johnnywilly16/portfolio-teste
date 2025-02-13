@@ -73,21 +73,6 @@ const projects = [
   }
 ]
 
-const cardVariants = {
-  hidden: { 
-    opacity: 0,
-    y: 20
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut"
-    }
-  }
-}
-
 // Componente de estrela de fundo
 const BackgroundStar = ({ delay = 0, size = 20, top, left }: { delay: number, size?: number, top: string, left: string }) => (
   <motion.div
@@ -129,7 +114,7 @@ const BackgroundStar = ({ delay = 0, size = 20, top, left }: { delay: number, si
 )
 
 // Card de Projeto
-const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
+const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -289,9 +274,9 @@ export function ProjectsSection() {
 
         {/* Lista de Projetos */}
         <div className="max-w-4xl mx-auto space-y-8">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <div key={project.title} className="relative">
-              <ProjectCard project={project} index={index} />
+              <ProjectCard project={project} />
             </div>
           ))}
         </div>
