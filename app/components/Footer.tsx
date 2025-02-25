@@ -13,15 +13,13 @@ export function Footer() {
     >
       <div className="container mx-auto px-4 py-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* Copyright */}
           <motion.div 
             className="text-slate-600 dark:text-slate-300 text-sm font-cartoon"
             whileHover={{ scale: 1.02 }}
           >
-            © 2024 Johnny Willy. Todos os direitos reservados.
+            © 2025 Johnny Willy. Todos os direitos reservados.
           </motion.div>
 
-          {/* Feito com */}
           <motion.div 
             className="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-cartoon order-first md:order-none"
             whileHover={{ scale: 1.02 }}
@@ -29,7 +27,6 @@ export function Footer() {
             Feito com <FaHeart className="text-pastel-purple dark:text-dark-purple" /> usando Next.js e Tailwind
           </motion.div>
 
-          {/* Voltar ao topo */}
           <motion.a
             href="#inicio"
             className="text-slate-600 hover:text-pastel-purple dark:text-slate-300 dark:hover:text-dark-purple transition-colors text-sm font-cartoon flex items-center gap-2"

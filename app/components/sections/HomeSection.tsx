@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState, useRef, useCallback } from 'react'
 
-// Terminal aprimorado com mais linhas de código
 const CodeTerminal = () => {
   const [text, setText] = useState<string>('')
   const [isTyping, setIsTyping] = useState<boolean>(false)
@@ -45,7 +44,6 @@ desenvolvedor.criarCoisasIncriveis() // ✨`
         setText(newText)
         textRef.current = newText
         
-        // Atualiza a posição atual do cursor
         const lines = newText.split('\n')
         setCurrentLine(lines.length - 1)
         setCurrentChar(lines[lines.length - 1].length)
@@ -98,7 +96,6 @@ desenvolvedor.criarCoisasIncriveis() // ✨`
         )
       }
 
-      // Divide a linha em caracteres para inserir o cursor na posição correta
       const chars = line.split('')
       
       return (
@@ -136,7 +133,6 @@ desenvolvedor.criarCoisasIncriveis() // ✨`
       <motion.div
         className="bg-light-card dark:bg-slate-800 rounded-xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 overflow-hidden shadow-xl transform-gpu hover:shadow-2xl hover:scale-[1.01] transition-all duration-300"
       >
-        {/* Barra de título do terminal */}
         <div className="bg-gradient-to-r from-pastel-purple/10 to-pastel-pink/10 dark:from-dark-purple/20 dark:to-dark-pink/20 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
           <div className="flex items-center gap-2">
             <div className="flex gap-2">
@@ -157,7 +153,6 @@ desenvolvedor.criarCoisasIncriveis() // ✨`
           </button>
         </div>
 
-        {/* Conteúdo do terminal */}
         <div className="p-6 sm:p-8 font-mono text-sm sm:text-base">
           <div className="mt-6 whitespace-pre text-pastel-purple dark:text-emerald-300">
             {renderTextWithCursor()}
@@ -168,7 +163,6 @@ desenvolvedor.criarCoisasIncriveis() // ✨`
   )
 }
 
-// Componente de nuvens flutuantes
 const FloatingClouds = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none -z-20">
     {[...Array(6)].map((_, i) => (
@@ -198,7 +192,6 @@ const FloatingClouds = () => (
   </div>
 )
 
-// Componente de bolhas flutuantes
 const FloatingBubbles = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none -z-20">
     {[...Array(15)].map((_, i) => (
@@ -253,7 +246,6 @@ export function TerminalTitle({ title, isActive }: TerminalTitleProps) {
           ease: "easeInOut"
         }}
       >
-        {/* Barra de título do terminal */}
         <div className="bg-gradient-to-r from-pastel-purple/10 to-pastel-pink/10 dark:from-dark-purple/20 dark:to-dark-pink/20 h-8 flex items-center px-4">
           <div className="flex gap-2">
             <div className="w-3 h-3 rounded-full bg-red-500" />
@@ -262,14 +254,12 @@ export function TerminalTitle({ title, isActive }: TerminalTitleProps) {
           </div>
         </div>
 
-        {/* Título */}
         <div className="px-8 py-6 relative">
           <div className="flex items-center justify-center gap-2">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-cartoon font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text text-center">
               {title}
             </h2>
 
-            {/* Cursor piscante */}
             {isActive && (
               <motion.div
                 className="w-[3px] h-8 bg-pastel-purple dark:bg-dark-purple"
@@ -280,7 +270,6 @@ export function TerminalTitle({ title, isActive }: TerminalTitleProps) {
           </div>
         </div>
 
-        {/* Efeito de brilho */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-r from-pastel-purple/5 to-pastel-pink/5 dark:from-dark-purple/5 dark:to-dark-pink/5"
           animate={{ opacity: [0.5, 0.8, 0.5] }}
@@ -297,7 +286,7 @@ export function HomeSection() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY
-      const threshold = window.innerHeight * 0.3 // 30% da altura da viewport
+      const threshold = window.innerHeight * 0.3
 
       setShowScroll(scrollPosition < threshold)
     }
@@ -308,18 +297,15 @@ export function HomeSection() {
 
   return (
     <section id="inicio" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-light-surface via-pastel-purple/5 to-light-surface dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface pt-16 lg:pt-24">
-      {/* Elementos de fundo */}
       <FloatingClouds />
       <FloatingBubbles />
 
       <div className="w-full h-full flex items-center justify-center relative z-10">
         <div className="w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center min-h-screen">
-          {/* Terminal Grande como foco principal */}
           <div className="w-full max-w-[92vw] sm:max-w-[95vw] md:max-w-[90vw] lg:max-w-4xl mt-12 sm:mt-10 md:mt-8 lg:-mt-20 transform-gpu">
             <CodeTerminal />
           </div>
 
-          {/* Scroll Indicator */}
           <AnimatePresence>
             {showScroll && (
               <motion.div

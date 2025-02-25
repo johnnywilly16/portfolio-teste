@@ -15,7 +15,6 @@ export function MobileMenu() {
       const sections = ['inicio', 'projetos', 'sobre', 'contato']
       const scrollPosition = window.scrollY + window.innerHeight / 2
 
-      // Encontra a última seção visível
       let currentSection = sections[0]
       sections.forEach(section => {
         const element = document.getElementById(section)
@@ -66,7 +65,6 @@ export function MobileMenu() {
 
   return (
     <div className="lg:hidden fixed top-0 right-0 w-full z-50 p-4 flex justify-end">
-      {/* Botão do Terminal */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         className="relative bg-white dark:bg-slate-800 text-pastel-purple dark:text-emerald-400 rounded-xl border-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 px-4 py-2 font-mono text-sm flex items-center gap-2 backdrop-blur-sm shadow-lg"
@@ -82,7 +80,6 @@ export function MobileMenu() {
         />
       </motion.button>
 
-      {/* Menu Terminal */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -92,7 +89,6 @@ export function MobileMenu() {
             animate="open"
             exit="closed"
           >
-            {/* Barra de título do terminal */}
             <div className="bg-white dark:bg-slate-700 px-4 py-2 flex items-center justify-between border-b-2 border-dashed border-pastel-purple/30 dark:border-dark-purple/30">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1.5">
@@ -110,7 +106,6 @@ export function MobileMenu() {
               </button>
             </div>
 
-            {/* Conteúdo do Terminal */}
             <div className="p-4 font-mono text-sm space-y-2">
               {[
                 { id: 'inicio', command: 'cd ~' },
@@ -138,7 +133,6 @@ export function MobileMenu() {
                 </motion.button>
               ))}
 
-              {/* Links Sociais */}
               <div className="pt-4 border-t border-pastel-purple/20 dark:border-slate-700 mt-4">
                 <div className="text-pastel-purple/70 dark:text-emerald-300/70 mb-2">$ ls ~/social</div>
                 <div className="flex gap-4">

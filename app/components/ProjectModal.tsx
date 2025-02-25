@@ -18,7 +18,6 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Overlay com blur otimizado */}
           <motion.div
             className="fixed inset-0 bg-black/50 z-50 backdrop-blur-[2px] sm:backdrop-blur-sm"
             initial={{ opacity: 0 }}
@@ -27,7 +26,6 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
             onClick={onClose}
           />
 
-          {/* Modal */}
           <motion.div
             className="fixed inset-0 flex items-center justify-center z-50 p-4 sm:p-8 overflow-y-auto overflow-x-hidden"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -36,9 +34,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
             transition={{ type: "spring", duration: 0.5 }}
           >
             <div className="bg-white/90 dark:bg-dark-surface/90 backdrop-blur-md rounded-2xl sm:rounded-3xl border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 p-4 sm:p-10 w-[95%] sm:w-full max-w-4xl my-auto relative">
-              {/* Container do conteúdo com scroll */}
               <div className="max-h-[80vh] overflow-y-auto overflow-x-hidden px-2 pb-2 scrollbar-thin scrollbar-thumb-pastel-purple/20 scrollbar-track-transparent">
-                {/* Conteúdo */}
                 <div className="space-y-6 sm:space-y-8 text-center">
                   <div className="relative inline-block mt-2 sm:mt-4">
                     <motion.h2 
@@ -48,7 +44,6 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     >
                       {project.title}
                     </motion.h2>
-                    {/* Estrelinhas decorativas */}
                     <motion.div
                       className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 text-xl sm:text-2xl text-pastel-yellow dark:text-dark-yellow"
                       animate={{ rotate: 360, scale: [1, 1.2, 1] }}
@@ -132,7 +127,6 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                 </div>
               </div>
 
-              {/* Botão de fechar */}
               <motion.button
                 className="absolute -top-6 -right-6 sm:-top-8 sm:-right-8 bg-gradient-to-br from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-white p-3 sm:p-4 rounded-full shadow-lg z-10 border-4 border-white dark:border-dark-surface"
                 whileHover={{ scale: 1.1, rotate: 90 }}

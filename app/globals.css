@@ -14,17 +14,14 @@
   --doodle-color: rgba(149, 117, 205, 0.8);
 }
 
-/* Fundo estilo caderno */
 .notebook-bg {
   background-image: 
-    /* Linha vertical (margem) */
     linear-gradient(90deg, 
       transparent 2rem,
       var(--notebook-margin-color) 2rem,
       var(--notebook-margin-color) calc(2rem + 2px),
       transparent calc(2rem + 2px)
     ),
-    /* Linhas horizontais */
     repeating-linear-gradient(
       0deg,
       transparent,
@@ -39,7 +36,6 @@
   background-image: none;
 }
 
-/* Doodles */
 .doodle {
   display: block;
   position: absolute;
@@ -64,7 +60,6 @@
   filter: drop-shadow(3px 3px 0 rgba(0, 0, 0, 0.2)) drop-shadow(0 0 12px var(--doodle-color));
 }
 
-/* Removendo duplicação do .paper-texture::before */
 .paper-texture::before {
   content: '';
   position: fixed;
@@ -82,7 +77,6 @@
 }
 
 @layer components {
-  /* Botão estilo cartoon */
   .btn-cartoon {
     @apply relative px-8 py-4 font-cartoon text-lg font-bold rounded-xl transition-all duration-200 transform;
     background: var(--btn-bg, theme('colors.pastel.purple'));
@@ -104,7 +98,6 @@
     box-shadow: none;
   }
 
-  /* Título estilo cartoon */
   .title-cartoon {
     @apply font-cartoon font-bold;
     color: #B39DDB;
@@ -130,7 +123,6 @@
   }
 }
 
-/* Animações */
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0); }
   50% { transform: translateY(-10px) rotate(5deg); }
@@ -186,7 +178,6 @@
   animation: wiggle 1s ease-in-out infinite;
 }
 
-/* Terminal */
 .terminal-container {
   @apply fixed bottom-8 left-8 w-48 md:w-64 z-50;
   animation: float 6s ease-in-out infinite;

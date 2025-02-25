@@ -7,7 +7,6 @@ import {
 } from 'react-icons/si'
 import { TerminalTitle } from './HomeSection'
 
-// Componente de bolhas flutuantes
 const FloatingBubbles = ({ color }: { color: string }) => (
   <div className="absolute inset-0 overflow-hidden -z-20">
     {[...Array(6)].map((_, i) => (
@@ -39,7 +38,6 @@ const FloatingBubbles = ({ color }: { color: string }) => (
   </div>
 )
 
-// Componente de estrelas decorativas
 const Stars = () => (
   <>
     {[...Array(15)].map((_, i) => (
@@ -69,7 +67,6 @@ const Stars = () => (
   </>
 )
 
-// Componente de nuvem de pensamento
 const ThoughtCloud = ({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) => (
   <motion.div
     className="relative"
@@ -89,7 +86,6 @@ const ThoughtCloud = ({ children, delay = 0 }: { children: React.ReactNode, dela
   </motion.div>
 )
 
-// Componente de ícone de tecnologia flutuante
 const FloatingTechIcon = ({ 
   Icon, 
   name, 
@@ -145,20 +141,15 @@ export function AboutSection() {
   return (
     <section id="sobre" className="min-h-screen py-20 bg-gradient-to-b from-pastel-purple/5 via-white/80 to-pastel-purple/10 dark:from-dark-purple/5 dark:via-dark-surface/80 dark:to-dark-purple/10 backdrop-blur-sm">
       <div className="container mx-auto px-4">
-        {/* Background com estrelas */}
         <Stars />
         
         <div className="container mx-auto px-4 sm:px-6">
-          {/* Título */}
           <div className="text-center mb-16">
             <TerminalTitle title="Sobre Mim" isActive={true} />
           </div>
 
-          {/* Conteúdo Principal */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-12">
-            {/* Coluna da Bio */}
             <div className="space-y-6 sm:space-y-8">
-              {/* Card do Desenvolvedor */}
               <ThoughtCloud delay={0.2}>
                 <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-4 sm:mb-6">
                   <motion.div
@@ -201,7 +192,6 @@ export function AboutSection() {
                 </motion.p>
               </ThoughtCloud>
 
-              {/* Card de Interesses */}
               <ThoughtCloud delay={0.4}>
                 <div className="flex items-center gap-6 mb-6">
                   <motion.div
@@ -257,7 +247,6 @@ export function AboutSection() {
                 </div>
               </ThoughtCloud>
 
-              {/* Card de Objetivos */}
               <ThoughtCloud delay={0.6}>
                 <div className="flex items-center gap-6 mb-6">
                   <motion.div
@@ -316,9 +305,7 @@ export function AboutSection() {
               </ThoughtCloud>
             </div>
 
-            {/* Coluna de Tecnologias */}
             <div className="space-y-6 sm:space-y-8">
-              {/* Frontend */}
               <motion.div
                 className="relative"
                 initial={{ opacity: 0, x: 50 }}
@@ -365,7 +352,6 @@ export function AboutSection() {
                 </div>
               </motion.div>
 
-              {/* Backend */}
               <motion.div
                 className="relative"
                 initial={{ opacity: 0, x: 50 }}

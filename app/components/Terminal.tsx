@@ -16,7 +16,6 @@ export function Terminal({ children }: TerminalProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      {/* Title bar */}
       <div className="h-8 bg-gradient-to-r from-pastel-purple/10 to-pastel-pink/10 dark:from-purple-500/20 dark:to-pink-500/20 flex items-center px-4">
         <div className="flex space-x-2">
           <div className="w-3 h-3 rounded-full bg-red-500" />
@@ -25,7 +24,6 @@ export function Terminal({ children }: TerminalProps) {
         </div>
       </div>
 
-      {/* Terminal content */}
       <div className="p-4 font-mono text-sm">
         <motion.div
           className="will-change-transform"

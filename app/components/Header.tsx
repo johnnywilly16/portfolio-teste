@@ -18,10 +18,8 @@ export function Header() {
       const sections = ['inicio', 'projetos', 'sobre', 'contato']
       const scrollPosition = window.scrollY + window.innerHeight / 2
 
-      // Atualiza o estado de scroll
       setScrolled(window.scrollY > 50)
 
-      // Encontra a última seção visível
       let currentSection = sections[0]
       sections.forEach(section => {
         const element = document.getElementById(section)
@@ -62,7 +60,6 @@ export function Header() {
         transition={{ duration: 0.5 }}
       >
         <div className="relative">
-          {/* Background com efeito glassmorphism */}
           <motion.div 
             className={`absolute inset-0 backdrop-blur-lg rounded-[2rem] border-4 border-dashed border-pastel-purple/50 dark:border-neon-purple/50 shadow-lg transition-all duration-300 ${
               scrolled 
@@ -78,7 +75,6 @@ export function Header() {
               ease: "easeInOut"
             }}
           >
-            {/* Padrão de bolinhas animadas com opacidade baseada no scroll */}
             <div className="absolute inset-0 overflow-hidden rounded-[2rem]">
               {[...Array(6)].map((_, i) => (
                 <motion.div
@@ -110,14 +106,12 @@ export function Header() {
 
           <div className="relative px-6 py-4">
             <div className="flex items-center justify-between">
-              {/* Logo limpo */}
               <div className="relative text-5xl font-handwriting font-bold">
                 <span className="bg-gradient-to-r from-pastel-purple to-pastel-pink dark:from-dark-purple dark:to-dark-pink text-transparent bg-clip-text">
                   
                 </span>
               </div>
 
-              {/* Menu de navegação */}
               <nav className="flex items-center gap-4">
                 {[
                   { id: 'inicio', label: 'Início' },
@@ -132,7 +126,6 @@ export function Header() {
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    {/* Container do Terminal */}
                     <motion.div 
                       className={`relative overflow-hidden rounded-xl transition-all duration-500 ${
                         activeSection === item.id 
@@ -145,7 +138,6 @@ export function Header() {
                         transition: { duration: 0.3 }
                       }}
                     >
-                      {/* Barra de título do terminal */}
                       {activeSection === item.id && (
                         <motion.div 
                           className="absolute top-0 left-0 right-0 h-2 bg-slate-100 dark:bg-slate-700 flex items-center px-1"
@@ -161,7 +153,6 @@ export function Header() {
                         </motion.div>
                       )}
                       
-                      {/* Texto do menu */}
                       <motion.span 
                         className={`relative z-10 px-4 py-2 block transition-colors duration-300 ${
                           activeSection === item.id 
@@ -182,7 +173,6 @@ export function Header() {
                             </motion.span>
                           )}
                           {item.label}
-                          {/* Cursor piscante */}
                           {activeSection === item.id && (
                             <motion.div
                               className="w-1.5 h-4 bg-pastel-purple dark:bg-emerald-400 ml-2"
@@ -197,7 +187,6 @@ export function Header() {
                         </div>
                       </motion.span>
 
-                      {/* Efeito de brilho */}
                       {activeSection === item.id && (
                         <motion.div
                           className="absolute inset-0 bg-gradient-to-r from-pastel-purple/10 to-pastel-pink/10 dark:from-dark-purple/10 dark:to-dark-pink/10"
@@ -212,7 +201,6 @@ export function Header() {
               </nav>
 
               <div className="flex items-center gap-3">
-                {/* Toggle de tema */}
                 <motion.button
                   onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                   className="relative p-3 rounded-xl bg-gradient-to-r from-pastel-yellow/20 to-pastel-purple/20 dark:from-neon-yellow/20 dark:to-neon-purple/20"
@@ -226,7 +214,6 @@ export function Header() {
                   )}
                 </motion.button>
 
-                {/* Links sociais */}
                 {[
                   { icon: FaGithub, href: 'https://github.com/johnnywilly16', color: 'purple' },
                   { icon: FaLinkedin, href: 'https://www.linkedin.com/in/johnny-willy/', color: 'purple' },

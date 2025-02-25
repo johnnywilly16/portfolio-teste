@@ -3,7 +3,6 @@ import { FaLinkedin, FaEnvelope, FaWhatsapp } from 'react-icons/fa'
 import { TerminalTitle } from './HomeSection'
 import { IconType } from 'react-icons'
 
-// Componente de bolhas flutuantes
 const FloatingBubbles = () => (
   <div className="absolute inset-0 overflow-hidden -z-20">
     {[...Array(15)].map((_, i) => (
@@ -32,7 +31,6 @@ const FloatingBubbles = () => (
   </div>
 )
 
-// Componente de Terminal de Contato
 const ContactTerminal = ({ 
   icon: Icon, 
   title, 
@@ -63,7 +61,6 @@ const ContactTerminal = ({
       whileHover={{ rotate: [-1, 1] }}
       transition={{ duration: 0.2 }}
     >
-      {/* Barra de título do terminal */}
       <div className="bg-gradient-to-r from-pastel-purple/20 to-pastel-pink/20 dark:from-dark-purple/20 dark:to-dark-pink/20 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="flex gap-2">
@@ -77,7 +74,6 @@ const ContactTerminal = ({
         </div>
       </div>
 
-      {/* Conteúdo do terminal */}
       <div className="p-6 font-mono space-y-4">
         <div className="flex items-center gap-3">
           <span className="text-pastel-pink dark:text-purple-400">$</span>
@@ -131,17 +127,14 @@ const ContactTerminal = ({
 export function ContactSection() {
   return (
     <section id="contato" className="min-h-[70vh] w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-pastel-purple/5 to-white dark:from-dark-surface dark:via-dark-purple/5 dark:to-dark-surface py-20">
-      {/* Elementos de fundo */}
       <FloatingBubbles />
 
       <div className="w-full flex items-center justify-center relative z-10">
         <div className="w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center">
-          {/* Título */}
           <div className="text-center mb-12">
             <TerminalTitle title="Entre em Contato" isActive={true} />
           </div>
 
-          {/* Grid de terminais de contato */}
           <div className="w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
             <ContactTerminal
               icon={FaWhatsapp}

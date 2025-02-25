@@ -73,7 +73,6 @@ const projects = [
   }
 ]
 
-// Componente de estrela de fundo
 const BackgroundStar = ({ delay = 0, size = 20, top, left }: { delay: number, size?: number, top: string, left: string }) => (
   <motion.div
     className="absolute text-pastel-yellow dark:text-dark-yellow pointer-events-none -z-10"
@@ -113,7 +112,6 @@ const BackgroundStar = ({ delay = 0, size = 20, top, left }: { delay: number, si
   </motion.div>
 )
 
-// Card de Projeto
 const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
   return (
     <motion.div 
@@ -133,7 +131,6 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
       className="relative bg-white/90 dark:bg-dark-surface/90 rounded-[2rem] border-4 border-dashed border-pastel-purple/30 dark:border-dark-purple/30 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-[1.02] will-change-transform"
     >
       <div className="p-6 sm:p-8 space-y-6">
-        {/* Cabeçalho */}
         <div className="flex items-center gap-4">
           <motion.div 
             className="relative text-4xl sm:text-5xl"
@@ -174,12 +171,10 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
           </div>
         </div>
 
-        {/* Descrição */}
         <p className="text-slate-600 dark:text-slate-300 font-cartoon leading-relaxed">
           {project.description}
         </p>
 
-        {/* Tecnologias */}
         <div className="flex flex-wrap gap-2">
           {project.technologies.map((tech) => (
             <span
@@ -192,7 +187,6 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
           ))}
         </div>
 
-        {/* Links */}
         <div className="flex flex-wrap gap-4 pt-2">
           {project.projectUrl && (
             <motion.a
@@ -242,7 +236,6 @@ export function ProjectsSection() {
       id="projetos" 
       className="relative min-h-screen py-20 bg-gradient-to-b from-pastel-purple/5 via-white/80 to-pastel-purple/10 dark:from-dark-purple/5 dark:via-dark-surface/80 dark:to-dark-purple/10 backdrop-blur-sm"
     >
-      {/* Background com estrelas */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
         {stars.map((star) => (
           <BackgroundStar 
@@ -255,7 +248,6 @@ export function ProjectsSection() {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Título */}
         <motion.div 
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -272,7 +264,6 @@ export function ProjectsSection() {
           <TerminalTitle title="Meus Projetos" isActive={true} />
         </motion.div>
 
-        {/* Lista de Projetos */}
         <div className="max-w-4xl mx-auto space-y-8">
           {projects.map((project) => (
             <div key={project.title} className="relative">
